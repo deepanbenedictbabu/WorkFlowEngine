@@ -13,6 +13,7 @@ using OptimaJet.Workflow.Core.Persistence;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WorkflowEngineMVC.Models;
+using OptimaJet.Workflow.Core.Model;
 
 namespace WorkflowEngineMVC.Controllers
 {
@@ -63,7 +64,11 @@ namespace WorkflowEngineMVC.Controllers
 
         private List<CommandViewModel> GetAvailableCommands(Guid processId)
         {            
-            List<CommandViewModel> commandViewModelList = new List<CommandViewModel>();
+            var hist = WorkflowInit.Runtime.GetProcessHistory(processId);
+            var schema = WorkflowInit.Runtime.GetProcessScheme(processId);
+            var trans1 = WorkflowInit.Runtime.GetAllActorsForAllCommandTransitions(processId);
+            //var trans2 = WorkflowInit.Runtime.PersistenceProvider.get
+            List <CommandViewModel> commandViewModelList = new List<CommandViewModel>();
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);

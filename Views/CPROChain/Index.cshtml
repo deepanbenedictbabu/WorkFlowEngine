@@ -4,10 +4,83 @@
 }
 
 <div id="wfgrid" style="min-height:600px; max-width: 1200px;">
-    <table>
+    <table style="margin: 0 auto;">
+        <tr>
+            <td style="color:blue; background-color:blue; color:white;" colspan="2">                    
+                Start New Remedy                            
+            </td>
+        </tr>
         <tr>
             <td>                    
-                <a class="nav-link text-dark" asp-area="" asp-controller="CPROChain" asp-action="StartRemedy">Start the remedy</a>                               
+                Case ID :                              
+            </td>
+            <td>                    
+                <input type="text" value="100016">                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                Remedy :                         
+            </td>
+            <td>                    
+                <input type="text" value="GTST - Genetic Test">                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                Source Type :                        
+            </td>
+            <td>                    
+                <input type="text" value="P-PUTATIVE FATHER">                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                Reference Type :                             
+            </td>
+             <td>                    
+                <input type="text" value="S_DNA TYPING - BUCCAL SWAP" >                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                File Number :                           
+            </td>
+            <td>                    
+                <input type="text" value="UR0017811" >                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                Process :                          
+            </td>
+            <td>                    
+                <input type="text" value="ES-ESTABLISHMENT">                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                Source Name :              
+            </td>
+            <td>                    
+                <input type="text" value="">                              
+            </td>
+        </tr>
+         <tr>
+            <td>                    
+                Reference ID :  
+            </td>
+            <td>                    
+                <input type="text" value="">                              
+            </td>
+            <br />
+        </tr>         
+        <tr style="text-align:center">
+            <td></td>
+            <td> 
+                <div class="button">
+                    <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="StartRemedy">Start New Remedy</a>                               
+                </div>
             </td>
         </tr>
     </table>

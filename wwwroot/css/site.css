@@ -66,6 +66,27 @@ a {
     color: #2c2c2c;
 }
 
-table, th, td {
+table, th, td {    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-spacing: 10px;
+}
+
+table {
     border: 1px solid black;
+}
+.button {
+    background: no-repeat;
+    color: white;
+    text-align: center;
+    background-position: center;
+    background-image: url('../images/button.jpg');
+    background-size: 170px 45px;
+    width: 230px;
+}
+
+.modal-dialog {
+    max-width: 65% !important;
 }
