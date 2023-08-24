@@ -1,0 +1,569 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\WorkflowEngineMVC.bundle.scp.css",
+      "PackagePath": "staticwebassets\\WorkflowEngineMVC.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\ar.json",
+      "PackagePath": "staticwebassets\\Localization\\ar.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\de.json",
+      "PackagePath": "staticwebassets\\Localization\\de.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\en_default.json",
+      "PackagePath": "staticwebassets\\Localization\\en_default.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\es.json",
+      "PackagePath": "staticwebassets\\Localization\\es.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\fr.json",
+      "PackagePath": "staticwebassets\\Localization\\fr.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\index.js",
+      "PackagePath": "staticwebassets\\Localization\\index.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\it.json",
+      "PackagePath": "staticwebassets\\Localization\\it.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\pt.json",
+      "PackagePath": "staticwebassets\\Localization\\pt.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\ru.json",
+      "PackagePath": "staticwebassets\\Localization\\ru.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\Localization\\tr.json",
+      "PackagePath": "staticwebassets\\Localization\\tr.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\css\\workflowdesigner.min.css",
+      "PackagePath": "staticwebassets\\css\\workflowdesigner.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\js\\workflowdesigner.min.js",
+      "PackagePath": "staticwebassets\\js\\workflowdesigner.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\activity.html",
+      "PackagePath": "staticwebassets\\templates\\activity.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\activitygroup.html",
+      "PackagePath": "staticwebassets\\templates\\activitygroup.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\activityinline.html",
+      "PackagePath": "staticwebassets\\templates\\activityinline.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\activitytoolbar.html",
+      "PackagePath": "staticwebassets\\templates\\activitytoolbar.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\actors.html",
+      "PackagePath": "staticwebassets\\templates\\actors.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\assignments.html",
+      "PackagePath": "staticwebassets\\templates\\assignments.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\codeactions.html",
+      "PackagePath": "staticwebassets\\templates\\codeactions.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\codeform.html",
+      "PackagePath": "staticwebassets\\templates\\codeform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\commandParameters.html",
+      "PackagePath": "staticwebassets\\templates\\commandParameters.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\commands.html",
+      "PackagePath": "staticwebassets\\templates\\commands.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\comment.html",
+      "PackagePath": "staticwebassets\\templates\\comment.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\commenttoolbar.html",
+      "PackagePath": "staticwebassets\\templates\\commenttoolbar.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\confirmDialog.html",
+      "PackagePath": "staticwebassets\\templates\\confirmDialog.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\assignmentplugin\\assignmentchangeform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\assignmentplugin\\assignmentchangeform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\assignmentplugin\\assignmentcreateform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\assignmentplugin\\assignmentcreateform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\assignmentplugin\\assignmentshavestatus.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\assignmentplugin\\assignmentshavestatus.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\basicsplugin\\createprocessform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\basicsplugin\\createprocessform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\basicsplugin\\httprequestform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\basicsplugin\\httprequestform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\basicsplugin\\sendemailform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\basicsplugin\\sendemailform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\loopsplugin\\startloopforeachform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\loopsplugin\\startloopforeachform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\customforms\\loopsplugin\\startloopforform.html",
+      "PackagePath": "staticwebassets\\templates\\customforms\\loopsplugin\\startloopforform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\decision.html",
+      "PackagePath": "staticwebassets\\templates\\decision.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\decisiontable.html",
+      "PackagePath": "staticwebassets\\templates\\decisiontable.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\dropdownValues.html",
+      "PackagePath": "staticwebassets\\templates\\dropdownValues.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\elements.html",
+      "PackagePath": "staticwebassets\\templates\\elements.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\elements\\activity.svg",
+      "PackagePath": "staticwebassets\\templates\\elements\\activity.svg"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\elements\\comment.svg",
+      "PackagePath": "staticwebassets\\templates\\elements\\comment.svg"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\elements\\decision.svg",
+      "PackagePath": "staticwebassets\\templates\\elements\\decision.svg"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\elements\\decisiontable.svg",
+      "PackagePath": "staticwebassets\\templates\\elements\\decisiontable.svg"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\elements\\transition.svg",
+      "PackagePath": "staticwebassets\\templates\\elements\\transition.svg"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\expressionform.html",
+      "PackagePath": "staticwebassets\\templates\\expressionform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\jsonform.html",
+      "PackagePath": "staticwebassets\\templates\\jsonform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\legend.html",
+      "PackagePath": "staticwebassets\\templates\\legend.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library.json",
+      "PackagePath": "staticwebassets\\templates\\library.json"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\AutoTransitions.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\AutoTransitions.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\DirectAndReverseTransitionsWithApprovalAndDeny.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\DirectAndReverseTransitionsWithApprovalAndDeny.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\DirectTransitionsWithApproval.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\DirectTransitionsWithApproval.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\DirectoryCompress.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\DirectoryCompress.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ExpressionConditionOtherwise.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ExpressionConditionOtherwise.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ExpressionOtherwise.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ExpressionOtherwise.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\FileWriteRead.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\FileWriteRead.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\HTTPRequest.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\HTTPRequest.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\LoopForDateTime.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\LoopForDateTime.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\LoopForInt.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\LoopForInt.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\LoopForeach.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\LoopForeach.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\LoopForeachFromParameter.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\LoopForeachFromParameter.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ParallelApprovalWithoutBranches.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ParallelApprovalWithoutBranches.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ParallelProcessesWithWaiting.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ParallelProcessesWithWaiting.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ParallelProcessesWithoutWaiting.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ParallelProcessesWithoutWaiting.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ParameterExpressionConditionOtherwise.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ParameterExpressionConditionOtherwise.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ParameterExpressionOtherwise.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ParameterExpressionOtherwise.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\ParametersAndExpressions.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\ParametersAndExpressions.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\library\\Timer.xml",
+      "PackagePath": "staticwebassets\\templates\\library\\Timer.xml"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\localization.html",
+      "PackagePath": "staticwebassets\\templates\\localization.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\logs.html",
+      "PackagePath": "staticwebassets\\templates\\logs.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\parameters.html",
+      "PackagePath": "staticwebassets\\templates\\parameters.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\parametersform.html",
+      "PackagePath": "staticwebassets\\templates\\parametersform.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\processinfo.html",
+      "PackagePath": "staticwebassets\\templates\\processinfo.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\timers.html",
+      "PackagePath": "staticwebassets\\templates\\timers.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\toolbar.html",
+      "PackagePath": "staticwebassets\\templates\\toolbar.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\toolbarinfo.html",
+      "PackagePath": "staticwebassets\\templates\\toolbarinfo.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\toolbarside.html",
+      "PackagePath": "staticwebassets\\templates\\toolbarside.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\transition.html",
+      "PackagePath": "staticwebassets\\templates\\transition.html"
+    },
+    {
+      "Id": "C:\\Project\\Source\\Wisconsin\\WorkflowEngineDotNetCore\\WorkflowEngineMVC\\wwwroot\\templates\\transitiontoolbar.html",
+      "PackagePath": "staticwebassets\\templates\\transitiontoolbar.html"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.WorkflowEngineMVC.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.WorkflowEngineMVC.props",
+      "PackagePath": "build\\WorkflowEngineMVC.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.WorkflowEngineMVC.props",
+      "PackagePath": "buildMultiTargeting\\WorkflowEngineMVC.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.WorkflowEngineMVC.props",
+      "PackagePath": "buildTransitive\\WorkflowEngineMVC.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

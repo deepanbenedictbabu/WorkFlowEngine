@@ -1,0 +1,16 @@
+﻿@page "{handler?}"
+@model WorkflowEngineMVC.Pages.ActivitychainModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewBag.Title = "Activity Chain";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="wfgrid" style="min-height:600px; max-width: 1200px;">    
+    <table>
+        <tr>
+            <td>                                
+                <a class="nav-link text-dark" asp-page="/Activitychain"  asp-page-handler="ProcessCommand">Schedule Genetic Test</a>                 
+            </td>
+        </tr>
+    </table>
+</div>
