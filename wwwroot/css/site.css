@@ -74,7 +74,7 @@ table, th, td {
     border-spacing: 10px;
 }
 
-table {
+.tableborder {
     border: 1px solid black;
 }
 .button {

@@ -17,18 +17,47 @@
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
 <div id="wfgrid" style="min-height:600px; max-width: 1200px;">
-    @if(@Model.ListCommandView_Model.Count>0)
-    {
-        <div>        
-            <b>Current State Name: @Model.ListCommandView_Model.FirstOrDefault().CurrentStateName</b>
-        </div>
-        <br />
-        <div>        
-            <b>Current Activity Name: @Model.ListCommandView_Model.FirstOrDefault().CurrentActivityName</b>
-        </div>
-    }
+    <table class="tableborder">
+         <tr>
+            <td style="color:blue; background-color:blue; color:white;">          
+                From
+            </td>
+            <td style="color:blue; background-color:blue; color:white;">
+                To
+            </td>
+        </tr>          
+        <tr>
+            <td>
+                @Model.Processdefinition.InitialActivity.Name
+            </td>
+            <td>                                
+                @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == @Model.Processdefinition.InitialActivity.Name))
+                {
+                    ViewData["NextActivityName"] = data.To.Name;
+                    ViewData["FinalActivity"] = false;                
+                    @data.To.Name                    
+                }                
+            </td>
+        </tr> 
+        @while((bool?)ViewData["FinalActivity"] != true)
+        {
+            @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == @ViewData["NextActivityName"]?.ToString()))
+            {
+                ViewData["NextActivityName"] = data.To.Name;
+                ViewData["FinalActivity"] = data.To.IsFinal;
+                <tr>
+                    <td>
+                        @data.From.Name
+                    </td>
+                    <td>
+                        @data.To.Name
+                    </td>
+                </tr>        
+            }
+        }
+    </table>
     <br/>
-    <table>
+    <table class="tableborder"> 
         @foreach (var item in Model.ListCommandView_Model)
         {
             <tr>

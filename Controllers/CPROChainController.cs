@@ -63,9 +63,9 @@ namespace WorkflowEngineMVC.Controllers
         }
 
         private List<CommandViewModel> GetAvailableCommands(Guid processId)
-        {            
-            var hist = WorkflowInit.Runtime.GetProcessHistory(processId);
+        {                        
             var schema = WorkflowInit.Runtime.GetProcessScheme(processId);
+            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.Processdefinition = schema;
             var trans1 = WorkflowInit.Runtime.GetAllActorsForAllCommandTransitions(processId);
             //var trans2 = WorkflowInit.Runtime.PersistenceProvider.get
             List <CommandViewModel> commandViewModelList = new List<CommandViewModel>();
