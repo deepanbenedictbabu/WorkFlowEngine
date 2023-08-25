@@ -25,10 +25,16 @@
             <td style="color:blue; background-color:blue; color:white;">
                 To
             </td>
+            <td style="color:blue; background-color:blue; color:white;">
+                Action
+            </td>
         </tr>          
         <tr>
             <td>
-                @Model.Processdefinition.InitialActivity.Name
+                @{
+                    ViewData["ActivityName"] = Model.Processdefinition.InitialActivity.Name;
+                 }
+                    @Model.Processdefinition.InitialActivity.Name
             </td>
             <td>                                
                 @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == @Model.Processdefinition.InitialActivity.Name))
@@ -38,6 +44,15 @@
                     @data.To.Name                    
                 }                
             </td>
+            @if(Model.CurrentActivityName == ViewData["ActivityName"]?.ToString())
+            {            
+                    <td style="background-color:blue;color:white">                      
+                    @foreach (var command in Model.ListCommandModel)
+                    {                                              
+                     <a class="nav-link text-dark" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-processId=@command.ProcessId asp-route-commandName=@command.CommandName>@command.CommandName</a>                                                                            
+                    }    
+                </td>
+            }
         </tr> 
         @while((bool?)ViewData["FinalActivity"] != true)
         {
@@ -45,6 +60,7 @@
             {
                 ViewData["NextActivityName"] = data.To.Name;
                 ViewData["FinalActivity"] = data.To.IsFinal;
+                ViewData["ActivityName"] = data.From.Name;
                 <tr>
                     <td>
                         @data.From.Name
@@ -52,31 +68,25 @@
                     <td>
                         @data.To.Name
                     </td>
+                    @if(Model.CurrentActivityName == ViewData["ActivityName"]?.ToString())
+                    {            
+                        <td style="background-color:blue;color:white">                         
+                            @foreach (var command in Model.ListCommandModel)
+                            {                                    
+                             <a class="nav-link text-dark" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-processId=@command.ProcessId asp-route-commandName=@command.CommandName>@command.CommandName</a>                                                                                          
+                            }                               
+                        </td>
+                    }
                 </tr>        
             }
         }
     </table>
-    <br/>
-    <table class="tableborder"> 
-        @foreach (var item in Model.ListCommandView_Model)
-        {
-            <tr>
-                <td>                    
-                      <a class="nav-link text-dark" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-processId=@item.ProcessId asp-route-commandName=@item.CommandName>@item.CommandName</a>                          
-                </td>
-            </tr>
-            @*<tr>
-                <td>                    
-                    <a class="nav-link text-dark" asp-area="" asp-controller="CPRO" asp-action="ProcessState" asp-route-stateName=@item.StateName>@item.StateName</a>
-                </td>
-            </tr>*@
-        }
-    </table>
+    <br/>    
     @if (@Model.GTSTScheduler_Model != null)
     {
         <br />
         <div>  
-            @Html.Partial("GTSTScheduler",Model)  
+            @Html.PartialAsync("GTSTScheduler",Model).Result  
         </div>
     }
 </div>

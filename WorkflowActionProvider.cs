@@ -8,7 +8,7 @@ namespace WorkflowLib
 {
     public class WorkflowActionProvider: IWorkflowActionProvider
     {
-        public WorkFlowResponseModel WorkFlowResponseModel;
+        public WorkFlowResponseModel WorkflowResponseModel;
         private readonly Dictionary<string, Action<ProcessInstance, WorkflowRuntime, string>> _actions = new();
 
         private readonly Dictionary<string, Func<ProcessInstance, WorkflowRuntime, string, CancellationToken, Task>>
@@ -35,13 +35,13 @@ namespace WorkflowLib
             string actionParameter)
         {            
             GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
-            WorkFlowResponseModel.GTSTScheduler_Model = gTSTSchedulerController.Show();            
+            WorkflowResponseModel.GTSTScheduler_Model = gTSTSchedulerController.Show();            
         }
         private void GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
             NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
-            WorkFlowResponseModel.NoticeGeneration_Model = noticeGenerationController.Show(actionParameter);            
+            WorkflowResponseModel.NoticeGeneration_Model = noticeGenerationController.Show(actionParameter);            
         }
 
         private void GenerateAlert(ProcessInstance processInstance, WorkflowRuntime runtime,
@@ -71,13 +71,14 @@ namespace WorkflowLib
         }
 
         public WorkFlowResponseModel ExecuteCommand(string commandName, Guid processId)
-        {              
+        {
+            WorkflowResponseModel = new WorkFlowResponseModel();
             WorkflowCommand? workflowCommand = WorkflowInit.Runtime
                                                 .GetAvailableCommands(processId, string.Empty)
                                                 .Where(c => c.CommandName.Trim().ToLower() == commandName.Trim().ToLower()).FirstOrDefault();
             WorkflowInit.Runtime.ExecuteCommand(workflowCommand, string.Empty, string.Empty);
-            WorkFlowResponseModel.ProcessId = processId;
-            return WorkFlowResponseModel;
+            WorkflowResponseModel.ProcessId = processId;
+            return WorkflowResponseModel;
         }
 
         #region Implementation of IWorkflowActionProvider

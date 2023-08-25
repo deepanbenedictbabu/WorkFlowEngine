@@ -24,29 +24,28 @@ namespace WorkflowEngineMVC.Controllers
         // GET: CPROController            
         public ActionResult Index()
         {
-            return View();          
+            return View("StartNewRemedy");          
         }
         public ActionResult StartRemedy(int caseId)
         {
             CreateInstance();
-            List<CommandViewModel> commandViewModelList = GetAvailableCommands(processId);
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.CaseId = caseId;            
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.ListCommandView_Model = commandViewModelList;
-            return View("Details", WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel);
-        }
-        // GET: CPROController/Details/5
-        public ActionResult Details(WorkFlowResponseModel wfResponseModel)
+            List<CommandModel> commandModelList = GetAvailableCommands(processId);
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CaseId = caseId;            
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;
+            return View("Activity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+        }        
+        public ActionResult ShowAllActivity(WorkFlowResponseModel wfResponseModel)
         {            
-            List<CommandViewModel> commandViewModelList = GetAvailableCommands(wfResponseModel.ProcessId);
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.ListCommandView_Model = commandViewModelList;            
-            return View("Details", WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel);
+            List<CommandModel> commandModelList = GetAvailableCommands(wfResponseModel.ProcessId);
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;            
+            return View("Activity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
         }
 
         private void CreateInstance()
         {
             processId = Guid.NewGuid();
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel = new WorkFlowResponseModel();
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.ProcessId = processId;
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel = new WorkFlowResponseModel();
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ProcessId = processId;
             try
             {
                 var createInstanceParameters = new CreateInstanceParams("SchemeCode", processId)
@@ -62,42 +61,31 @@ namespace WorkflowEngineMVC.Controllers
             }
         }
 
-        private List<CommandViewModel> GetAvailableCommands(Guid processId)
+        private List<CommandModel> GetAvailableCommands(Guid processId)
         {                        
             var schema = WorkflowInit.Runtime.GetProcessScheme(processId);
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.Processdefinition = schema;
-            var trans1 = WorkflowInit.Runtime.GetAllActorsForAllCommandTransitions(processId);
-            //var trans2 = WorkflowInit.Runtime.PersistenceProvider.get
-            List <CommandViewModel> commandViewModelList = new List<CommandViewModel>();
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.Processdefinition = schema;                     
+            List <CommandModel> commandModelList = new List<CommandModel>();
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CurrentActivityName = activityName;
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CurrentStateName = stateName;            
             foreach (var workflowCommand in workflowCommands)
             {
-                var commandViewModel = new CommandViewModel();
-                commandViewModel.ProcessId= workflowCommand.ProcessId;
-                commandViewModel.CommandName = workflowCommand.CommandName;
-                commandViewModel.CurrentActivityName = activityName;
-                commandViewModel.CurrentStateName = stateName;
-                commandViewModelList.Add(commandViewModel);
-            }
-            if(commandViewModelList.Count() == 0)
-            {
-                var commandViewModel = new CommandViewModel();                
-                commandViewModel.CurrentActivityName = activityName;
-                commandViewModel.CurrentStateName = stateName;
-                commandViewModelList.Add(commandViewModel);
-            }
-            return commandViewModelList;
+                var commandModel = new CommandModel();
+                commandModel.ProcessId= workflowCommand.ProcessId;
+                commandModel.CommandName = workflowCommand.CommandName;                
+                commandModelList.Add(commandModel);
+            }            
+            return commandModelList;
         }
 
         public ActionResult ProcessCommand(string commandName, Guid processId)
         {
-            WorkflowInit.WorkflowActionProvider.ExecuteCommand(commandName, processId);
-            //workflowActionProvider.ExecuteCommand(commandName, processId);
-            WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel.ListCommandView_Model = GetAvailableCommands(processId);
-            //ViewData["WFResponseModel"] = workFlowResponseModel;
-            return RedirectToAction("Details", WorkflowInit.WorkflowActionProvider.WorkFlowResponseModel);
+            WorkflowInit.WorkflowActionProvider.ExecuteCommand(commandName, processId);            
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = GetAvailableCommands(processId);            
+            return RedirectToAction("ShowAllActivity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
         }
 
         private List<StateViewModel> GetAvailableState()
@@ -122,7 +110,7 @@ namespace WorkflowEngineMVC.Controllers
         {
             SetState(stateName);
             List<StateViewModel> stateViewModelList = GetAvailableState();
-            return View("Details", stateViewModelList);
+            return View("ShowAllActivity", stateViewModelList);
         }
 
         private void SetState(string stateName)

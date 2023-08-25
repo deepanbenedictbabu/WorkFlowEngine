@@ -1,19 +1,8 @@
 ﻿@code {
 }
-@using WorkflowEngineMVC.ViewModels;
-@inject List<CommandViewModel> Model
+@using WorkflowEngineMVC.Models;
+@inject List<CommandModel> Model
 <div id="wfgrid" style="min-height:600px; max-width: 1200px;">
-    @if(Model.Count>0)
-    {
-        <div>        
-            <b>Current State Name: @Model.FirstOrDefault().CurrentStateName</b>
-        </div>
-        <br />
-        <div>        
-            <b>Current Activity Name: @Model.FirstOrDefault().CurrentActivityName</b>
-        </div>
-    }
-    <br/>
     <table>
         @foreach (var item in Model)
         {
