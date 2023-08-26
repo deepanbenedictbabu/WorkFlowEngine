@@ -7,7 +7,9 @@ namespace WorkflowEngineMVC.Models
         public Guid ProcessId { get; set; }
         public string? CurrentStateName { get; set; }
         public string? CurrentActivityName { get; set; }
-        public int CaseId { get; set; }
+        public string? CurrentCommandName { get; set; }
+        public string CaseId { get; set; }
+        public bool IsHistoryView  { get; set; }
         public GTSTSchedulerModel? GTSTScheduler_Model { get; set; }
         public NoticeGenerationModel? NoticeGeneration_Model { get; set; }
         public NoticePreviewModel? NoticePreview_Model { get; set; }        
@@ -17,6 +19,8 @@ namespace WorkflowEngineMVC.Models
         public WorkFlowResponseModel()
         {
             Processdefinition = new ProcessDefinition();
+            ListCommandModel = new List<CommandModel>();
+            IsHistoryView = false;
         }
 
     }

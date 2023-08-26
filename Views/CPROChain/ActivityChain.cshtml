@@ -1,0 +1,53 @@
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using Microsoft.AspNetCore.Mvc.ViewFeatures;
+@using System.Net.Http.Headers;
+@*@model List<WorkflowEngineMVC.ViewModels.StateViewModel>*@
+@{
+    ViewBag.Title = "CPRO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WorkFlowResponseModel
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
+<div>
+    <div >  
+        @Html.PartialAsync("CPRORibbon",Model).Result  
+    </div>
+    <br />     
+    @if (Model.IsHistoryView)
+    {
+        <div id="divListView" class="button">
+                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessListView" asp-route-processId=@Model.ProcessId>List View</a>                               
+        </div> 
+        <br /> 
+        <div>  
+            @Html.PartialAsync("CPROProcessHistoryView",Model).Result  
+        </div>
+    }
+    else
+    {
+        <div id="divHistoryView" class="button">
+                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-processId=@Model.ProcessId>History View</a>                               
+        </div> 
+            <br /> 
+        <div>  
+            @Html.PartialAsync("CPROProcessListView",Model).Result              
+        </div>
+    }
+    <br />    
+    <br/>    
+    @if (@Model.GTSTScheduler_Model != null)
+    {
+        <br />
+        <div>  
+            @Html.PartialAsync("GTSTScheduler",Model).Result  
+        </div>
+    }
+</div>

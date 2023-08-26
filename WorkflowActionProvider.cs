@@ -77,7 +77,7 @@ namespace WorkflowLib
                                                 .GetAvailableCommands(processId, string.Empty)
                                                 .Where(c => c.CommandName.Trim().ToLower() == commandName.Trim().ToLower()).FirstOrDefault();
             WorkflowInit.Runtime.ExecuteCommand(workflowCommand, string.Empty, string.Empty);
-            WorkflowResponseModel.ProcessId = processId;
+            WorkflowResponseModel.ProcessId = processId;            
             return WorkflowResponseModel;
         }
 

@@ -1,0 +1,63 @@
+﻿@model WorkFlowResponseModel
+<div>
+    <table class="tableborder">
+         <tr>
+            <td style="color:blue; background-color:blue; color:white;">          
+                From Activity
+            </td>
+            <td style="color:blue; background-color:blue; color:white;">
+                To  Activity
+            </td>
+            <td style="color:blue; background-color:blue; color:white;">
+                Status
+            </td>
+        </tr>          
+        <tr>
+            <td>
+                @Model.Processdefinition.InitialActivity.Name
+            </td>
+            <td>     
+                @{
+                string activityName = Model.Processdefinition.InitialActivity.Name;
+                string nextActivityName = "";
+                bool isFinalActivity = false; 
+                @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == @Model.Processdefinition.InitialActivity.Name))
+                { 
+                    nextActivityName = data.To.Name;
+                    isFinalActivity = false;  
+                    @data.To.Name                    
+                } 
+                }
+            </td>
+            <td>                                                            
+                @if(Model.CurrentActivityName == activityName)
+                {
+                <span style="color:blue;font-weight:bold;">IN PROGRESS</span> 
+                }                
+            </td> 
+        </tr> 
+        @while(!isFinalActivity)
+        {
+            @foreach (var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == nextActivityName))
+            {
+                activityName = data.From.Name;
+                nextActivityName = data.To.Name;
+                isFinalActivity = data.To.IsFinal;
+                <tr>
+                    <td>
+                        @data.From.Name
+                    </td>
+                    <td>
+                        @data.To.Name
+                    </td>
+                    <td>                                                            
+                        @if(Model.CurrentActivityName == activityName)
+                        {
+                        <span style="color:blue;font-weight:bold;">IN PROGRESS</span> 
+                        }                
+                    </td> 
+                </tr>        
+            }
+        }
+    </table>
+</div>

@@ -14,6 +14,8 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WorkflowEngineMVC.Models;
 using OptimaJet.Workflow.Core.Model;
+using System.Net.NetworkInformation;
+using WorkflowEngineMVC.Data;
 
 namespace WorkflowEngineMVC.Controllers
 {
@@ -21,31 +23,57 @@ namespace WorkflowEngineMVC.Controllers
     {
         static string schemeCode = "SimpleWF";
         static Guid processId;
+        MoqData moqData;
+        CaseDetailsModel caseDetailsModel;
         // GET: CPROController            
         public ActionResult Index()
         {
-            return View("StartNewRemedy");          
+            moqData = new MoqData();
+            caseDetailsModel = moqData.getCaseDetails();
+            return View("StartNewRemedy", caseDetailsModel);          
         }
-        public ActionResult StartRemedy(int caseId)
+        public ActionResult StartRemedy(string caseId)
         {
-            CreateInstance();
-            List<CommandModel> commandModelList = GetAvailableCommands(processId);
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CaseId = caseId;            
+            CreateInstance(caseId);
+            List<CommandModel> commandModelList = GetAvailableCommands(processId);                      
             WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;
-            return View("Activity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
         }        
         public ActionResult ShowAllActivity(WorkFlowResponseModel wfResponseModel)
-        {            
-            List<CommandModel> commandModelList = GetAvailableCommands(wfResponseModel.ProcessId);
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;            
-            return View("Activity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+        {
+            processView(wfResponseModel.ProcessId, false);
+            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+        }
+        public ActionResult ShowProcessHistoryView(Guid processId)
+        {
+            processView(processId, true);
+            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+        }
+        public ActionResult ShowProcessListView(Guid processId)
+        {
+            processView(processId, false);
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.GTSTScheduler_Model = null;
+            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+        }
+        public ActionResult UpdateActivity(Guid processId)
+        {
+            processView(processId, false);
+            return View("UpdateActivity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
         }
 
-        private void CreateInstance()
+        private void processView(Guid processId, bool isHistoryView)
+        {
+            List<CommandModel> commandModelList = GetAvailableCommands(processId);
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.IsHistoryView = isHistoryView;            
+        }
+
+        private void CreateInstance(string caseId)
         {
             processId = Guid.NewGuid();
             WorkflowInit.WorkflowActionProvider.WorkflowResponseModel = new WorkFlowResponseModel();
             WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ProcessId = processId;
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CaseId = caseId;
             try
             {
                 var createInstanceParameters = new CreateInstanceParams("SchemeCode", processId)
@@ -68,8 +96,9 @@ namespace WorkflowEngineMVC.Controllers
             List <CommandModel> commandModelList = new List<CommandModel>();
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
-            var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
+            var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);            
             WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CurrentActivityName = activityName;
+            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ProcessId = processId;
             WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CurrentStateName = stateName;            
             foreach (var workflowCommand in workflowCommands)
             {

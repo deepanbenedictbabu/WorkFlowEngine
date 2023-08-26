@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkflowEngineMVC.Data;
 using WorkflowEngineMVC.Models;
+using WorkflowLib;
 
 namespace WorkflowEngineMVC.Controllers
 {
@@ -23,6 +25,17 @@ namespace WorkflowEngineMVC.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult Save(Guid processId)
+        {
+            if (processId != Guid.Empty)
+            {                
+                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId } );
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }            
         }
 
         // GET: GTSTSchedulerController/Details/5

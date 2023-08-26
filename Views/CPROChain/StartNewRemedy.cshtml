@@ -2,8 +2,8 @@
     ViewBag.Title = "CPRO";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div id="wfgrid" style="min-height:600px; max-width: 1200px;">
+@model CaseDetailsModel
+<div>
     <table style="margin: 0 auto;" class="tableborder">
         <tr>
             <td style="color:blue; background-color:blue; color:white;" colspan="2">                    
@@ -15,7 +15,7 @@
                 Case ID :                              
             </td>
             <td>                    
-                <input type="text" value="100016">                              
+                <input type="text" value=@Model.CaseId>                              
             </td>
         </tr>
          <tr>
@@ -79,7 +79,7 @@
             <td></td>
             <td> 
                 <div class="button">
-                    <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="StartRemedy">Start New Remedy</a>                               
+                    <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="StartRemedy" asp-route-caseId=@Model.CaseId>Start New Remedy</a>                               
                 </div>
             </td>
         </tr>

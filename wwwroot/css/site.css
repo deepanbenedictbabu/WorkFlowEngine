@@ -72,6 +72,7 @@ table, th, td {
     padding-left: 20px;
     padding-right: 20px;
     border-spacing: 10px;
+    font-size:medium;
 }
 
 .tableborder {
@@ -89,4 +90,9 @@ table, th, td {
 
 .modal-dialog {
     max-width: 65% !important;
+}
+
+.navlinkcolor {
+    color: blue !important;
+    font-weight:bold;
 }
