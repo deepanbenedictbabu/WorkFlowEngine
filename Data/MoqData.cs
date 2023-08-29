@@ -6,13 +6,9 @@ namespace WorkflowEngineMVC.Data
     public class MoqData
     {
         public GTSTSchedulerModel GetGTSTScheduleDetails(string? caseId)
-        {
-            CaseDetailsModel? caseDetails = GetCaseDetails(caseId);
-            GTSTSchedulerModel gTSTSchedulerModel = new GTSTSchedulerModel();
-            gTSTSchedulerModel.MemberId = caseDetails?.CP;
-            gTSTSchedulerModel.CaseId = caseDetails?.CaseId;
-            gTSTSchedulerModel.FirstName = caseDetails?.CPFirstName;            
-            gTSTSchedulerModel.LastName = caseDetails?.CPLastName;
+        {            
+            GTSTSchedulerModel gTSTSchedulerModel = new GTSTSchedulerModel();   
+            gTSTSchedulerModel.CaseId = caseId;
             gTSTSchedulerModel.ScheduledDate = DateTime.Now.AddDays(1);
             gTSTSchedulerModel.ScheduledTime = DateTime.Now.ToShortTimeString();            
             return gTSTSchedulerModel;
@@ -47,21 +43,17 @@ namespace WorkflowEngineMVC.Data
             return caseDetails;
         }
 
-        public NoticeGenerationModel GetNoticeGenerationDetails(string? caseId)
-        {
-            CaseDetailsModel? caseDetails = GetCaseDetails(caseId);
+        public NoticeGenerationModel GetNoticeGenerationDetails(string noticeId, string? caseId)
+        {            
             NoticeGenerationModel noticeGenerationModel = new NoticeGenerationModel();
-            noticeGenerationModel.MemberId = caseDetails?.CP;
-            noticeGenerationModel.CaseId = caseDetails?.CaseId;
-            noticeGenerationModel.CPFirstName = caseDetails?.CPFirstName;            
-            noticeGenerationModel.CPLastName = caseDetails?.CPLastName;                        
+            noticeGenerationModel.CaseId = caseId;
+            noticeGenerationModel.NoticeId = noticeId;
             noticeGenerationModel.CPDOB = "10/06/1990";            
             noticeGenerationModel.CPAddress = "5201 NE 20Th Street";
             noticeGenerationModel.CPZip = "66614";
             noticeGenerationModel.CPCity = "Topeka";
-            noticeGenerationModel.CPState = "KS";
-            noticeGenerationModel.NCPFirstName = caseDetails?.NCPFirstName;
-            noticeGenerationModel.NCPLastName = caseDetails?.NCPLastName;
+            noticeGenerationModel.CPState = "KS";    
+            
             noticeGenerationModel.NCPDOB = "10/06/1980";
             noticeGenerationModel.NCPAddress = "3001 SE 10Th Street";
             noticeGenerationModel.NCPZip = "66602";
@@ -71,15 +63,20 @@ namespace WorkflowEngineMVC.Data
         }
 
         public GTSTTestResultsModel GetGTSTTestResults(string? caseId)
-        {
-            CaseDetailsModel? caseDetails = GetCaseDetails(caseId);
+        {            
             GTSTTestResultsModel gtstTestResultsModel = new GTSTTestResultsModel();
-            gtstTestResultsModel.FirstName = caseDetails?.CPFirstName;
-            gtstTestResultsModel.LastName = caseDetails?.CPLastName;
-            gtstTestResultsModel.MemberId = caseDetails?.CP;
-            gtstTestResultsModel.CaseId = caseDetails?.CaseId;
+            gtstTestResultsModel.CaseId = caseId;
             gtstTestResultsModel.TestReslt = "Genetic Test Result Values";
             return gtstTestResultsModel;
+        }
+
+        public CPROUserAlertModel GetUserAlerts(string? caseId)
+        {
+            CPROUserAlertModel cproUserAlertModel = new CPROUserAlertModel();
+            cproUserAlertModel.CaseId = caseId;            
+            cproUserAlertModel.AlertName = "GTST";
+            cproUserAlertModel.AlertMessage = "Genetic Test Alert Created";
+            return cproUserAlertModel;
         }
     }
 }

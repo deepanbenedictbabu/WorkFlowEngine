@@ -5,37 +5,26 @@ using WorkflowEngineMVC.Models;
 
 namespace WorkflowEngineMVC.Controllers
 {
-    public class NoticeGenerationController : Controller
+    public class CPROUserAlertController : Controller
     {
-        NoticeGenerationModel noticeGenerationModel;
+        CPROUserAlertModel cproUserAlertModel;
         MoqData moqData;
-        public NoticeGenerationController()
+        public CPROUserAlertController()
         {
             moqData = new MoqData();
-            noticeGenerationModel = new NoticeGenerationModel();
+            cproUserAlertModel = new CPROUserAlertModel();
         }
             // GET: NoticeGenerationController
-        public NoticeGenerationModel Show(string noticeId, string? caseId)
+        public CPROUserAlertModel GenerateAlert(string? caseId)
         {
-            noticeGenerationModel = moqData.GetNoticeGenerationDetails(noticeId, caseId);
-            return noticeGenerationModel;
+            cproUserAlertModel = moqData.GetUserAlerts(caseId);
+            return cproUserAlertModel;
         }
         // GET: GTSTSchedulerController
         public ActionResult Index()
         {
             return View();
-        }
-        public ActionResult Save(Guid processId, string caseId)
-        {
-            if (processId != Guid.Empty)
-            {
-                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId, caseId });
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-        }
+        }       
 
         // GET: NoticeGenerationController/Details/5
         public ActionResult Details(int id)

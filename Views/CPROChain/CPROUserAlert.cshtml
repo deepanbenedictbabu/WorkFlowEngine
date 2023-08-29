@@ -1,0 +1,63 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model WorkFlowResponseModel   
+<div class="modal fade show d-block " id="divModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 45% !important;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User Alerts</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            <div>
+                <div style="float:right">                                                                                         
+                    <div class="button">
+                        <a class="nav-link text-white" href="#" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">Close</a>                               
+                    </div>                                                                                                                            
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="dialg" title="Definition: Knowledge">
+                    <div>
+                        <table style="margin: 0 auto;" class="tableborder">                            
+                             <tr>
+                                <td>                    
+                                    Case ID :                               
+                                </td>
+                                <td>                    
+                                    <input type="text" value=@Model.CaseDetailsModel?.CaseId>                              
+                                </td>
+                             </tr>                             
+                             <tr>
+                                <td>                    
+                                    Alert Name :                          
+                                </td> 
+                                <td>                    
+                                    <span>@Model.CPROUserAlertModel.AlertName</span>                            
+                                </td> 
+                            </tr>   
+                            <tr>
+                                <td>                    
+                                    Alert Message :                          
+                                </td> 
+                                <td>                    
+                                   <span>@Model.CPROUserAlertModel.AlertMessage</span>                                                          
+                                </td> 
+                            </tr>   
+                            <tr>
+                                <td>
+                                    <br />
+                                    <br />                                                                 
+                                </td>
+                            </tr> 
+                        </table>
+                    </div>                                     
+                </div>
+            </div>             
+        </div>
+    </div>
+</div>

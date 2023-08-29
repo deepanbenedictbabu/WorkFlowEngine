@@ -3,9 +3,7 @@
     public class GTSTTestResultsModel
     {
         public string? CaseId { get; set; }
-        public string? MemberId { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string? MemberId { get; set; }        
         public string? TestReslt { get; set; }        
     }
 }

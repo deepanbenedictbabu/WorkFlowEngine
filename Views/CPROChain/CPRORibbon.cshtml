@@ -54,9 +54,18 @@
             <td>
                 <span class="bold">Arrears Only</span> <br /><input type="text" disabled value="N- NO" />
             </td>
-            <td>
-                <span class="bold">Special Alert</span>
-            </td>
+            @*@if (@Model?.CPROUserAlertModel != null)
+            {
+                <td>
+                     <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowCPROAlerts" asp-route-caseId=@Model.CaseDetailsModel?.CaseId>Special Alert</a>                               
+                </td>
+            }
+            else
+            {
+                <td>
+                    
+                </td> 
+            }*@
         </tr>
         <tr>
             <td>

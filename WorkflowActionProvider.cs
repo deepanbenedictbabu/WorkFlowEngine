@@ -3,6 +3,7 @@ using OptimaJet.Workflow.Core.Runtime;
 using WorkflowEngineMVC.Controllers;
 using WorkflowEngineMVC;
 using WorkflowEngineMVC.Models;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace WorkflowLib
 {
@@ -36,26 +37,34 @@ namespace WorkflowLib
             string actionParameter)
         {            
             GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
-            WorkflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(WorkflowResponseModel?.CaseDetailsModel?.CaseId);            
+            string caseId = processInstance.GetParameter<string>("CPROCaseId");
+            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            WorkflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(caseId);            
         }
         private void RecordGTSTTestResults(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
             GTSTTestResultsController gTSTTestResultsController = new GTSTTestResultsController();
-            WorkflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(WorkflowResponseModel?.CaseDetailsModel?.CaseId);
+            string caseId = processInstance.GetParameter<string>("CPROCaseId");
+            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            WorkflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(caseId);
         }
         private void GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
             NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
-            WorkflowResponseModel.NoticeGenerationModel = noticeGenerationController.Show(actionParameter, WorkflowResponseModel?.CaseDetailsModel?.CaseId);            
+            string caseId = processInstance.GetParameter<string>("CPROCaseId");
+            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            WorkflowResponseModel.NoticeGenerationModel = noticeGenerationController.Show(actionParameter,caseId);            
         }
 
         private void GenerateAlert(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
-            GenerateUserAlerts generateUserAlerts = new GenerateUserAlerts ();
-            generateUserAlerts.GenerateAlert(actionParameter);            
+            CPROUserAlertController generateUserAlerts = new CPROUserAlertController();
+            string caseId = processInstance.GetParameter<string>("CPROCaseId");
+            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            WorkflowResponseModel.CPROUserAlertModel = generateUserAlerts.GenerateAlert(caseId);
         }
 
         private async Task MyActionAsync(ProcessInstance processInstance, WorkflowRuntime runtime,
@@ -78,8 +87,7 @@ namespace WorkflowLib
         }
 
         public WorkFlowResponseModel ExecuteCommand(string commandName, Guid processId)
-        {
-            WorkflowResponseModel = new WorkFlowResponseModel();
+        {            
             WorkflowCommand? workflowCommand = WorkflowInit.Runtime
                                                 .GetAvailableCommands(processId, string.Empty)
                                                 .Where(c => c.CommandName.Trim().ToLower() == commandName.Trim().ToLower()).FirstOrDefault();

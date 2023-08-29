@@ -16,6 +16,8 @@ using WorkflowEngineMVC.Models;
 using OptimaJet.Workflow.Core.Model;
 using System.Net.NetworkInformation;
 using WorkflowEngineMVC.Data;
+using Microsoft.AspNetCore.Components;
+using OptimaJet.Workflow.MSSQL.Models;
 
 namespace WorkflowEngineMVC.Controllers
 {
@@ -25,11 +27,15 @@ namespace WorkflowEngineMVC.Controllers
         static Guid processId;
         MoqData moqData;
         CaseDetailsModel? caseDetailsModel;
-        string _caseId;
+        WorkFlowResponseModel workFlowResponseModel;
+        string? _caseId;
         public CPROChainController()
         {
+            workFlowResponseModel = new WorkFlowResponseModel();
             moqData = new MoqData();
             caseDetailsModel = new CaseDetailsModel();
+            caseDetailsModel = new CaseDetailsModel();
+            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
         }
 
         public ActionResult Index()
@@ -41,8 +47,7 @@ namespace WorkflowEngineMVC.Controllers
         public ActionResult GetCaseDetails(string caseId)
         {
             _caseId = caseId;
-            caseDetailsModel = moqData?.GetCaseDetails(caseId);
-            WorkFlowResponseModel workFlowResponseModel = new WorkFlowResponseModel();
+            caseDetailsModel = moqData?.GetCaseDetails(caseId);            
             workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
             return View("Index", workFlowResponseModel);
         }
@@ -52,61 +57,64 @@ namespace WorkflowEngineMVC.Controllers
         {
             _caseId = caseId;
             caseDetailsModel = moqData?.GetCaseDetails(caseId);
-            caseDetailsModel.IsStartRemedy = true;
-            WorkFlowResponseModel workFlowResponseModel = new WorkFlowResponseModel();
+            caseDetailsModel.IsStartRemedy = true;            
             workFlowResponseModel.CaseDetailsModel = caseDetailsModel;            
             return View("Index", workFlowResponseModel);          
+        }
+        public ActionResult ShowCPROAlerts(string caseId)
+        {
+            _caseId = caseId;                        
+            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
+            workFlowResponseModel.CPROUserAlertModel = moqData?.GetUserAlerts(caseId);
+            workFlowResponseModel.CPROUserAlertModel.IsShowAlert = true;
+            return View("ActivityChain", workFlowResponseModel);          
         }
         public ActionResult StartRemedy(string caseId)
         {            
             CreateInstance(caseId);
             _caseId = caseId;
-            List<CommandModel> commandModelList = GetAvailableCommands(processId);                      
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;
-            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            List<CommandModel> commandModelList = GetAvailableCommands(processId);
+            workFlowResponseModel.ListCommandModel = commandModelList;
+            return View("ActivityChain", workFlowResponseModel);
         }        
         public ActionResult ShowAllActivity(WorkFlowResponseModel wfResponseModel)
         {            
-            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            return View("ActivityChain", workFlowResponseModel);
         }
         public ActionResult ShowProcessHistoryView(Guid processId, string caseId)
         {
-            _caseId = caseId;
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel = new WorkFlowResponseModel();
+            _caseId = caseId;            
             processView(processId, true);
-            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            return View("ActivityChain", workFlowResponseModel);
         }
         public ActionResult ShowProcessListView(Guid processId, string caseId)
         {
-            _caseId = caseId;
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel = new WorkFlowResponseModel();
+            _caseId = caseId;           
             processView(processId, false);            
-            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            return View("ActivityChain", workFlowResponseModel);
         }
         public ActionResult UpdateActivity(Guid processId, string caseId)
         {
             _caseId = caseId;
             processView(processId, false);
-            return View("UpdateActivity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            return View("UpdateActivity", workFlowResponseModel);
         }
 
         private void processView(Guid processId, bool isHistoryView)
         {            
             List<CommandModel> commandModelList = GetAvailableCommands(processId);            
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = commandModelList;
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.IsHistoryView = isHistoryView;            
+            workFlowResponseModel.ListCommandModel = commandModelList;
+            workFlowResponseModel.IsHistoryView = isHistoryView;            
         }
 
         private void CreateInstance(string caseId)
         {
-            processId = Guid.NewGuid();
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel = new WorkFlowResponseModel();
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ProcessId = processId;            
+            processId = Guid.NewGuid();            
+            workFlowResponseModel.ProcessId = processId;            
             try
             {
-                var createInstanceParameters = new CreateInstanceParams("SchemeCode", processId)
-                                                    //.AddPersistentParameter("StringParameter", "Some String")
-                                                    //.AddPersistentParameter("ObjectParameter", ObjectParameter)
+                var createInstanceParameters = new CreateInstanceParams("SchemeCode", processId)                                                    
+                                                    .AddPersistentParameter("CaseId", caseId)
                                                     .AddTemporaryParameter("CurrentDate", DateTime.Now);
                 WorkflowInit.Runtime.CreateInstance(schemeCode, processId);
                 Console.WriteLine("CreateInstance - OK.", processId);
@@ -120,16 +128,16 @@ namespace WorkflowEngineMVC.Controllers
         private List<CommandModel> GetAvailableCommands(Guid processId)
         {                        
             var schema = WorkflowInit.Runtime.GetProcessScheme(processId);
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.Processdefinition = schema;                     
+            workFlowResponseModel.Processdefinition = schema;                     
             List <CommandModel> commandModelList = new List<CommandModel>();
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
             caseDetailsModel = moqData.GetCaseDetails(_caseId);
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CurrentActivityName = activityName;
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ProcessId = processId;
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CurrentStateName = stateName;
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.CaseDetailsModel = caseDetailsModel;
+            workFlowResponseModel.CurrentActivityName = activityName;
+            workFlowResponseModel.ProcessId = processId;
+            workFlowResponseModel.CurrentStateName = stateName;
+            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
             foreach (var workflowCommand in workflowCommands)
             {
                 var commandModel = new CommandModel();
@@ -142,11 +150,12 @@ namespace WorkflowEngineMVC.Controllers
 
         public ActionResult ProcessCommand(string commandName, Guid processId, string caseId)
         {
-            _caseId = caseId;
-            WorkflowInit.WorkflowActionProvider.ExecuteCommand(commandName, processId);            
-            WorkflowInit.WorkflowActionProvider.WorkflowResponseModel.ListCommandModel = GetAvailableCommands(processId);
-            //return RedirectToAction("ShowAllActivity", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
-            return View("ActivityChain", WorkflowInit.WorkflowActionProvider.WorkflowResponseModel);
+            _caseId = caseId;            
+            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "CPROCaseId", caseId);
+            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "WorkflowResponseModel", workFlowResponseModel);
+            workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(commandName, processId);            
+            workFlowResponseModel.ListCommandModel = GetAvailableCommands(processId);            
+            return View("ActivityChain", workFlowResponseModel);
         }
 
         private List<StateViewModel> GetAvailableState()
