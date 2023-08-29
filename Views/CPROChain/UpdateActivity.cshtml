@@ -18,6 +18,10 @@
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
 <div>
     <div >  
+        @Html.PartialAsync("CaseFilter",Model).Result  
+    </div>
+    <br />
+    <div >  
         @Html.PartialAsync("CPRORibbon",Model).Result  
     </div>
     <br />
