@@ -28,7 +28,7 @@
                 {   
                  <tr>  
                      <td>                                             
-                            <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-processId=@command.ProcessId asp-route-commandName=@command.CommandName>@command.CommandName</a> 
+                            <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-processId=@command.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId asp-route-commandName=@command.CommandName>@command.CommandName</a> 
                      </td>  
                  </tr>        
                 }                                  

@@ -23,6 +23,7 @@ namespace WorkflowLib
         {
             // Register your actions in _actions and _asyncActions dictionaries            
             _actions.Add("ShowGTSTScheduler", ShowGTSTScheduler); // sync
+            _actions.Add("RecordGTSTTestResults", RecordGTSTTestResults); // sync
             _actions.Add("GenerateNotice", GenerateNotice); // sync            
             _actions.Add("GenerateAlert", GenerateAlert); // sync
             _asyncActions.Add("MyActionAsync", MyActionAsync); // async
@@ -35,13 +36,19 @@ namespace WorkflowLib
             string actionParameter)
         {            
             GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
-            WorkflowResponseModel.GTSTScheduler_Model = gTSTSchedulerController.Show();            
+            WorkflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(WorkflowResponseModel?.CaseDetailsModel?.CaseId);            
+        }
+        private void RecordGTSTTestResults(ProcessInstance processInstance, WorkflowRuntime runtime,
+            string actionParameter)
+        {
+            GTSTTestResultsController gTSTTestResultsController = new GTSTTestResultsController();
+            WorkflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(WorkflowResponseModel?.CaseDetailsModel?.CaseId);
         }
         private void GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
             NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
-            WorkflowResponseModel.NoticeGeneration_Model = noticeGenerationController.Show(actionParameter);            
+            WorkflowResponseModel.NoticeGenerationModel = noticeGenerationController.Show(actionParameter, WorkflowResponseModel?.CaseDetailsModel?.CaseId);            
         }
 
         private void GenerateAlert(ProcessInstance processInstance, WorkflowRuntime runtime,

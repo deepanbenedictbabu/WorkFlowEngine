@@ -4,7 +4,7 @@
 *@
 @model WorkFlowResponseModel   
 <div class="modal fade show d-block " id="divModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" id="divSchedulerModal" role="document" >
+    <div class="modal-dialog" id="divSchedulerModal" role="document"  style="max-width: 50% !important;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Proceeding - GTST</h5>
@@ -45,7 +45,7 @@
                                     Case ID :                               
                                 </td>
                                 <td>                    
-                                    <input type="text" value="100016">                              
+                                    <input type="text" value=@Model.CaseDetailsModel?.CaseId >                              
                                 </td>
                             </tr>
                              <tr>
@@ -117,11 +117,11 @@
                     <div style="margin-left: 65%;">
                         <div>                            
                             <br />
-                            MemberId : @Model.GTSTScheduler_Model?.MemberId <br />
-                            Member Name : @Model.GTSTScheduler_Model?.LastName, @Model.GTSTScheduler_Model?.FirstName <br />                       
+                            MemberId : @Model.CaseDetailsModel?.CP <br />
+                            Member Name : @Model.CaseDetailsModel?.CPLastName, @Model.CaseDetailsModel?.CPFirstName <br />                       
                             <br/>                            
                             <div class="button">
-                                <a class="nav-link text-white" asp-area="" asp-controller="GTSTScheduler" asp-action="Save" asp-route-processId=@Model.ProcessId>Accept Scheduling</a>                               
+                                <a class="nav-link text-white" asp-area="" asp-controller="GTSTScheduler" asp-action="Save" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>Accept Scheduling</a>                               
                             </div>                                    
                             <div>
                                 <div class="button">

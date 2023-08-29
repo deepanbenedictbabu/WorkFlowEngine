@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Components\" />
+    <Folder Include="Views\NoticeGeneration\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 

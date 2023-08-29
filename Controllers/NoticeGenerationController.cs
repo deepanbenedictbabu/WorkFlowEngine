@@ -1,23 +1,40 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkflowEngineMVC.Data;
 using WorkflowEngineMVC.Models;
-
 
 namespace WorkflowEngineMVC.Controllers
 {
     public class NoticeGenerationController : Controller
     {
         NoticeGenerationModel noticeGenerationModel;
-        // GET: NoticeGenerationController
-        public NoticeGenerationModel Show(string noticeId)
+        MoqData moqData;
+        public NoticeGenerationController()
         {
+            moqData = new MoqData();
             noticeGenerationModel = new NoticeGenerationModel();
-            noticeGenerationModel.NoticeId= noticeId;
+        }
+            // GET: NoticeGenerationController
+        public NoticeGenerationModel Show(string noticeId, string? caseId)
+        {
+            noticeGenerationModel = moqData.GetNoticeGenerationDetails(caseId);
             return noticeGenerationModel;
         }
+        // GET: GTSTSchedulerController
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult Save(Guid processId, string caseId)
+        {
+            if (processId != Guid.Empty)
+            {
+                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId, caseId });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: NoticeGenerationController/Details/5

@@ -1,0 +1,45 @@
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using Microsoft.AspNetCore.Mvc.ViewFeatures;
+@using System.Net.Http.Headers;
+@*@model List<WorkflowEngineMVC.ViewModels.StateViewModel>*@
+@{
+    ViewBag.Title = "CPRO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WorkFlowResponseModel
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
+<div>
+    <div >  
+        @Html.PartialAsync("CaseFilter",Model).Result  
+    </div>
+    <br />
+    @if (Model != null)
+    {
+        <div >  
+            @Html.PartialAsync("CPRORibbon",Model).Result  
+        </div>
+    }
+    <br /> 
+    @if (Model != null)
+    {
+        <div >  
+            @Html.PartialAsync("CPROActivityList",Model).Result  
+        </div>
+    }
+    <br /> 
+    @if (Model != null && Model.CaseDetailsModel?.IsStartRemedy == true)
+    {
+        <div >  
+            @Html.PartialAsync("StartNewRemedy",Model).Result  
+        </div>
+    }
+    <br/>       
+</div>

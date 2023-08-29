@@ -8,17 +8,18 @@ namespace WorkflowEngineMVC.Controllers
 {
     public class GTSTSchedulerController : Controller
     {
-        GTSTSchedulerModel gtstSchedulerModel;
+        GTSTSchedulerModel gtstSchedulerModel;          
         MoqData moqData;
         public GTSTSchedulerController()
         {
             moqData = new MoqData();
             gtstSchedulerModel = new GTSTSchedulerModel();
         }
+
         // GET: GTSTSchedulerController/Show
-        public GTSTSchedulerModel Show()
+        public GTSTSchedulerModel Show( string? caseId)
         {
-            gtstSchedulerModel = moqData.GetGTSTScheduleDetails();            
+            gtstSchedulerModel = moqData.GetGTSTScheduleDetails(caseId);            
             return gtstSchedulerModel;
         }
         // GET: GTSTSchedulerController
@@ -26,11 +27,11 @@ namespace WorkflowEngineMVC.Controllers
         {
             return View();
         }
-        public ActionResult Save(Guid processId)
+        public ActionResult Save(Guid processId,  string caseId)
         {
             if (processId != Guid.Empty)
             {                
-                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId } );
+                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId, caseId } );
             }
             else
             {

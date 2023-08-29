@@ -1,0 +1,153 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model WorkFlowResponseModel 
+<div class="modal fade show d-block " id="divModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 55% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">EST-07 - Notice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            <div>
+                <div style="float:right">                                                                     
+                    <div class="button">
+                        <a class="nav-link text-white" asp-area="" asp-controller="NoticeGeneration" asp-action="Save" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel.CaseId>Save Changes</a>                               
+                    </div>                                                                                                                      
+                </div>
+            </div>       
+            <div class="modal-body">
+                <div id="dialg" title="Definition: Knowledge">
+                    <div style="width: 100%;">
+                        <table style="margin: 0 auto;" class="tableborder">
+                            <tr>
+                                <td colspan="3">                    
+                                    Form 07                                    
+                                    <br />
+                                    Rev 03/20
+                                </td>                                
+                            </tr>
+                             <tr>
+                                <td colspan="3" style="text-align:center">                    
+                                    <h1>The Family Court of the State of Wisconsin </h1>
+                                </td>                                
+                            </tr>
+                            <td colspan="3" style="text-align:center">                    
+                                <h3>Notice of Genetic Test Result</h3>
+                            </td> 
+                            <tr>
+                                <td>                    
+                                    Child Support Recipient                 
+                                </td>       
+                                 <td>                    
+                                    Child Support Payor                 
+                                </td>   
+                            </tr>
+                             <tr>
+                                <td>                    
+                                    <table class="tableborder">
+                                        <tr>
+                                            <td>
+                                                Name </br>
+                                            </td>
+                                             <td>
+                                                D.O.B </br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">
+                                                @Model.CaseDetailsModel?.CPLastName, @Model.CaseDetailsModel?.CPFirstName 
+                                            </td>
+                                             <td style="font-weight:bold">
+                                                @Model.NoticeGenerationModel?.CPDOB
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td colspan="2">
+                                                Street Address: <span style="font-weight:bold">@Model.NoticeGenerationModel?.CPAddress</span>
+                                            </td>                                             
+                                        </tr>
+                                         <tr>                                             
+                                            <td colspan="2">
+                                                City / State / Zip Code 
+                                                <br />
+                                                <span style="font-weight:bold">@Model.NoticeGenerationModel?.CPCity , @Model.NoticeGenerationModel?.CPState , @Model.NoticeGenerationModel?.CPZip</span>
+                                            </td>                                             
+                                        </tr>
+                                    </table>                        
+                                </td>
+                                <td>
+                                    <table class="tableborder">
+                                        <tr>
+                                            <td>
+                                                Name </br>
+                                            </td>
+                                             <td>
+                                                D.O.B </br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">
+                                                <span style="font-weight:bold">@Model.CaseDetailsModel?.NCPLastName, @Model.CaseDetailsModel?.NCPFirstName</span> 
+                                            </td>
+                                             <td style="font-weight:bold">
+                                                <span style="font-weight:bold">@Model.NoticeGenerationModel?.NCPDOB</span>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td colspan="2">
+                                                Street Address: <span style="font-weight:bold">@Model.NoticeGenerationModel?.NCPAddress</span>
+                                            </td>                                             
+                                        </tr>
+                                         <tr>
+                                           <td colspan="2">
+                                             City / State / Zip Code 
+                                             <br />
+                                                <span style="font-weight:bold">@Model.NoticeGenerationModel?.NCPCity , @Model.NoticeGenerationModel?.NCPState , @Model.NoticeGenerationModel?.NCPZip </span>
+                                            </td>                                             
+                                        </tr>
+                                    </table>                
+                                </td>
+                                <td> 
+                                    <table class="tableborder">
+                                        <tr>
+                                            <td>
+                                               File Number : </br>                  
+                                               <input type="text" style="font-weight:bold" value="UR0017811" >  
+                                            </td>                                            
+                                        </tr>
+                                         <tr>
+                                            <td>                    
+                                                Petition Number : <br />                                
+                                                <input type="text" style="font-weight:bold" value="" >                              
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td>                    
+                                                Acct. No. </br>
+                                                <span style="font-weight:bold">@Model.CaseDetailsModel?.CaseId</span>
+                                            </td>
+                                        </tr> 
+                                    </table>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                </td>
+                            </tr> 
+                        </table>
+                    </div>    
+                </div>            
+            </div>            
+        </div>
+    </div>
+</div>

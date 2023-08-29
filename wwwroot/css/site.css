@@ -89,10 +89,14 @@ table, th, td {
 }
 
 .modal-dialog {
-    max-width: 65% !important;
+    max-width: 70% !important;
 }
 
 .navlinkcolor {
     color: blue !important;
+    font-weight:bold;
+}
+
+.bold{
     font-weight:bold;
 }

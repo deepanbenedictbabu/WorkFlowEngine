@@ -7,51 +7,69 @@
             </td>
         </tr>                        
         <tr>
+            @if (Model != null)
+            {
+                <td>                     
+                   <span class="bold">CP</span> <br /><input type="text" disabled value= @Model.CaseDetailsModel?.CP />  <br /><input type="text" disabled value= @(Model.CaseDetailsModel?.CPLastName + "," + Model.CaseDetailsModel?.CPFirstName) />                                                                  
+                </td>
+            }
+            else
+            {
+                <td>                    
+                    <span class="bold">CP</span> <br /><input type="text" disabled value="" />  <br /><input type="text" disabled value="" />                                                                  
+                </td>
+            }
             <td>                    
-                CP <br /><input type="text" disabled value=@Model.CaseId>  <br /><input type="text" disabled value="VAVALA, DEBORA ANN">                                                                  
-            </td>
-            <td>                    
-                 Case Type <br /><input type="text" disabled value="N-NON-PA">                        
+                 <span class="bold">Case Type</span> <br /><input type="text" disabled value="N-NON-PA" />                        
             </td>
              <td>                    
-                 IV-A/ IV-E Case ID <br /><input type="text" disabled value="">                                  
+                 <span class="bold">IV-A/ IV-E Case ID</span> <br /><input type="text" disabled value="" />                                  
             </td>           
              <td>
-                ENF Status <br /><input type="text" disabled value="WORK-WORKABLE"> 
+                <span class="bold">ENF Status</span> <br /><input type="text" disabled value="WORK-WORKABLE" /> 
             </td>
             <td>
                 
             </td>            
         </tr>  
         <tr>
+             @if (Model != null)
+            {
+                <td>
+                    <span class="bold">NCP</span> <br /><input type="text" disabled value=@(Model.CaseDetailsModel?.NCP + "-" + Model.CaseDetailsModel?.NCPLastName + "," + Model.CaseDetailsModel?.NCPFirstName) /> 
+                </td>
+            }
+            else
+            {
+                <td>
+                    <span class="bold">NCP</span> <br /><input type="text" disabled value="" /> 
+                </td>
+            }
             <td>
-                NCP <br /><input type="text" disabled value="0000422891- GONZALES, MICHAELA"> 
+                <span class="bold">Case Status</span> <br /><input type="text" disabled value="O- OPEN" />
             </td>
             <td>
-                Case Status <br /><input type="text" disabled value="O- OPEN">
+                <span class="bold">Family Violence</span> <br /><input type="text" disabled value="N- NO" />
             </td>
             <td>
-                Family Violence <br /><input type="text" disabled value="N- NO">
+                <span class="bold">Arrears Only</span> <br /><input type="text" disabled value="N- NO" />
             </td>
             <td>
-                Arrears Only <br /><input type="text" disabled value="N- NO">
-            </td>
-            <td>
-                Special Alert
+                <span class="bold">Special Alert</span>
             </td>
         </tr>
         <tr>
             <td>
-                County <br /><input type="text" disabled value="03- NEW CASTLE COUNTY">
+                <span class="bold">County</span> <br /><input type="text" disabled value="03- NEW CASTLE COUNTY" />
             </td>
             <td>
-                Intergovernmental <br /><input type="text" disabled value="I- INITIATING S">
+                <span class="bold">Intergovernmental</span> <br /><input type="text" disabled value="I- INITIATING S" />
             </td>
             <td>
-                File Number <br /><input type="text" disabled value="UR00175811">
+                <span class="bold">File Number</span> <br /><input type="text" disabled value="UR00175811" />
             </td>
             <td>
-                Category <br /><input type="text" disabled value="FS- FULL SERVICES">
+                <span class="bold">Category</span> <br /><input type="text" disabled value="FS- FULL SERVICES" />
             </td>
             <td>
 

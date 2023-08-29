@@ -23,7 +23,7 @@
                     bool isStatusSet = false;
                     @if(Model.CurrentActivityName == activityName)
                     {
-                    <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-processId=@Model.ProcessId>@activityName</a>                     
+                        <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>@activityName</a>                     
                     }
                     else
                     {
@@ -58,7 +58,7 @@
                         @if (Model.CurrentActivityName == activityName)
                         {
                         <td>                        
-                            <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-processId=@Model.ProcessId>@nextActivityName</a>  
+                            <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>@nextActivityName</a>  
                         </td> 
                         <td>                                      
                             <span style="color:blue;font-weight:bold;">IN PROGRESS</span>                     

@@ -24,7 +24,7 @@
     @if (Model.IsHistoryView)
     {
         <div id="divListView" class="button">
-                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessListView" asp-route-processId=@Model.ProcessId>List View</a>                               
+                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessListView" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>List View</a>                               
         </div> 
         <br /> 
         <div>  
@@ -34,7 +34,7 @@
     else
     {
         <div id="divHistoryView" class="button">
-                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-processId=@Model.ProcessId>History View</a>                               
+                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>History View</a>                               
         </div> 
             <br /> 
         <div>  
@@ -43,11 +43,25 @@
     }
     <br />    
     <br/>    
-    @if (@Model.GTSTScheduler_Model != null)
+    @if (@Model.GTSTSchedulerModel != null)
     {
         <br />
         <div>  
             @Html.PartialAsync("GTSTScheduler",Model).Result  
+        </div>
+    }
+    else if(@Model.NoticeGenerationModel != null)
+    {
+        <br />
+        <div>  
+            @Html.PartialAsync("NoticeGeneration",Model).Result  
+        </div>
+    }
+    else if(@Model.GTSTTestResultsModel != null)
+    {
+        <br />
+        <div>  
+            @Html.PartialAsync("GTSTTestResult",Model).Result  
         </div>
     }
 </div>
