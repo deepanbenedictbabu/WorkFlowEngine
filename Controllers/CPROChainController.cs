@@ -33,8 +33,7 @@ namespace WorkflowEngineMVC.Controllers
         {
             workFlowResponseModel = new WorkFlowResponseModel();
             moqData = new MoqData();
-            caseDetailsModel = new CaseDetailsModel();
-            caseDetailsModel = new CaseDetailsModel();
+            caseDetailsModel = new CaseDetailsModel();            
             workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
         }
 
