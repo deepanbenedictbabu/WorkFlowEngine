@@ -108,7 +108,7 @@ namespace WorkflowLib
                 CPROUserAlertController generateUserAlerts = new CPROUserAlertController();
                 string caseId = processInstance.GetParameter<string>("CPROCaseId");                
                 workflowResponseModel.ScreenName = "CPROUserAlert";
-                workflowResponseModel.CPROUserAlertModel = generateUserAlerts.GenerateAlert(caseId);
+                workflowResponseModel.CPROUserAlertModel = generateUserAlerts.GenerateAlert(caseId, actionParameter);
                 processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);                
             }
             return true;

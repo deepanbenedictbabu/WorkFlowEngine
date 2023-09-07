@@ -60,8 +60,8 @@
             } 
             @if (Model?.CPROUserAlertModel != null)
             {
-                <td>
-                     <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowCPROAlerts" asp-route-jsonString=@wfJsonModel>Special Alert</a>                               
+                <td>                     
+                         <a class="navlinkcolor" href="#" onclick="$('#divSchedulerModal').show();$('#divModal').addClass('d-block');">Special Alert</a>      
                 </td>
             }
             else

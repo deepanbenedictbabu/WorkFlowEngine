@@ -15,9 +15,10 @@ namespace WorkflowEngineMVC.Controllers
             cproUserAlertModel = new CPROUserAlertModel();
         }
             // GET: NoticeGenerationController
-        public CPROUserAlertModel GenerateAlert(string? caseId)
+        public CPROUserAlertModel GenerateAlert(string? caseId, string message)
         {
             cproUserAlertModel = moqData.GetUserAlerts(caseId);
+            cproUserAlertModel.AlertMessage = message;
             return cproUserAlertModel;
         }
         // GET: GTSTSchedulerController

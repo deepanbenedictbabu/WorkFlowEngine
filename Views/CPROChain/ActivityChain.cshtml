@@ -71,9 +71,9 @@
             @Html.PartialAsync("GTSTTestResult",Model).Result  
         </div>
     }
-    else if (@Model.CPROUserAlertModel != null && @Model.CPROUserAlertModel.IsShowAlert)
-    {
-        Model.CPROUserAlertModel.IsShowAlert = false;
+    @if (@Model.CPROUserAlertModel != null)
+    {        
+        wfJsonModel = JsonSerializer.Serialize(Model);
         <br />
         <div>  
             @Html.PartialAsync("CPROUserAlert",Model).Result  
