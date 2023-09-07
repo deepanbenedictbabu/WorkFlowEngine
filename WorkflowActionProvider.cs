@@ -4,12 +4,13 @@ using WorkflowEngineMVC.Controllers;
 using WorkflowEngineMVC;
 using WorkflowEngineMVC.Models;
 using Microsoft.CodeAnalysis.Operations;
+using OptimaJet.Workflow.Core.Persistence;
 
 namespace WorkflowLib
 {
     public class WorkflowActionProvider: IWorkflowActionProvider
     {
-        public WorkFlowResponseModel WorkflowResponseModel;
+        private WorkFlowResponseModel workflowResponseModel;
         private readonly Dictionary<string, Action<ProcessInstance, WorkflowRuntime, string>> _actions = new();
 
         private readonly Dictionary<string, Func<ProcessInstance, WorkflowRuntime, string, CancellationToken, Task>>
@@ -23,52 +24,96 @@ namespace WorkflowLib
         public WorkflowActionProvider()
         {
             // Register your actions in _actions and _asyncActions dictionaries            
-            _actions.Add("ShowGTSTScheduler", ShowGTSTScheduler); // sync
-            _actions.Add("RecordGTSTTestResults", RecordGTSTTestResults); // sync
-            _actions.Add("GenerateNotice", GenerateNotice); // sync            
-            _actions.Add("GenerateAlert", GenerateAlert); // sync
+            //_actions.Add("ShowGTSTScheduler", ShowGTSTScheduler); // sync
+            //_actions.Add("RecordGTSTTestResults", RecordGTSTTestResults); // sync
+            //_actions.Add("GenerateNotice", GenerateNotice); // sync            
+            //_actions.Add("GenerateAlert", GenerateAlert); // sync
             _asyncActions.Add("MyActionAsync", MyActionAsync); // async
 
             // Register your conditions in _conditions and _asyncConditions dictionaries
             _conditions.Add("MyCondition", MyCondition); // sync
+            _conditions.Add("ShowGTSTScheduler", ShowGTSTScheduler); // sync            
+            _conditions.Add("RecordGTSTTestResults", RecordGTSTTestResults); // sync            
+            _conditions.Add("GenerateNotice", GenerateNotice); // sync            
+            _conditions.Add("GenerateAlert", GenerateAlert); // sync            
             _asyncConditions.Add("MyConditionAsync", MyConditionAsync); // async
         }
-        private void ShowGTSTScheduler(ProcessInstance processInstance, WorkflowRuntime runtime,
-            string actionParameter)
-        {            
-            GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
-            string caseId = processInstance.GetParameter<string>("CPROCaseId");
-            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            WorkflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(caseId);
-            processInstance.SetParameter("WorkflowResponseModel", WorkflowResponseModel);
-        }
-        private void RecordGTSTTestResults(ProcessInstance processInstance, WorkflowRuntime runtime,
+        private bool ShowGTSTScheduler(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
-            GTSTTestResultsController gTSTTestResultsController = new GTSTTestResultsController();
-            string caseId = processInstance.GetParameter<string>("CPROCaseId");
-            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            WorkflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(caseId);
-            processInstance.SetParameter("WorkflowResponseModel", WorkflowResponseModel);
+            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            if (workflowResponseModel.GTSTSchedulerModel == null)
+            {
+                GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
+                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+                workflowResponseModel.ScreenName = "GTSTScheduler";
+                workflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(caseId);
+                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+                return false;
+            }
+            else
+            {
+                workflowResponseModel.ScreenName = "";
+                return true;
+            }
         }
-        private void GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
+        private bool RecordGTSTTestResults(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
-            NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
-            string caseId = processInstance.GetParameter<string>("CPROCaseId");
-            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            WorkflowResponseModel.NoticeGenerationModel = noticeGenerationController.Show(actionParameter,caseId);
-            processInstance.SetParameter("WorkflowResponseModel", WorkflowResponseModel);
+            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            if (workflowResponseModel.GTSTTestResultsModel == null)
+            {
+                GTSTTestResultsController gTSTTestResultsController = new GTSTTestResultsController();
+                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+                workflowResponseModel.ScreenName = "GTSTTestResults";
+                workflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(caseId);
+                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+                return false;
+            }
+            else
+            {
+                workflowResponseModel.ScreenName = "";
+                return true;
+            }
+        }
+        private bool GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
+            string actionParameter)
+        {
+            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            if (workflowResponseModel.NoticeGenerationModel == null)
+            {
+                NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
+                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+                workflowResponseModel.ScreenName = "NoticeGeneration";
+                workflowResponseModel.NoticeGenerationModel = noticeGenerationController.Show(actionParameter, caseId);
+                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+                return false;
+            }
+            else
+            {
+                workflowResponseModel.ScreenName = "";
+                return true;
+            }
         }
 
-        private void GenerateAlert(ProcessInstance processInstance, WorkflowRuntime runtime,
+        private bool GenerateAlert(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
-            CPROUserAlertController generateUserAlerts = new CPROUserAlertController();
-            string caseId = processInstance.GetParameter<string>("CPROCaseId");
-            WorkflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            WorkflowResponseModel.CPROUserAlertModel = generateUserAlerts.GenerateAlert(caseId);
-            processInstance.SetParameter("WorkflowResponseModel", WorkflowResponseModel);
+            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            if (workflowResponseModel.CPROUserAlertModel == null)
+            {
+                CPROUserAlertController generateUserAlerts = new CPROUserAlertController();
+                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+                workflowResponseModel.ScreenName = "CPROUserAlert";
+                workflowResponseModel.CPROUserAlertModel = generateUserAlerts.GenerateAlert(caseId);
+                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+                return false;
+            }
+            else
+            {
+                workflowResponseModel.ScreenName = "";
+                return true;
+            }
         }
 
         private async Task MyActionAsync(ProcessInstance processInstance, WorkflowRuntime runtime,
@@ -90,15 +135,15 @@ namespace WorkflowLib
             return false;
         }
 
-        public WorkFlowResponseModel ExecuteCommand(string commandName, Guid processId)
+        public WorkFlowResponseModel ExecuteCommand(WorkFlowResponseModel workflowResponseModel, string commandName)
         {
-            WorkflowResponseModel = new WorkFlowResponseModel();
+            this.workflowResponseModel = workflowResponseModel;
+            this.workflowResponseModel.ProcessId = this.workflowResponseModel.ProcessId;            
             WorkflowCommand? workflowCommand = WorkflowInit.Runtime
-                                                .GetAvailableCommands(processId, string.Empty)
+                                                .GetAvailableCommands(workflowResponseModel.ProcessId, string.Empty)
                                                 .Where(c => c.CommandName.Trim().ToLower() == commandName.Trim().ToLower()).FirstOrDefault();
-            WorkflowInit.Runtime.ExecuteCommand(workflowCommand, string.Empty, string.Empty);
-            WorkflowResponseModel.ProcessId = processId;            
-            return WorkflowResponseModel;
+            WorkflowInit.Runtime.ExecuteCommand(workflowCommand, string.Empty, string.Empty);                        
+            return this.workflowResponseModel;
         }
 
         #region Implementation of IWorkflowActionProvider

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OptimaJet.Workflow.Core.Persistence;
+using System.Text.Json;
 using WorkflowEngineMVC.Data;
 using WorkflowEngineMVC.Models;
 using WorkflowLib;
@@ -8,7 +10,7 @@ namespace WorkflowEngineMVC.Controllers
 {
     public class GTSTSchedulerController : Controller
     {
-        GTSTSchedulerModel gtstSchedulerModel;          
+        GTSTSchedulerModel gtstSchedulerModel;        
         MoqData moqData;
         public GTSTSchedulerController()
         {
@@ -17,9 +19,10 @@ namespace WorkflowEngineMVC.Controllers
         }
 
         // GET: GTSTSchedulerController/Show
-        public GTSTSchedulerModel Show( string? caseId)
-        {
-            gtstSchedulerModel = moqData.GetGTSTScheduleDetails(caseId);            
+        public GTSTSchedulerModel Show(string? caseId)
+        {            
+            gtstSchedulerModel = moqData.GetGTSTScheduleDetails(caseId);   
+            //Show the screen with all the case and schedule details
             return gtstSchedulerModel;
         }
         // GET: GTSTSchedulerController
@@ -27,18 +30,13 @@ namespace WorkflowEngineMVC.Controllers
         {
             return View();
         }
-        public ActionResult Save(Guid processId,  string caseId)
-        {
-            if (processId != Guid.Empty)
-            {                
-                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId, caseId } );
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }            
-        }
 
+        public ActionResult SaveSchedule(string jsonString, string? commandName)
+        {               
+            //Save the schedule details to db            
+            return RedirectToAction("ProcessCommand", "CPROChain", new { jsonString, commandName });                    
+        }
+        
         // GET: GTSTSchedulerController/Details/5
         public ActionResult Details(int id)
         {

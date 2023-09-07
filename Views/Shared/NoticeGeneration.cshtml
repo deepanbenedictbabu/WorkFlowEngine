@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Text.Json;
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -13,10 +13,13 @@
                 </button>
             </div>
             <br />
+             @{                        
+                 var wfJsonModel = JsonSerializer.Serialize(Model);  
+             } 
             <div>
                 <div style="float:right">                                                                     
                     <div class="button">
-                        <a class="nav-link text-white" asp-area="" asp-controller="NoticeGeneration" asp-action="Save" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel.CaseId>Save Changes</a>                               
+                        <a class="nav-link text-white" asp-area="" asp-controller="NoticeGeneration" asp-action="GenerateNotice" asp-route-jsonString=@wfJsonModel asp-route-commandName=@Model.CurrentCommandName>Save Changes</a>                               
                     </div>                                                                                                                      
                 </div>
             </div>       

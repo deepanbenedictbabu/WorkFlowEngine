@@ -5,6 +5,7 @@
         public Guid ProcessId { get; set; }
         public string? CaseId { get; set; }       
         public DateTime ScheduledDate { get; set; }
-        public string? ScheduledTime { get; set; }        
+        public string? ScheduledTime { get; set; }          
+        public bool IsScheduled { get; set; }
     }
 }

@@ -7,6 +7,8 @@
 @using Microsoft.AspNetCore.Mvc.Rendering;
 @using Microsoft.AspNetCore.Mvc.ViewFeatures;
 @using System.Net.Http.Headers;
+@using System.Text.Json
+
 @*@model List<WorkflowEngineMVC.ViewModels.StateViewModel>*@
 @{
     ViewBag.Title = "CPRO";
@@ -25,7 +27,7 @@
         @Html.PartialAsync("CPRORibbon",Model).Result  
     </div>
     <br />
-    <br />
+    <br />   
     <div>
          <table class="tableborder" style="width:50%">
             <tr>
@@ -34,13 +36,16 @@
                 </td>
             </tr> 
             <tr>
-                <td>
+                <td>                     
+                    @{                        
+                        var wfJsonModel = JsonSerializer.Serialize(Model);  
+                    }                                                                                           
                     <table class="tableborder" style="width:70%">                                                                            
                             @foreach (var command in Model.ListCommandModel)
                             {   
                              <tr>  
                                  <td>                                             
-                                       <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-processId=@command.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId asp-route-commandName=@command.CommandName>@command.CommandName</a> 
+                                       <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-jsonString=@wfJsonModel asp-route-commandName=@command.CommandName >@command.CommandName</a>                                               
                                  </td>  
                              </tr>        
                             }                                  

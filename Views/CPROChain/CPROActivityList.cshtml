@@ -5,6 +5,9 @@
             <td style="color:blue; background-color:blue; color:white;">          
                 List of Activity Chain
             </td>
+            <td style="color:blue; background-color:blue; color:white;">          
+                Current Status
+            </td>
         </tr>  
          <tr>
             <td>          
@@ -19,7 +22,10 @@
         <tr>
             <td>          
                 <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowStartRemedy" asp-route-caseId=@Model.CaseDetailsModel?.CaseId>Genetic Test</a>          
-            </td>            
+            </td>   
+            <td>                                                                       
+              <span style="color:blue;font-weight:bold;">Yet To Start</span>             
+            </td> 
         </tr>   
         <tr>
             <td>          
@@ -30,6 +36,6 @@
             <td>          
                 Case Closure
             </td>
-        </tr>   
+        </tr>         
     </table>
 </div>

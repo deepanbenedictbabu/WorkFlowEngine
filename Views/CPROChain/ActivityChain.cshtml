@@ -7,7 +7,7 @@
 @using Microsoft.AspNetCore.Mvc.Rendering;
 @using Microsoft.AspNetCore.Mvc.ViewFeatures;
 @using System.Net.Http.Headers;
-@*@model List<WorkflowEngineMVC.ViewModels.StateViewModel>*@
+@using System.Text.Json;
 @{
     ViewBag.Title = "CPRO";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,11 +24,14 @@
     <div >  
         @Html.PartialAsync("CPRORibbon",Model).Result  
     </div>
+     @{        
+        var wfJsonModel = JsonSerializer.Serialize(Model);  
+     } 
     <br />     
     @if (Model.IsHistoryView)
     {
         <div id="divListView" class="button">
-                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessListView" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>List View</a>                               
+                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessListView" asp-route-jsonString=@wfJsonModel>List View</a>                               
         </div> 
         <br /> 
         <div>  
@@ -38,7 +41,7 @@
     else
     {
         <div id="divHistoryView" class="button">
-                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>History View</a>                               
+                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-jsonString=@wfJsonModel>History View</a>                               
         </div> 
             <br /> 
         <div>  
@@ -47,28 +50,28 @@
     }
     <br />    
     <br/>    
-    @if (@Model.GTSTSchedulerModel != null)
+    @if (@Model.ScreenName == "GTSTScheduler")
     {
         <br />
         <div>  
             @Html.PartialAsync("GTSTScheduler",Model).Result  
         </div>
     }
-    else if(@Model.NoticeGenerationModel != null)
+    else if(@Model.ScreenName == "NoticeGeneration")
     {
         <br />
         <div>  
             @Html.PartialAsync("NoticeGeneration",Model).Result  
         </div>
     }
-    else if(@Model.GTSTTestResultsModel != null)
+    else if(@Model.ScreenName == "GTSTTestResults")
     {
         <br />
         <div>  
             @Html.PartialAsync("GTSTTestResult",Model).Result  
         </div>
     }
-    @*else if(@Model.CPROUserAlertModel!= null)
+    @*else if(@Model.ScreenName == "CPROUserAlert")
     {
         <br />
         <div>  

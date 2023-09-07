@@ -9,19 +9,20 @@ namespace WorkflowEngineMVC.Models
         public string? CurrentActivityName { get; set; }
         public string? CurrentCommandName { get; set; }        
         public bool IsHistoryView  { get; set; }
+        public string? ScreenName { get; set; }        
         public CaseDetailsModel? CaseDetailsModel { get; set; }
         public GTSTSchedulerModel? GTSTSchedulerModel { get; set; }
         public NoticeGenerationModel? NoticeGenerationModel { get; set; }        
         public GTSTTestResultsModel? GTSTTestResultsModel { get; set; }
         public CPROUserAlertModel? CPROUserAlertModel { get; set; }
         public List<CommandModel> ListCommandModel { get; set; }                   
-        public ProcessDefinition Processdefinition { get; set; }
+        public List<ActivityModel> ListActivityModel { get; set; }
 
         public WorkFlowResponseModel()
-        {
-            Processdefinition = new ProcessDefinition();
+        {            
             ListCommandModel = new List<CommandModel>();
-            IsHistoryView = false;
+            ListActivityModel = new List<ActivityModel>();
+            IsHistoryView = false;            
         }
 
     }

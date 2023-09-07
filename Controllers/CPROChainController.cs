@@ -1,23 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OptimaJet.Workflow.Core.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using WorkflowLib;
-using System.IO;
-using Microsoft.Extensions.Configuration;
-using WorkflowEngineMVC.ViewModels;
-using OptimaJet.Workflow.Core.Persistence;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using WorkflowEngineMVC.Models;
-using OptimaJet.Workflow.Core.Model;
-using System.Net.NetworkInformation;
+using System.Text.Json;
 using WorkflowEngineMVC.Data;
-using Microsoft.AspNetCore.Components;
-using OptimaJet.Workflow.MSSQL.Models;
+using WorkflowEngineMVC.Models;
+using WorkflowEngineMVC.ViewModels;
+using WorkflowLib;
 
 namespace WorkflowEngineMVC.Controllers
 {
@@ -33,8 +20,7 @@ namespace WorkflowEngineMVC.Controllers
         {
             workFlowResponseModel = new WorkFlowResponseModel();
             moqData = new MoqData();
-            caseDetailsModel = new CaseDetailsModel();            
-            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
+            caseDetailsModel = new CaseDetailsModel();                        
         }
 
         public ActionResult Index()
@@ -72,37 +58,34 @@ namespace WorkflowEngineMVC.Controllers
         {            
             CreateInstance(caseId);
             _caseId = caseId;
-            List<CommandModel> commandModelList = GetAvailableCommands(processId);
-            workFlowResponseModel.ListCommandModel = commandModelList;
+            GetAllActivitiesAndCommands(processId);
             return View("ActivityChain", workFlowResponseModel);
         }        
-        public ActionResult ShowAllActivity(WorkFlowResponseModel wfResponseModel)
-        {            
+        public ActionResult ShowProcessHistoryView(string jsonString)
+        {
+            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString)?? new WorkFlowResponseModel();
+            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            processView(true);
             return View("ActivityChain", workFlowResponseModel);
         }
-        public ActionResult ShowProcessHistoryView(Guid processId, string caseId)
+        public ActionResult ShowProcessListView(string jsonString)
         {
-            _caseId = caseId;            
-            processView(processId, true);
+            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            processView(false);            
             return View("ActivityChain", workFlowResponseModel);
         }
-        public ActionResult ShowProcessListView(Guid processId, string caseId)
+        public ActionResult UpdateActivity(string jsonString)
         {
-            _caseId = caseId;           
-            processView(processId, false);            
-            return View("ActivityChain", workFlowResponseModel);
-        }
-        public ActionResult UpdateActivity(Guid processId, string caseId)
-        {
-            _caseId = caseId;
-            processView(processId, false);
+            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            processView(false);
             return View("UpdateActivity", workFlowResponseModel);
         }
 
-        private void processView(Guid processId, bool isHistoryView)
+        private void processView(bool isHistoryView)
         {            
-            List<CommandModel> commandModelList = GetAvailableCommands(processId);            
-            workFlowResponseModel.ListCommandModel = commandModelList;
+            GetAllActivitiesAndCommands(workFlowResponseModel.ProcessId);            
             workFlowResponseModel.IsHistoryView = isHistoryView;            
         }
 
@@ -124,13 +107,23 @@ namespace WorkflowEngineMVC.Controllers
             }
         }
 
-        private List<CommandModel> GetAvailableCommands(Guid processId)
+        private void GetAllActivitiesAndCommands(Guid processId)
         {                        
             var schema = WorkflowInit.Runtime.GetProcessScheme(processId);
-            workFlowResponseModel.Processdefinition = schema;                     
-            List <CommandModel> commandModelList = new List<CommandModel>();
+            //workFlowResponseModel.Processdefinition = schema;                                 
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
+            workFlowResponseModel.ListCommandModel = new List<CommandModel>();
+            workFlowResponseModel.ListActivityModel = new List<ActivityModel>();
+            foreach (var activity in schema.Activities)
+            {
+                ActivityModel activityModel = new ActivityModel();
+                activityModel.IsInitial = activity.IsInitial;
+                activityModel.IsFinal = activity.IsFinal;
+                activityModel.ActivityName = activity.Name;
+                activityModel.ProcessId = processId;
+                workFlowResponseModel.ListActivityModel.Add(activityModel);
+            }
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
             caseDetailsModel = moqData.GetCaseDetails(_caseId);
             workFlowResponseModel.CurrentActivityName = activityName;
@@ -141,54 +134,21 @@ namespace WorkflowEngineMVC.Controllers
             {
                 var commandModel = new CommandModel();
                 commandModel.ProcessId= workflowCommand.ProcessId;
-                commandModel.CommandName = workflowCommand.CommandName;                
-                commandModelList.Add(commandModel);
+                commandModel.CommandName = workflowCommand.CommandName;
+                workFlowResponseModel.ListCommandModel.Add(commandModel);
             }            
-            return commandModelList;
         }
 
-        public ActionResult ProcessCommand(string commandName, Guid processId, string caseId)
+        public ActionResult ProcessCommand(string jsonString, string commandName)
         {
-            _caseId = caseId;            
-            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "CPROCaseId", caseId);
+            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString);
+            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            workFlowResponseModel.CurrentCommandName = commandName;            
+            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "CPROCaseId", _caseId);
             WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "WorkflowResponseModel", workFlowResponseModel);
-            workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(commandName, processId);            
-            workFlowResponseModel.ListCommandModel = GetAvailableCommands(processId);            
+            workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(workFlowResponseModel, commandName );            
+            GetAllActivitiesAndCommands(processId);            
             return View("ActivityChain", workFlowResponseModel);
-        }
-
-        private List<StateViewModel> GetAvailableState()
-        {
-            var workflowStates = WorkflowInit.Runtime
-                            .GetAvailableStateToSet(processId, Thread.CurrentThread.CurrentCulture);
-            var stateViewModelList = new List<StateViewModel>();
-            var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
-            var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
-            foreach (var workflowState in workflowStates)
-            {
-                var stateViewModel = new StateViewModel();
-                stateViewModel.StateName = workflowState.Name;
-                stateViewModel.CurrentStateName = stateName;
-                stateViewModel.CurrentActivityName = activityName;                
-                stateViewModelList.Add(stateViewModel);
-            }
-            return stateViewModelList;
-        }
-
-        public ActionResult ProcessState(string stateName)
-        {
-            SetState(stateName);
-            List<StateViewModel> stateViewModelList = GetAvailableState();
-            return View("ShowAllActivity", stateViewModelList);
-        }
-
-        private void SetState(string stateName)
-        {            
-            var state = WorkflowInit.Runtime
-                    .GetAvailableStateToSet(processId, Thread.CurrentThread.CurrentCulture)
-                    .Where(c => c.Name.Trim().ToLower() == stateName.Trim().ToLower()).FirstOrDefault();
-            var stateParams = new SetStateParams(processId, stateName);
-            WorkflowInit.Runtime.SetState(stateParams);
         }
 
         private void DeleteProcess()

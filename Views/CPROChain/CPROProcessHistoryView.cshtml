@@ -12,7 +12,7 @@
                 Status
             </td>
         </tr>          
-        <tr>
+        @*<tr>
             <td>
                 @Model.Processdefinition.InitialActivity.Name
             </td>
@@ -35,8 +35,8 @@
                 <span style="color:blue;font-weight:bold;">IN PROGRESS</span> 
                 }                
             </td> 
-        </tr> 
-        @while(!isFinalActivity)
+        </tr> *@
+        @*@while(!isFinalActivity)
         {
             @foreach (var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == nextActivityName))
             {
@@ -58,6 +58,6 @@
                     </td> 
                 </tr>        
             }
-        }
+        }*@
     </table>
 </div>

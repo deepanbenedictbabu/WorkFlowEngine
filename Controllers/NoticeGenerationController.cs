@@ -18,6 +18,7 @@ namespace WorkflowEngineMVC.Controllers
         public NoticeGenerationModel Show(string noticeId, string? caseId)
         {
             noticeGenerationModel = moqData.GetNoticeGenerationDetails(noticeId, caseId);
+            //Implement the Notice generation logic here
             return noticeGenerationModel;
         }
         // GET: GTSTSchedulerController
@@ -25,16 +26,10 @@ namespace WorkflowEngineMVC.Controllers
         {
             return View();
         }
-        public ActionResult Save(Guid processId, string caseId)
+        public ActionResult GenerateNotice(string jsonString, string? commandName)
         {
-            if (processId != Guid.Empty)
-            {
-                return RedirectToAction("ShowProcessListView", "CPROChain", new { processId, caseId });
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            //Save the notice details to db            
+            return RedirectToAction("ProcessCommand", "CPROChain", new { jsonString, commandName });
         }
 
         // GET: NoticeGenerationController/Details/5

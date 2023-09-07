@@ -1,4 +1,5 @@
-﻿@model WorkFlowResponseModel
+﻿@using System.Text.Json;
+@model WorkFlowResponseModel
 <div>    
     <div>        
         <table class="tableborder">
@@ -12,73 +13,35 @@
                 <td style="background-color:blue; color:white;">
                     Started on
                 </td>
-            </tr>          
-            <tr>
-                <td>
-                @{
-                    string activityName = Model.Processdefinition.InitialActivity.Name;
-                    string nextActivityName = "";
-                    bool isFinalActivity = false; 
-                    string finalActivityName = "";
-                    bool isStatusSet = false;
-                    @if(Model.CurrentActivityName == activityName)
-                    {
-                        <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>@activityName</a>                     
-                    }
-                    else
-                    {
-                    <span>@activityName</span>
-                    }            
-                    @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == @Model.Processdefinition.InitialActivity.Name))
-                    {
-                        nextActivityName = data.To.Name;
-                        isFinalActivity = false;                    
-                    }
-                }
-                </td>
-                <td>                                                            
-                @if(Model.CurrentActivityName == activityName)
-                {
-                <span style="color:blue;font-weight:bold;">IN PROGRESS</span> 
-                }                
-                </td>                 
-            </tr>         
-            @while(!isFinalActivity)
+            </tr>
+            @{                
+                var wfJsonModel = JsonSerializer.Serialize(Model);  
+            }    
+            @foreach(var data in Model.ListActivityModel)
             {
-                @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == nextActivityName))
-                {
-                    activityName = data.From.Name;
-                    nextActivityName = data.To.Name;
-                    isFinalActivity = data.To.IsFinal;                     
-                    @if(isFinalActivity)
-                    {
-                        finalActivityName = data.To.Name;
-                    }
-                    <tr>
-                        @if (Model.CurrentActivityName == activityName)
+                <tr>
+                    <td>                         
+                        @if (Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
-                        <td>                        
-                            <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-processId=@Model.ProcessId asp-route-caseId=@Model.CaseDetailsModel?.CaseId>@nextActivityName</a>  
-                        </td> 
-                        <td>                                      
-                            <span style="color:blue;font-weight:bold;">IN PROGRESS</span>                     
-                        </td>
+                            <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-jsonString=@wfJsonModel>@data.ActivityName</a>                            
                         }
                         else
                         {
-                        <td>                        
-                             @nextActivityName
-                        </td> 
-                        <td>           
-                        @if(isFinalActivity && Model.CurrentActivityName == finalActivityName)
+                            <span>@data.ActivityName</span>
+                        }
+                    </td>
+                    <td>                                                            
+                        @if(Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
-                            <span style="color:red;font-weight:bold;">CLOSED</span>   
+                            <span style="color:blue;font-weight:bold;">IN PROGRESS</span>
                         }
-                        </td>  
+                        else if(Model.CurrentActivityName == @data.ActivityName && @data.IsFinal)
+                        {
+                            <span style="color:red;font-weight:bold;">CLOSED</span> 
                         }
-                    </tr>        
-                }
-            }       
+                    </td>  
+            </tr>                    
+            }           
         </table> 
     </div>
 </div>

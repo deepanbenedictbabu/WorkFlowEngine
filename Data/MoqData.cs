@@ -10,7 +10,8 @@ namespace WorkflowEngineMVC.Data
             GTSTSchedulerModel gTSTSchedulerModel = new GTSTSchedulerModel();   
             gTSTSchedulerModel.CaseId = caseId;
             gTSTSchedulerModel.ScheduledDate = DateTime.Now.AddDays(1);
-            gTSTSchedulerModel.ScheduledTime = DateTime.Now.ToShortTimeString();            
+            gTSTSchedulerModel.ScheduledTime = DateTime.Now.ToShortTimeString();
+            gTSTSchedulerModel.IsScheduled = true;
             return gTSTSchedulerModel;
         }
 
