@@ -4,7 +4,7 @@
 *@
 @model WorkFlowResponseModel   
 <div class="modal fade show d-block " id="divModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 45% !important;" >
+    <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 30% !important;" >
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">User Alerts</h5>
@@ -13,13 +13,6 @@
                 </button>
             </div>
             <br />
-            <div>
-                <div style="float:right">                                                                                         
-                    <div class="button">
-                        <a class="nav-link text-white" href="#" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">Close</a>                               
-                    </div>                                                                                                                            
-                </div>
-            </div>
             <div class="modal-body">
                 <div id="dialg" title="Definition: Knowledge">
                     <div>
@@ -28,8 +21,8 @@
                                 <td>                    
                                     Case ID :                               
                                 </td>
-                                <td>                    
-                                    <input type="text" value=@Model.CaseDetailsModel?.CaseId>                              
+                                <td>                                                        
+                                    <span>@Model.CaseDetailsModel?.CaseId</span>  
                                 </td>
                              </tr>                             
                              <tr>
@@ -37,7 +30,7 @@
                                     Alert Name :                          
                                 </td> 
                                 <td>                    
-                                    <span>@Model.CPROUserAlertModel.AlertName</span>                            
+                                    <span>@Model.CPROUserAlertModel?.AlertName</span>                            
                                 </td> 
                             </tr>   
                             <tr>
@@ -45,19 +38,26 @@
                                     Alert Message :                          
                                 </td> 
                                 <td>                    
-                                   <span>@Model.CPROUserAlertModel.AlertMessage</span>                                                          
+                                   <span>@Model.CPROUserAlertModel?.AlertMessage</span>                                                          
                                 </td> 
                             </tr>   
                             <tr>
                                 <td>
-                                    <br />
-                                    <br />                                                                 
+                                    <br />                                                                                                    
                                 </td>
                             </tr> 
                         </table>
                     </div>                                     
                 </div>
-            </div>             
+                </br>
+            </div>               
+            <div>
+                <div style="float:right">                                                                                         
+                    <div class="button">
+                        <a class="nav-link text-white" href="#" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">Close</a>                               
+                    </div>                                                                                                                            
+                </div>
+            </div>
         </div>
     </div>
 </div>

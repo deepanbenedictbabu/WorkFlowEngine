@@ -3,11 +3,15 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model WorkFlowResponseModel 
+
+@{
+    var noticeGenerationModel = Model.ListNoticeGenerationModel.Where(d => d.NoticeId == Model.CurrentNoticeId).FirstOrDefault();
+} 
 <div class="modal fade show d-block " id="divModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 55% !important;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">EST-07 - Notice</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@noticeGenerationModel?.NoticeId - Notice</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -66,19 +70,19 @@
                                                 @Model.CaseDetailsModel?.CPLastName, @Model.CaseDetailsModel?.CPFirstName 
                                             </td>
                                              <td style="font-weight:bold">
-                                                @Model.NoticeGenerationModel?.CPDOB
+                                                @noticeGenerationModel?.CPDOB
                                             </td>
                                         </tr>
                                          <tr>
                                             <td colspan="2">
-                                                Street Address: <span style="font-weight:bold">@Model.NoticeGenerationModel?.CPAddress</span>
+                                                Street Address: <span style="font-weight:bold">@noticeGenerationModel?.CPAddress</span>
                                             </td>                                             
                                         </tr>
                                          <tr>                                             
                                             <td colspan="2">
                                                 City / State / Zip Code 
                                                 <br />
-                                                <span style="font-weight:bold">@Model.NoticeGenerationModel?.CPCity , @Model.NoticeGenerationModel?.CPState , @Model.NoticeGenerationModel?.CPZip</span>
+                                                <span style="font-weight:bold">@noticeGenerationModel?.CPCity , @noticeGenerationModel?.CPState , @noticeGenerationModel?.CPZip</span>
                                             </td>                                             
                                         </tr>
                                     </table>                        
@@ -98,19 +102,19 @@
                                                 <span style="font-weight:bold">@Model.CaseDetailsModel?.NCPLastName, @Model.CaseDetailsModel?.NCPFirstName</span> 
                                             </td>
                                              <td style="font-weight:bold">
-                                                <span style="font-weight:bold">@Model.NoticeGenerationModel?.NCPDOB</span>
+                                                <span style="font-weight:bold">@noticeGenerationModel?.NCPDOB</span>
                                             </td>
                                         </tr>
                                          <tr>
                                             <td colspan="2">
-                                                Street Address: <span style="font-weight:bold">@Model.NoticeGenerationModel?.NCPAddress</span>
+                                                Street Address: <span style="font-weight:bold">@noticeGenerationModel?.NCPAddress</span>
                                             </td>                                             
                                         </tr>
                                          <tr>
                                            <td colspan="2">
                                              City / State / Zip Code 
                                              <br />
-                                                <span style="font-weight:bold">@Model.NoticeGenerationModel?.NCPCity , @Model.NoticeGenerationModel?.NCPState , @Model.NoticeGenerationModel?.NCPZip </span>
+                                                <span style="font-weight:bold">@noticeGenerationModel?.NCPCity , @noticeGenerationModel?.NCPState , @noticeGenerationModel?.NCPZip </span>
                                             </td>                                             
                                         </tr>
                                     </table>                

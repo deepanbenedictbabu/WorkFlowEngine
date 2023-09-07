@@ -46,11 +46,11 @@ namespace WorkflowEngineMVC.Controllers
             workFlowResponseModel.CaseDetailsModel = caseDetailsModel;            
             return View("Index", workFlowResponseModel);          
         }
-        public ActionResult ShowCPROAlerts(string caseId)
+        public ActionResult ShowCPROAlerts(string jsonString)
         {
-            _caseId = caseId;                        
-            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
-            workFlowResponseModel.CPROUserAlertModel = moqData?.GetUserAlerts(caseId);
+            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            processView(false);                    
             workFlowResponseModel.CPROUserAlertModel.IsShowAlert = true;
             return View("ActivityChain", workFlowResponseModel);          
         }

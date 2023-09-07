@@ -1,4 +1,5 @@
-﻿@model WorkFlowResponseModel
+﻿@using System.Text.Json;
+@model WorkFlowResponseModel
 <div>
     <table class="tableborder">
         <tr>
@@ -54,18 +55,21 @@
             <td>
                 <span class="bold">Arrears Only</span> <br /><input type="text" disabled value="N- NO" />
             </td>
-            @*@if (@Model?.CPROUserAlertModel != null)
+            @{                        
+                var wfJsonModel = JsonSerializer.Serialize(Model);  
+            } 
+            @if (Model?.CPROUserAlertModel != null)
             {
                 <td>
-                     <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowCPROAlerts" asp-route-caseId=@Model.CaseDetailsModel?.CaseId>Special Alert</a>                               
+                     <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowCPROAlerts" asp-route-jsonString=@wfJsonModel>Special Alert</a>                               
                 </td>
             }
             else
             {
                 <td>
-                    
+                     Special Alert
                 </td> 
-            }*@
+            }
         </tr>
         <tr>
             <td>

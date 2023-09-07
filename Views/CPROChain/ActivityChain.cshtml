@@ -71,11 +71,12 @@
             @Html.PartialAsync("GTSTTestResult",Model).Result  
         </div>
     }
-    @*else if(@Model.ScreenName == "CPROUserAlert")
+    else if (@Model.CPROUserAlertModel != null && @Model.CPROUserAlertModel.IsShowAlert)
     {
+        Model.CPROUserAlertModel.IsShowAlert = false;
         <br />
         <div>  
             @Html.PartialAsync("CPROUserAlert",Model).Result  
-        </div>
-    }*@
+        </div>        
+    }
 </div>

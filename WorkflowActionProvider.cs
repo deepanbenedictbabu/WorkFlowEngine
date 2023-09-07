@@ -77,15 +77,18 @@ namespace WorkflowLib
             }
         }
         private bool GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
-            string actionParameter)
+            string actionParameter)//actionParameter should be the notice id 
         {
             workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            if (workflowResponseModel.NoticeGenerationModel == null)
+            var listNoticeGenerationModel = workflowResponseModel.ListNoticeGenerationModel.Where(d => d.NoticeId == actionParameter).ToList();
+            if (listNoticeGenerationModel == null || listNoticeGenerationModel.Count() < 1)
             {
                 NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
                 string caseId = processInstance.GetParameter<string>("CPROCaseId");                
                 workflowResponseModel.ScreenName = "NoticeGeneration";
-                workflowResponseModel.NoticeGenerationModel = noticeGenerationController.Show(actionParameter, caseId);
+                workflowResponseModel.CurrentNoticeId = actionParameter;
+                var noticeGenerationModel = noticeGenerationController.Show(actionParameter, caseId);                
+                workflowResponseModel.ListNoticeGenerationModel.Add(noticeGenerationModel);
                 processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
                 return false;
             }
@@ -106,14 +109,9 @@ namespace WorkflowLib
                 string caseId = processInstance.GetParameter<string>("CPROCaseId");                
                 workflowResponseModel.ScreenName = "CPROUserAlert";
                 workflowResponseModel.CPROUserAlertModel = generateUserAlerts.GenerateAlert(caseId);
-                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
-                return false;
+                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);                
             }
-            else
-            {
-                workflowResponseModel.ScreenName = "";
-                return true;
-            }
+            return true;
         }
 
         private async Task MyActionAsync(ProcessInstance processInstance, WorkflowRuntime runtime,
