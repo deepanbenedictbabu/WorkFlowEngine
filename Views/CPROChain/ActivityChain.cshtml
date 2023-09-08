@@ -40,10 +40,10 @@
     }
     else
     {
-        <div id="divHistoryView" class="button">
+       @* <div id="divHistoryView" class="button">
                 <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-jsonString=@wfJsonModel>History View</a>                               
-        </div> 
-            <br /> 
+        </div> *@
+            @*<br /> *@
         <div>  
             @Html.PartialAsync("CPROProcessListView",Model).Result              
         </div>
@@ -72,8 +72,7 @@
         </div>
     }
     @if (@Model.CPROUserAlertModel != null)
-    {        
-        wfJsonModel = JsonSerializer.Serialize(Model);
+    {                
         <br />
         <div>  
             @Html.PartialAsync("CPROUserAlert",Model).Result  

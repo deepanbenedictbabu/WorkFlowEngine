@@ -143,8 +143,10 @@ namespace WorkflowEngineMVC.Controllers
         {
             workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString);
             _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
-            workFlowResponseModel.CurrentCommandName = commandName;            
+            workFlowResponseModel.CurrentCommandName = commandName;  
+            //Parameter List
             WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "CPROCaseId", _caseId);
+            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "FamilyViolence", workFlowResponseModel.CaseDetailsModel?.FamilyViolence);
             WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "WorkflowResponseModel", workFlowResponseModel);
             workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(workFlowResponseModel, commandName );            
             GetAllActivitiesAndCommands(processId);            

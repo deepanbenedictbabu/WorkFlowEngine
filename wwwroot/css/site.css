@@ -74,9 +74,23 @@ table, th, td {
     border-spacing: 10px;
     font-size:medium;
 }
-
+table {    
+    border-collapse: collapse;
+}
 .tableborder {
     border: 1px solid black;
+}
+.tdbottomborder {
+    border: 1px solid #ddd;
+}
+.grayborder {
+    border: 1px solid #ddd;
+    padding: 0px;
+}
+.tblnopadding {
+    border: 1px solid #ddd;
+    padding: 0px;
+    border-spacing:0px
 }
 .button {
     background: no-repeat;

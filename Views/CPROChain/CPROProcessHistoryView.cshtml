@@ -1,4 +1,5 @@
-﻿@model WorkFlowResponseModel
+﻿@using System.Text.Json;
+@model WorkFlowResponseModel
 <div>
     <table class="tableborder">
          <tr>
@@ -59,5 +60,33 @@
                 </tr>        
             }
         }*@
+         @{                
+            var wfJsonModel = JsonSerializer.Serialize(Model);  
+        }    
+        @foreach(var data in Model.ListActivityModel)
+        {
+            <tr>
+                <td>                         
+                    @if (Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
+                    {
+                        <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-jsonString=@wfJsonModel>@data.ActivityName</a>                            
+                    }
+                    else
+                    {
+                        <span>@data.ActivityName</span>
+                    }
+                </td>
+                <td>                                                            
+                    @if(Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
+                    {
+                        <span style="color:blue;font-weight:bold;">IN PROGRESS</span>
+                    }
+                    else if(Model.CurrentActivityName == @data.ActivityName && @data.IsFinal)
+                    {
+                        <span style="color:red;font-weight:bold;">CLOSED</span> 
+                    }
+                </td>  
+        </tr>                    
+        }      
     </table>
 </div>

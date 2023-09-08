@@ -26,6 +26,7 @@ namespace WorkflowEngineMVC.Data
             caseDetails1.CPLastName = "Luther";
             caseDetails1.NCPFirstName = "Jame";
             caseDetails1.NCPLastName = "Mike";
+            caseDetails1.FamilyViolence = "Y";
             caseDetailsModels.Add(caseDetails1);
 
             CaseDetailsModel caseDetails2 = new CaseDetailsModel();
@@ -36,6 +37,7 @@ namespace WorkflowEngineMVC.Data
             caseDetails2.CPLastName = "Joseph";
             caseDetails2.NCPFirstName = "Miller";
             caseDetails2.NCPLastName = "Peter";
+            caseDetails2.FamilyViolence = "Y";
             caseDetailsModels.Add(caseDetails2);
 
             CaseDetailsModel? caseDetails = new CaseDetailsModel();

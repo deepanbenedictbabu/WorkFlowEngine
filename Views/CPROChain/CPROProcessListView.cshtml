@@ -2,7 +2,7 @@
 @model WorkFlowResponseModel
 <div>    
     <div>        
-        <table class="tableborder">
+        <table class="tableborder" style="width:75%">
              <tr>
                 <td style="background-color:blue; color:white;">          
                     Action
@@ -10,9 +10,9 @@
                 <td style="background-color:blue; color:white;">
                     Status
                 </td>
-                <td style="background-color:blue; color:white;">
+                @*<td style="background-color:blue; color:white;">
                     Started on
-                </td>
+                </td>*@
             </tr>
             @{                
                 var wfJsonModel = JsonSerializer.Serialize(Model);  
@@ -20,7 +20,7 @@
             @foreach(var data in Model.ListActivityModel)
             {
                 <tr>
-                    <td>                         
+                    <td class="tdbottomborder">                         
                         @if (Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
                             <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-jsonString=@wfJsonModel>@data.ActivityName</a>                            
@@ -30,7 +30,7 @@
                             <span>@data.ActivityName</span>
                         }
                     </td>
-                    <td>                                                            
+                        <td class="tdbottomborder">                                                            
                         @if(Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
                             <span style="color:blue;font-weight:bold;">IN PROGRESS</span>
@@ -39,7 +39,7 @@
                         {
                             <span style="color:red;font-weight:bold;">CLOSED</span> 
                         }
-                    </td>  
+                    </td> 
             </tr>                    
             }           
         </table> 

@@ -26,7 +26,6 @@
     <div >  
         @Html.PartialAsync("CPRORibbon",Model).Result  
     </div>
-    <br />
     <br />   
     <div>
          <table class="tableborder" style="width:50%">
@@ -40,7 +39,7 @@
                     @{                        
                         var wfJsonModel = JsonSerializer.Serialize(Model);  
                     }                                                                                           
-                    <table class="tableborder" style="width:70%">                                                                            
+                    <table style="width:100%">                                                                            
                             @foreach (var command in Model.ListCommandModel)
                             {   
                              <tr>  
@@ -54,4 +53,11 @@
             </tr>
         </table>
     </div>
+    @if (@Model.CPROUserAlertModel != null)
+    {                
+        <br />
+        <div>  
+            @Html.PartialAsync("CPROUserAlert",Model).Result  
+        </div>        
+    }
 </div>

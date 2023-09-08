@@ -11,5 +11,6 @@
         public string? NCPFirstName { get; set; }
         public string? NCPLastName { get; set; }
         public bool IsStartRemedy { get; set; }
+        public string? FamilyViolence { get; set; }
     }
 }
