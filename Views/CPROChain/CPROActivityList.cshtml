@@ -15,17 +15,18 @@
             </td>
             <td class="tdbottomborder">                                                                                               
             </td> 
-        </tr>      
-        <tr>
+        </tr> 
+         <tr>
             <td class="tdbottomborder">          
-                Establishment process
-            </td>
-            <td class="tdbottomborder">                                                                                               
+                <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowStartRemedy" asp-route-caseId=@Model.CaseDetailsModel?.CaseId asp-route-majorActivity="ESTP">Establishment processt</a>          
+            </td>   
+            <td class="tdbottomborder">                                                                       
+              <span style="color:blue;font-weight:bold;">Yet To Start</span>             
             </td> 
-        </tr>   
+        </tr>         
         <tr>
             <td class="tdbottomborder">          
-                <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowStartRemedy" asp-route-caseId=@Model.CaseDetailsModel?.CaseId>Genetic Test</a>          
+                <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ShowStartRemedy" asp-route-caseId=@Model.CaseDetailsModel?.CaseId asp-route-majorActivity="GTST">Genetic Test</a>          
             </td>   
             <td class="tdbottomborder">                                                                       
               <span style="color:blue;font-weight:bold;">Yet To Start</span>             

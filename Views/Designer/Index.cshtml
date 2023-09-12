@@ -14,6 +14,12 @@
         <a href="javascript:SelectScheme('wfe')" class="ui secondary button">Upload XML</a>
         <a href="javascript:DownloadSchemeBPMN()" class="ui secondary button">Download BPMN2</a>
         <a href="javascript:SelectScheme('bpmn')" class="ui secondary button">Upload BPMN2</a>
+        <label for="activity">Major Activity:</label>
+        <select id="activity" name="activity">
+            <option value="GTST">GTST</option>
+            <option value="ESTP">ESTP</option>            
+        </select>
+        <a href="javascript:wfdesignerRedraw()" class="ui secondary button">Load Designer</a>
     </div>
     <input type="file" name="uploadFile" id="uploadFile" style="display:none" onchange="javascript: UploadScheme(this);">
 </form>
@@ -42,8 +48,8 @@
         }
         return query_string;
     }();
-    //Load settings
-    var schemecode =  QueryString.code ?  QueryString.code : 'SimpleWF';
+    //Load settings    
+    var schemecode =  QueryString.code ?  QueryString.code : 'GTST';
     var processid = QueryString.processid;
     var graphwidth = 1200;
     var graphminheight = 600;
@@ -53,6 +59,9 @@
     //Recreate designer object
     function wfdesignerRedraw() {
         var data;
+        var selectElement = document.querySelector('#activity');
+        var majorActivity = selectElement.value;
+        var schemecode =  majorActivity ?  majorActivity : 'GTST';        
         if (wfdesigner != undefined) {
             wfdesigner.destroy();
         }

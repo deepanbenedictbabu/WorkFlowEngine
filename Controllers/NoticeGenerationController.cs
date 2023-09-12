@@ -15,9 +15,10 @@ namespace WorkflowEngineMVC.Controllers
             noticeGenerationModel = new NoticeGenerationModel();
         }
             // GET: NoticeGenerationController
-        public NoticeGenerationModel Show(string noticeId, string? caseId)
+        public NoticeGenerationModel Show(string noticeId, string? caseId, string? noticeRecipient)
         {
             noticeGenerationModel = moqData.GetNoticeGenerationDetails(noticeId, caseId);
+            noticeGenerationModel.NoticeRecipient = noticeRecipient;
             //Implement the Notice generation logic here
             return noticeGenerationModel;
         }

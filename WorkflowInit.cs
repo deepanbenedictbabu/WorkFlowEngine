@@ -4,6 +4,7 @@ using OptimaJet.Workflow.Core.Builder;
 using OptimaJet.Workflow.Core.Bus;
 using OptimaJet.Workflow.Core.Runtime;
 using OptimaJet.Workflow.DbPersistence;
+using WorkflowEngineMVC;
 
 namespace WorkflowLib
 {
@@ -28,7 +29,7 @@ namespace WorkflowLib
                 throw new Exception("Please init ConnectionString before calling the Runtime!");
             }
             // TODO If you have a license key, you have to register it here
-            WorkflowRuntime.RegisterLicense("TRIAL-VFJJQUw6MDkuMjkuMjAyMzpleUpUZEhKcFkzUkRhR1ZqYXlJNmRISjFaU3dpVFdGNFRuVnRZbVZ5VDJaQlkzUnBkbWwwYVdWeklqbzFNQ3dpVFdGNFRuVnRZbVZ5VDJaVWNtRnVjMmwwYVc5dWN5STZOVEFzSWsxaGVFNTFiV0psY2s5bVUyTm9aVzFsY3lJNk5Td2lUV0Y0VG5WdFltVnlUMlpVYUhKbFlXUnpJam8xTENKTllYaE9kVzFpWlhKUFprTnZiVzFoYm1Seklqb3lNSDA9OmNQamRjT2JNNW9rRmc2cEZlRVd3RlFkYWlSSkt3SHl4ZHhhNXZFdUFNaGtHYmJkZk1hN2FTV1J4aFdvZ0dtY3h5RHhnNi9rNEQ1WkU2MStYNTNwSzlaZlFGWmxTQjNRbmU0dlAzQTQzc0JJT0ZEdWhSRUhOYXRaNlA4N2ljRjQ3b3BNVXQ5K2JGR1FoaFhtUGJJUEczWVZSK3JwdnhtdVdBcTJmYTRRUzdJST0=");
+            WorkflowRuntime.RegisterLicense("TRIAL-VFJJQUw6MDkuMzAuMjAyMzpleUpUZEhKcFkzUkRhR1ZqYXlJNmRISjFaU3dpVFdGNFRuVnRZbVZ5VDJaQlkzUnBkbWwwYVdWeklqb3RNU3dpVFdGNFRuVnRZbVZ5VDJaVWNtRnVjMmwwYVc5dWN5STZMVEVzSWsxaGVFNTFiV0psY2s5bVUyTm9aVzFsY3lJNkxURXNJazFoZUU1MWJXSmxjazltVkdoeVpXRmtjeUk2TFRFc0lrMWhlRTUxYldKbGNrOW1RMjl0YldGdVpITWlPaTB4ZlE9PTpnYnNHb2xqL2VsQ1FvelI1NVErcWpPYVF0VzQ0Q1BNYy95MG8zUXBOVldycWIzckRXUXAvK1BxcHZLenF4WmlyODZ1MkJSTm9WblVPWE5JczNzdDY3bWtHaWdxb2txVVVaaWsxZGNGcllDTmtqRjNWZXVkMFJOZkZVNDQxblZ4U3E4N1h4TXIyMk1mdDVyYnFlVHhtUy9Dd25KN29nRjBpVzBPL203NnhiT2c9");
 
             // TODO If you are using database different from SQL Server you have to use different persistence provider here.
             var dbProvider = new MSSQLProvider(ConnectionString);
@@ -45,7 +46,7 @@ namespace WorkflowLib
                 .WithActionProvider(WorkflowActionProvider)
                 .EnableCodeActions()
                 //.CodeActionsDebugOn()
-                .SwitchAutoUpdateSchemeBeforeGetAvailableCommandsOn()
+                .SwitchAutoUpdateSchemeBeforeGetAvailableCommandsOn()                
                 .AsSingleServer();
 
             var plugin = new OptimaJet.Workflow.Plugins.BasicPlugin();

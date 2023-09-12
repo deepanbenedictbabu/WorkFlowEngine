@@ -14,6 +14,7 @@
         public string? NCPAddress { get; set; }
         public string? NCPZip { get; set; }
         public string? NCPCity { get; set; }
-        public string? NCPState { get; set; }        
+        public string? NCPState { get; set; }
+        public string? NoticeRecipient { get; set; }
     }
 }

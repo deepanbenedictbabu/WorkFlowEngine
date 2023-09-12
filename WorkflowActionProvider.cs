@@ -5,6 +5,8 @@ using WorkflowEngineMVC;
 using WorkflowEngineMVC.Models;
 using Microsoft.CodeAnalysis.Operations;
 using OptimaJet.Workflow.Core.Persistence;
+using OptimaJet.Workflow.Core.Model.ApprovalMap;
+using System.Text.Json;
 
 namespace WorkflowLib
 {
@@ -79,15 +81,16 @@ namespace WorkflowLib
         private bool GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)//actionParameter should be the notice id 
         {
+            var inputParam = JsonSerializer.Deserialize<WorkFlowInputParameter>(actionParameter);
             workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            var listNoticeGenerationModel = workflowResponseModel.ListNoticeGenerationModel.Where(d => d.NoticeId == actionParameter).ToList();
+            var listNoticeGenerationModel = workflowResponseModel.ListNoticeGenerationModel.Where(d => d.NoticeId == inputParam?.NoticeId).ToList();
             if (listNoticeGenerationModel == null || listNoticeGenerationModel.Count() < 1)
             {
                 NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
                 string caseId = processInstance.GetParameter<string>("CPROCaseId");                
                 workflowResponseModel.ScreenName = "NoticeGeneration";
-                workflowResponseModel.CurrentNoticeId = actionParameter;
-                var noticeGenerationModel = noticeGenerationController.Show(actionParameter, caseId);                
+                workflowResponseModel.CurrentNoticeId = inputParam?.NoticeId;
+                var noticeGenerationModel = noticeGenerationController.Show(inputParam?.NoticeId ?? "", caseId, inputParam?.NoticeRecipient);                
                 workflowResponseModel.ListNoticeGenerationModel.Add(noticeGenerationModel);
                 processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
                 return false;
@@ -140,6 +143,7 @@ namespace WorkflowLib
             WorkflowCommand? workflowCommand = WorkflowInit.Runtime
                                                 .GetAvailableCommands(workflowResponseModel.ProcessId, string.Empty)
                                                 .Where(c => c.CommandName.Trim().ToLower() == commandName.Trim().ToLower()).FirstOrDefault();
+            workflowCommand?.SetAllParametersToDefault();
             WorkflowInit.Runtime.ExecuteCommand(workflowCommand, string.Empty, string.Empty);                        
             return this.workflowResponseModel;
         }

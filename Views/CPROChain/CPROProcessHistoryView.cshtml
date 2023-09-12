@@ -10,83 +10,37 @@
                 To  Activity
             </td>
             <td style="color:blue; background-color:blue; color:white;">
-                Status
+                Command Name
             </td>
-        </tr>          
-        @*<tr>
-            <td>
-                @Model.Processdefinition.InitialActivity.Name
+            <td style="color:blue; background-color:blue; color:white;">
+                Start Transition Time
             </td>
-            <td>     
-                @{
-                string activityName = Model.Processdefinition.InitialActivity.Name;
-                string nextActivityName = "";
-                bool isFinalActivity = false; 
-                @foreach(var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == @Model.Processdefinition.InitialActivity.Name))
-                { 
-                    nextActivityName = data.To.Name;
-                    isFinalActivity = false;  
-                    @data.To.Name                    
-                } 
-                }
+            <td style="color:blue; background-color:blue; color:white;">
+                Duration In Seconds
             </td>
-            <td>                                                            
-                @if(Model.CurrentActivityName == activityName)
-                {
-                <span style="color:blue;font-weight:bold;">IN PROGRESS</span> 
-                }                
-            </td> 
-        </tr> *@
-        @*@while(!isFinalActivity)
-        {
-            @foreach (var data in Model.Processdefinition.Transitions.Where(d => d.From.Name == nextActivityName))
-            {
-                activityName = data.From.Name;
-                nextActivityName = data.To.Name;
-                isFinalActivity = data.To.IsFinal;
-                <tr>
-                    <td>
-                        @data.From.Name
-                    </td>
-                    <td>
-                        @data.To.Name
-                    </td>
-                    <td>                                                            
-                        @if(Model.CurrentActivityName == activityName)
-                        {
-                        <span style="color:blue;font-weight:bold;">IN PROGRESS</span> 
-                        }                
-                    </td> 
-                </tr>        
-            }
-        }*@
-         @{                
+        </tr>                 
+        @{                
             var wfJsonModel = JsonSerializer.Serialize(Model);  
-        }    
-        @foreach(var data in Model.ListActivityModel)
+        }            
+        @foreach(var data in Model.ListHistory)
         {
             <tr>
                 <td>                         
-                    @if (Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
-                    {
-                        <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-jsonString=@wfJsonModel>@data.ActivityName</a>                            
-                    }
-                    else
-                    {
-                        <span>@data.ActivityName</span>
-                    }
+                     <span>@data.FromActivityName</span>                    
                 </td>
-                <td>                                                            
-                    @if(Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
-                    {
-                        <span style="color:blue;font-weight:bold;">IN PROGRESS</span>
-                    }
-                    else if(Model.CurrentActivityName == @data.ActivityName && @data.IsFinal)
-                    {
-                        <span style="color:red;font-weight:bold;">CLOSED</span> 
-                    }
-                </td>  
-        </tr>                    
+                <td>                         
+                     <span>@data.ToActivityName</span>                    
+                </td>
+                <td>                         
+                     <span>@data.TriggerName</span>                    
+                </td>
+                <td>                         
+                     <span>@data.StartTransitionTime</span>                    
+                </td>
+                <td>                         
+                     <span>@data.TransitionDuration</span>                    
+                </td>                             
+            </tr>                    
         }      
     </table>
 </div>

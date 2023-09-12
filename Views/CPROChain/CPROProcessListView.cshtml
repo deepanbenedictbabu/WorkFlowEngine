@@ -10,18 +10,49 @@
                 <td style="background-color:blue; color:white;">
                     Status
                 </td>
-                @*<td style="background-color:blue; color:white;">
+                <td style="background-color:blue; color:white;">
                     Started on
-                </td>*@
+                </td>
+                <td style="background-color:blue; color:white;">
+                    Due on
+                </td>
+                <td style="background-color:blue; color:white;">
+                    Days Elapsed
+                </td>
             </tr>
             @{                
                 var wfJsonModel = JsonSerializer.Serialize(Model);  
             }    
             @foreach(var data in Model.ListActivityModel)
             {
+                var isCompleted = Model?.ListHistory.Where(d => d.FromActivityName == data.ActivityName || d.ToActivityName == data.ActivityName).ToList().Count > 0;
+                var history = Model?.ListHistory.Where(d => d.FromActivityName == data.ActivityName).ToList()
+                                               .OrderByDescending(d => d.StartTransitionTime).FirstOrDefault();
+                string? startdate = "";
+                string? dueOn = "";
+                string? daysElapsed = "";
+                @if (@data.IsInitial)
+                {                            
+                    startdate = Model?.ProcessStartedDate.ToShortDateString();
+                    dueOn = Model?.ProcessStartedDate.AddDays(data.DaysDue).ToShortDateString();
+                    daysElapsed = DateTime.Now.Date.Subtract(Model.ProcessStartedDate.Date).TotalDays.ToString();
+                }
+                else
+                {
+                    startdate = history?.StartTransitionTime.Value.ToShortDateString();
+                    dueOn = history?.StartTransitionTime.Value.AddDays(data.DaysDue).ToShortDateString();
+                    if (!string.IsNullOrEmpty(startdate))
+                    {
+                        daysElapsed = DateTime.Now.Date.Subtract(Model.ProcessStartedDate.Date).TotalDays.ToString();
+                    }
+                    else
+                    {
+                        daysElapsed = "";
+                    }
+                }  
                 <tr>
                     <td class="tdbottomborder">                         
-                        @if (Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
+                        @if (Model?.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
                             <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-jsonString=@wfJsonModel>@data.ActivityName</a>                            
                         }
@@ -30,15 +61,28 @@
                             <span>@data.ActivityName</span>
                         }
                     </td>
-                        <td class="tdbottomborder">                                                            
-                        @if(Model.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
+                    <td class="tdbottomborder">                                                            
+                        @if(Model?.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
                             <span style="color:blue;font-weight:bold;">IN PROGRESS</span>
                         }
-                        else if(Model.CurrentActivityName == @data.ActivityName && @data.IsFinal)
+                        else if(Model?.CurrentActivityName == @data.ActivityName && @data.IsFinal)
                         {
-                            <span style="color:red;font-weight:bold;">CLOSED</span> 
+                            <span style="color:red;font-weight:bold;">CLOSED</span>
                         }
+                        else if(isCompleted)
+                        {
+                            <span style="color:limegreen;font-weight:bold;">COMPLETED</span>
+                        }
+                    </td>                     
+                    <td class="tdbottomborder">    
+                        <span>@startdate</span>                                            
+                    </td> 
+                    <td class="tdbottomborder">    
+                        <span>@dueOn</span>                                                
+                    </td> 
+                    <td class="tdbottomborder">    
+                        <span>@daysElapsed</span>                                                
                     </td> 
             </tr>                    
             }           

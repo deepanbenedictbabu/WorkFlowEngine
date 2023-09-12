@@ -9,8 +9,7 @@ using WorkflowLib;
 namespace WorkflowEngineMVC.Controllers
 {
     public class CPROChainController : Controller
-    {
-        static string schemeCode = "SimpleWF";
+    {        
         static Guid processId;
         MoqData moqData;
         CaseDetailsModel? caseDetailsModel;
@@ -38,12 +37,13 @@ namespace WorkflowEngineMVC.Controllers
         }
 
         // GET: CPROController            
-        public ActionResult ShowStartRemedy(string caseId)
+        public ActionResult ShowStartRemedy(string caseId, string majorActivity)
         {
             _caseId = caseId;
             caseDetailsModel = moqData?.GetCaseDetails(caseId);
             caseDetailsModel.IsStartRemedy = true;            
-            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;            
+            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
+            workFlowResponseModel.MajorActivity = majorActivity;
             return View("Index", workFlowResponseModel);          
         }
         public ActionResult ShowCPROAlerts(string jsonString)
@@ -54,9 +54,9 @@ namespace WorkflowEngineMVC.Controllers
             workFlowResponseModel.CPROUserAlertModel.IsShowAlert = true;
             return View("ActivityChain", workFlowResponseModel);          
         }
-        public ActionResult StartRemedy(string caseId)
+        public ActionResult StartRemedy(string caseId, string majorActivity)
         {            
-            CreateInstance(caseId);
+            CreateInstance(caseId, majorActivity);
             _caseId = caseId;
             GetAllActivitiesAndCommands(processId);
             return View("ActivityChain", workFlowResponseModel);
@@ -89,16 +89,18 @@ namespace WorkflowEngineMVC.Controllers
             workFlowResponseModel.IsHistoryView = isHistoryView;            
         }
 
-        private void CreateInstance(string caseId)
+        private void CreateInstance(string caseId, string majorActivity)
         {
             processId = Guid.NewGuid();            
-            workFlowResponseModel.ProcessId = processId;            
+            workFlowResponseModel.ProcessId = processId;
+            workFlowResponseModel.ProcessStartedDate = DateTime.Now;
             try
             {
                 var createInstanceParameters = new CreateInstanceParams("SchemeCode", processId)                                                    
                                                     .AddPersistentParameter("CaseId", caseId)
+                                                    .AddPersistentParameter("MajorActivity", majorActivity)
                                                     .AddTemporaryParameter("CurrentDate", DateTime.Now);
-                WorkflowInit.Runtime.CreateInstance(schemeCode, processId);
+                WorkflowInit.Runtime.CreateInstance(majorActivity, processId);
                 Console.WriteLine("CreateInstance - OK.", processId);
             }
             catch (Exception ex)
@@ -110,7 +112,10 @@ namespace WorkflowEngineMVC.Controllers
         private void GetAllActivitiesAndCommands(Guid processId)
         {                        
             var schema = WorkflowInit.Runtime.GetProcessScheme(processId);
-            //workFlowResponseModel.Processdefinition = schema;                                 
+            //workFlowResponseModel.Processdefinition = schema;
+            var pi = WorkflowInit.Runtime.GetProcessInstanceAndFillProcessParameters(processId);
+            var listHistory = WorkflowInit.Runtime.PersistenceProvider.GetProcessHistoryAsync(pi.ProcessId).Result;
+            workFlowResponseModel.ListHistory = listHistory.OrderBy(d => d.StartTransitionTime).ToList();           
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
             workFlowResponseModel.ListCommandModel = new List<CommandModel>();
@@ -122,6 +127,8 @@ namespace WorkflowEngineMVC.Controllers
                 activityModel.IsFinal = activity.IsFinal;
                 activityModel.ActivityName = activity.Name;
                 activityModel.ProcessId = processId;
+                activityModel.DaysDue = Convert.ToDouble(schema.GetActivityAnnotation(activity.Name, "DaysDue"));
+                activityModel.MinorActivity = schema.GetActivityAnnotation(activity.Name, "MinorActivity");
                 workFlowResponseModel.ListActivityModel.Add(activityModel);
             }
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
