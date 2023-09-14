@@ -9,6 +9,6 @@
         public string? LocalizedName { get; set; }
         public string? Classifier { get; set; }
         public double DaysDue { get; set; }
-        public string? MinorActivity { get; set; }
+        public string? MinorActivityCode { get; set; }
     }
 }

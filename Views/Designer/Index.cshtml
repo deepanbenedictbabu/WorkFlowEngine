@@ -15,11 +15,10 @@
         <a href="javascript:DownloadSchemeBPMN()" class="ui secondary button">Download BPMN2</a>
         <a href="javascript:SelectScheme('bpmn')" class="ui secondary button">Upload BPMN2</a>
         <label for="activity">Major Activity:</label>
-        <select id="activity" name="activity">
+        <select id="activity" name="activity" onchange="activityChange()">
             <option value="GTST">GTST</option>
             <option value="ESTP">ESTP</option>            
-        </select>
-        <a href="javascript:wfdesignerRedraw()" class="ui secondary button">Load Designer</a>
+        </select>        
     </div>
     <input type="file" name="uploadFile" id="uploadFile" style="display:none" onchange="javascript: UploadScheme(this);">
 </form>
@@ -61,7 +60,7 @@
         var data;
         var selectElement = document.querySelector('#activity');
         var majorActivity = selectElement.value;
-        var schemecode =  majorActivity ?  majorActivity : 'GTST';        
+        schemecode =  majorActivity ?  majorActivity : 'GTST';        
         if (wfdesigner != undefined) {
             wfdesigner.destroy();
         }
@@ -152,6 +151,10 @@
 
     function OnNew() {
         wfdesigner.create();
+    }
+
+    function activityChange() {
+        wfdesignerRedraw();
     }
 
 </script>

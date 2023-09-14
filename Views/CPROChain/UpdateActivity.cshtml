@@ -8,6 +8,7 @@
 @using Microsoft.AspNetCore.Mvc.ViewFeatures;
 @using System.Net.Http.Headers;
 @using System.Text.Json;
+@using OptimaJet.Workflow.Core.Runtime;
 
 @*@model List<WorkflowEngineMVC.ViewModels.StateViewModel>*@
 @{
@@ -18,15 +19,38 @@
 <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
+<script type="text/javascript">
+    var jsonModel;
+    $(function () {
+        $("#btnModify").click(function () {
+            if(document.querySelector('input[name="rbCommand"]:checked')==null)
+            {
+                alert("Please select a command to update activity!")
+                return;
+            }
+            var commandName = document.querySelector('input[name="rbCommand"]:checked').value;            
+            var notes = document.querySelector('textarea[name="txtNotes"]').value; 
+            var parameterValue = "?jsonString=" + jsonModel + "&commandName="+commandName + "&notes="+notes;
+            var url = "@Url.Action("ProcessCommand", "CPROChain")"; 
+            window.location.href = url+ parameterValue;
+        });
+    });
+</script>
 <div>
-    <div >  
+    <div>  
         @Html.PartialAsync("CaseFilter",Model).Result  
-    </div>
+    </div>    
     <br />
+    <div> 
+        <div class="button">        
+            <a class="nav-link text-white" id="btnModify" style="cursor:pointer;">Modify</a>  
+        </div>
+    </div>
+     <br />
     <div >  
         @Html.PartialAsync("CPRORibbon",Model).Result  
     </div>
-    <br />   
+    <br />         
     <div>
          <table class="tableborder" style="width:50%">
             <tr>
@@ -36,21 +60,40 @@
             </tr> 
             <tr>
                 <td>                     
-                    @{                        
+                    @{
+                        Model.ListHistory = new List<ProcessHistoryItem>();
                         var wfJsonModel = JsonSerializer.Serialize(Model);  
-                    }                                                                                           
+                    }   
+                    <script>
+                        jsonModel = JSON.stringify(@Html.Raw(JsonSerializer.Serialize(Model)));                        
+                    </script>
                     <table style="width:100%">                                                                            
                             @foreach (var command in Model.ListCommandModel)
                             {   
                              <tr>  
                                  <td>                                             
-                                       <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="ProcessCommand" asp-route-jsonString=@wfJsonModel asp-route-commandName=@command.CommandName >@command.CommandName</a>                                               
-                                 </td>  
-                             </tr>        
+                                       <input class="navlinkcolor" id="@command.CommandName" type="radio" name="rbCommand" value="@command.CommandName"> <label class="navlinkcolor" for="@command.CommandName">@command.CommandName</label>
+                                 </td>                                   
+                             </tr>                              
                             }                                  
                     </table>
                 </td>
             </tr>
+        </table>
+    </div>
+    <br />
+    <div>
+         <table class="tableborder" style="width:50%">
+            <tr>
+                <td style="color:blue; background-color:blue; color:white;">                    
+                    Special Notes                        
+                </td>
+            </tr> 
+            <tr>
+                <td>                    
+                    <textarea rows="5" cols="75" id="txtNotes" name="txtNotes"></textarea>                        
+                </td>
+            </tr> 
         </table>
     </div>
     @if (@Model.CPROUserAlertModel != null)

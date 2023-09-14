@@ -1,6 +1,6 @@
 ﻿@model WorkFlowResponseModel
 <div class="modal fade show d-block " id="divModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 28% !important;">
+    <div class="modal-dialog" id="divSchedulerModal" role="document" style="max-width: 500px !important;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Start New Remedy</h5>
@@ -24,7 +24,7 @@
                                 Remedy :                         
                             </td>
                             <td>                    
-                                <input type="text" value=@Model.MajorActivity>                              
+                                <input type="text" value=@Model.MajorActivityCode>                              
                             </td>
                         </tr>
                             <tr>
@@ -80,7 +80,7 @@
                             <td></td>
                             <td> 
                                 <div class="button">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="StartRemedy" asp-route-caseId=@Model.CaseDetailsModel?.CaseId asp-route-majorActivity=@Model.MajorActivity>Start New Remedy</a>                               
+                                    <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="StartRemedy" asp-route-caseId=@Model.CaseDetailsModel?.CaseId asp-route-majorActivity=@Model.MajorActivityCode>Start New Remedy</a>                               
                                 </div>
                             </td>
                         </tr>

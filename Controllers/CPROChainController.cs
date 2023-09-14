@@ -3,23 +3,31 @@ using OptimaJet.Workflow.Core.Runtime;
 using System.Text.Json;
 using WorkflowEngineMVC.Data;
 using WorkflowEngineMVC.Models;
-using WorkflowEngineMVC.ViewModels;
 using WorkflowLib;
 
 namespace WorkflowEngineMVC.Controllers
 {
     public class CPROChainController : Controller
     {        
-        static Guid processId;
-        MoqData moqData;
-        CaseDetailsModel? caseDetailsModel;
-        WorkFlowResponseModel workFlowResponseModel;
+        static Guid _processId;
+        MoqData _moqData;
+        CaseDetailsModel? _caseDetailsModel;
+        WorkFlowResponseModel _workFlowResponseModel;
         string? _caseId;
+        const string _constStrSchemeCode = "SchemeCode";
+        const string  _constStrMinorActivity = "MinorActivity";
+        const string _constStrMajorActivity = "MajorActivity";
+        const string _constStrCPROCaseId = "CPROCaseId";        
+        const string _constStrDaysDue = "DaysDue";
+        const string _constStrCurrentDate = "CurrentDate";
+        const string _constStrFamilyViolence = "FamilyViolence";
+        const string _constStrWorkflowResponseModel = "WorkflowResponseModel";        
+
         public CPROChainController()
         {
-            workFlowResponseModel = new WorkFlowResponseModel();
-            moqData = new MoqData();
-            caseDetailsModel = new CaseDetailsModel();                        
+            _workFlowResponseModel = new WorkFlowResponseModel();
+            _moqData = new MoqData();
+            _caseDetailsModel = new CaseDetailsModel();                        
         }
 
         public ActionResult Index()
@@ -31,77 +39,78 @@ namespace WorkflowEngineMVC.Controllers
         public ActionResult GetCaseDetails(string caseId)
         {
             _caseId = caseId;
-            caseDetailsModel = moqData?.GetCaseDetails(caseId);            
-            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
-            return View("Index", workFlowResponseModel);
+            _caseDetailsModel = _moqData?.GetCaseDetails(caseId);            
+            _workFlowResponseModel.CaseDetailsModel = _caseDetailsModel;
+            return View("Index", _workFlowResponseModel);
         }
 
         // GET: CPROController            
         public ActionResult ShowStartRemedy(string caseId, string majorActivity)
         {
             _caseId = caseId;
-            caseDetailsModel = moqData?.GetCaseDetails(caseId);
-            caseDetailsModel.IsStartRemedy = true;            
-            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
-            workFlowResponseModel.MajorActivity = majorActivity;
-            return View("Index", workFlowResponseModel);          
+            _caseDetailsModel = _moqData?.GetCaseDetails(caseId);
+            _caseDetailsModel.IsStartRemedy = true;            
+            _workFlowResponseModel.CaseDetailsModel = _caseDetailsModel;
+            _workFlowResponseModel.MajorActivityCode = majorActivity;
+            return View("Index", _workFlowResponseModel);          
         }
         public ActionResult ShowCPROAlerts(string jsonString)
         {
-            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
-            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            _workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            _caseId = _workFlowResponseModel?.CaseDetailsModel?.CaseId;
             processView(false);                    
-            workFlowResponseModel.CPROUserAlertModel.IsShowAlert = true;
-            return View("ActivityChain", workFlowResponseModel);          
+            _workFlowResponseModel.CPROUserAlertModel.IsShowAlert = true;
+            return View("ActivityChain", _workFlowResponseModel);          
         }
         public ActionResult StartRemedy(string caseId, string majorActivity)
         {            
             CreateInstance(caseId, majorActivity);
             _caseId = caseId;
-            GetAllActivitiesAndCommands(processId);
-            return View("ActivityChain", workFlowResponseModel);
+            GetAllActivitiesAndCommands(_processId);
+            return View("ActivityChain", _workFlowResponseModel);
         }        
         public ActionResult ShowProcessHistoryView(string jsonString)
         {
-            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString)?? new WorkFlowResponseModel();
-            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            _workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString)?? new WorkFlowResponseModel();
+            _caseId = _workFlowResponseModel?.CaseDetailsModel?.CaseId;
             processView(true);
-            return View("ActivityChain", workFlowResponseModel);
+            return View("ActivityChain", _workFlowResponseModel);
         }
         public ActionResult ShowProcessListView(string jsonString)
         {
-            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
-            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            _workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            _caseId = _workFlowResponseModel?.CaseDetailsModel?.CaseId;
             processView(false);            
-            return View("ActivityChain", workFlowResponseModel);
+            return View("ActivityChain", _workFlowResponseModel);
         }
         public ActionResult UpdateActivity(string jsonString)
         {
-            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
-            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            _workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            _caseId = _workFlowResponseModel?.CaseDetailsModel?.CaseId;
             processView(false);
-            return View("UpdateActivity", workFlowResponseModel);
+            return View("UpdateActivity", _workFlowResponseModel);
         }
 
         private void processView(bool isHistoryView)
         {            
-            GetAllActivitiesAndCommands(workFlowResponseModel.ProcessId);            
-            workFlowResponseModel.IsHistoryView = isHistoryView;            
+            GetAllActivitiesAndCommands(_workFlowResponseModel.ProcessId);            
+            _workFlowResponseModel.IsHistoryView = isHistoryView;            
         }
 
         private void CreateInstance(string caseId, string majorActivity)
         {
-            processId = Guid.NewGuid();            
-            workFlowResponseModel.ProcessId = processId;
-            workFlowResponseModel.ProcessStartedDate = DateTime.Now;
+            _processId = Guid.NewGuid();            
+            _workFlowResponseModel.ProcessId = _processId;
+            _workFlowResponseModel.MajorActivityCode = majorActivity;
+            _workFlowResponseModel.ProcessStartedDate = DateTime.Now;
             try
             {
-                var createInstanceParameters = new CreateInstanceParams("SchemeCode", processId)                                                    
-                                                    .AddPersistentParameter("CaseId", caseId)
-                                                    .AddPersistentParameter("MajorActivity", majorActivity)
-                                                    .AddTemporaryParameter("CurrentDate", DateTime.Now);
-                WorkflowInit.Runtime.CreateInstance(majorActivity, processId);
-                Console.WriteLine("CreateInstance - OK.", processId);
+                var createInstanceParameters = new CreateInstanceParams(_constStrSchemeCode, _processId)                                                    
+                                                    .AddPersistentParameter(_constStrCPROCaseId, caseId)
+                                                    .AddPersistentParameter(_constStrMajorActivity, majorActivity)
+                                                    .AddTemporaryParameter(_constStrCurrentDate, DateTime.Now);
+                WorkflowInit.Runtime.CreateInstance(majorActivity, _processId);
+                Console.WriteLine("CreateInstance - OK.", _processId);
             }
             catch (Exception ex)
             {
@@ -115,11 +124,11 @@ namespace WorkflowEngineMVC.Controllers
             //workFlowResponseModel.Processdefinition = schema;
             var pi = WorkflowInit.Runtime.GetProcessInstanceAndFillProcessParameters(processId);
             var listHistory = WorkflowInit.Runtime.PersistenceProvider.GetProcessHistoryAsync(pi.ProcessId).Result;
-            workFlowResponseModel.ListHistory = listHistory.OrderBy(d => d.StartTransitionTime).ToList();           
+            _workFlowResponseModel.ListHistory = listHistory.OrderBy(d => d.StartTransitionTime).ToList();           
             var activityName = WorkflowInit.Runtime.GetCurrentActivityName(processId);
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
-            workFlowResponseModel.ListCommandModel = new List<CommandModel>();
-            workFlowResponseModel.ListActivityModel = new List<ActivityModel>();
+            _workFlowResponseModel.ListCommandModel = new List<CommandModel>();
+            _workFlowResponseModel.ListActivityModel = new List<ActivityModel>();
             foreach (var activity in schema.Activities)
             {
                 ActivityModel activityModel = new ActivityModel();
@@ -127,48 +136,60 @@ namespace WorkflowEngineMVC.Controllers
                 activityModel.IsFinal = activity.IsFinal;
                 activityModel.ActivityName = activity.Name;
                 activityModel.ProcessId = processId;
-                activityModel.DaysDue = Convert.ToDouble(schema.GetActivityAnnotation(activity.Name, "DaysDue"));
-                activityModel.MinorActivity = schema.GetActivityAnnotation(activity.Name, "MinorActivity");
-                workFlowResponseModel.ListActivityModel.Add(activityModel);
+                activityModel.DaysDue = Convert.ToDouble(schema.GetActivityAnnotation(activity.Name, _constStrDaysDue));
+                activityModel.MinorActivityCode = schema.GetActivityAnnotation(activity.Name, _constStrMinorActivity);
+                _workFlowResponseModel.ListActivityModel.Add(activityModel);
             }
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
-            caseDetailsModel = moqData.GetCaseDetails(_caseId);
-            workFlowResponseModel.CurrentActivityName = activityName;
-            workFlowResponseModel.ProcessId = processId;
-            workFlowResponseModel.CurrentStateName = stateName;
-            workFlowResponseModel.CaseDetailsModel = caseDetailsModel;
+            _caseDetailsModel = _moqData.GetCaseDetails(_caseId);
+            _workFlowResponseModel.CurrentActivityName = activityName;
+            _workFlowResponseModel.CurrentMinorActivityCode = schema.GetActivityAnnotation(activityName, _constStrMinorActivity);
+            _workFlowResponseModel.ProcessId = processId;
+            _workFlowResponseModel.CurrentStateName = stateName;
+            _workFlowResponseModel.CaseDetailsModel = _caseDetailsModel;
             foreach (var workflowCommand in workflowCommands)
             {
                 var commandModel = new CommandModel();
                 commandModel.ProcessId= workflowCommand.ProcessId;
                 commandModel.CommandName = workflowCommand.CommandName;
-                workFlowResponseModel.ListCommandModel.Add(commandModel);
+                _workFlowResponseModel.ListCommandModel.Add(commandModel);
             }            
         }
 
-        public ActionResult ProcessCommand(string jsonString, string commandName)
+        public ActionResult ProcessCommand(string jsonString, string commandName, string notes)
         {
-            workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString);
-            _caseId = workFlowResponseModel?.CaseDetailsModel?.CaseId;
-            workFlowResponseModel.CurrentCommandName = commandName;  
+            _workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString);
+            _caseId = _workFlowResponseModel?.CaseDetailsModel?.CaseId;
+            _workFlowResponseModel.CurrentCommandName = commandName;
             //Parameter List
-            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "CPROCaseId", _caseId);
-            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "FamilyViolence", workFlowResponseModel.CaseDetailsModel?.FamilyViolence);
-            WorkflowInit.Runtime.SetPersistentProcessParameter(processId, "WorkflowResponseModel", workFlowResponseModel);
-            workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(workFlowResponseModel, commandName );            
-            GetAllActivitiesAndCommands(processId);            
-            return View("ActivityChain", workFlowResponseModel);
+            WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrCPROCaseId, _caseId);
+            WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrFamilyViolence, _workFlowResponseModel.CaseDetailsModel?.FamilyViolence);
+            WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrWorkflowResponseModel, _workFlowResponseModel);
+            WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrMinorActivity, _workFlowResponseModel.CurrentMinorActivityCode);
+            _workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(_workFlowResponseModel, commandName );            
+            GetAllActivitiesAndCommands(_processId);
+            if (!string.IsNullOrEmpty(notes))
+            {
+                SpecialNotes specialNotes = new SpecialNotes();
+                specialNotes.ProcessId = _processId;
+                specialNotes.CaseId = _caseId;
+                specialNotes.Notes = notes;
+                specialNotes.MajorActivityCode = _workFlowResponseModel.MajorActivityCode;
+                specialNotes.MinorActivityCode = _workFlowResponseModel.CurrentMinorActivityCode;
+                _workFlowResponseModel.ListSpecialNotes.Add(specialNotes);
+            }
+            return View("ActivityChain", _workFlowResponseModel);
         }
 
         private void DeleteProcess()
         {
-            if (processId == null)
+            if (_processId == null)
             {
                 Console.WriteLine("The process isn't created. Please, create process instance.");
                 return;
             }
-            WorkflowInit.Runtime.DeleteInstance(processId);
-            Console.WriteLine("DeleteProcess - OK.", processId);            
+            WorkflowInit.Runtime.DeleteInstance(_processId);
+            Console.WriteLine("DeleteProcess - OK.", _processId);            
         }
 
         // GET: CPROController/Create

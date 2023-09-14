@@ -99,7 +99,7 @@ table {
     background-position: center;
     background-image: url('../images/button.jpg');
     background-size: 170px 45px;
-    width: 230px;
+    width: 230px;    
 }
 
 .modal-dialog {
@@ -109,6 +109,7 @@ table {
 .navlinkcolor {
     color: blue !important;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .bold{

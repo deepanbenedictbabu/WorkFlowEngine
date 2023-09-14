@@ -9,7 +9,8 @@ namespace WorkflowEngineMVC.Models
         public DateTime ProcessStartedDate { get; set; }
         public string? CurrentStateName { get; set; }
         public string? CurrentActivityName { get; set; }
-        public string? MajorActivity { get; set; }
+        public string? CurrentMinorActivityCode { get; set; }
+        public string? MajorActivityCode { get; set; }
         public string? CurrentCommandName { get; set; }        
         public bool IsHistoryView  { get; set; }
         public string? ScreenName { get; set; }
@@ -22,6 +23,7 @@ namespace WorkflowEngineMVC.Models
         public List<CommandModel> ListCommandModel { get; set; }                   
         public List<ActivityModel> ListActivityModel { get; set; }
         public List<ProcessHistoryItem> ListHistory { get; set; }
+        public List<SpecialNotes> ListSpecialNotes { get; set; }
 
         public WorkFlowResponseModel()
         {            
@@ -29,6 +31,7 @@ namespace WorkflowEngineMVC.Models
             ListActivityModel = new List<ActivityModel>();
             ListNoticeGenerationModel = new List<NoticeGenerationModel>();
             ListHistory = new List<ProcessHistoryItem>();
+            ListSpecialNotes = new List<SpecialNotes>();
             IsHistoryView = false;            
         }
 

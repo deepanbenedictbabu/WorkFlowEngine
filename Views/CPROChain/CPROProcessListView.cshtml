@@ -1,4 +1,5 @@
 ﻿@using System.Text.Json;
+@using OptimaJet.Workflow.Core.Runtime;
 @model WorkFlowResponseModel
 <div>    
     <div>        
@@ -19,10 +20,7 @@
                 <td style="background-color:blue; color:white;">
                     Days Elapsed
                 </td>
-            </tr>
-            @{                
-                var wfJsonModel = JsonSerializer.Serialize(Model);  
-            }    
+            </tr>              
             @foreach(var data in Model.ListActivityModel)
             {
                 var isCompleted = Model?.ListHistory.Where(d => d.FromActivityName == data.ActivityName || d.ToActivityName == data.ActivityName).ToList().Count > 0;
@@ -54,6 +52,8 @@
                     <td class="tdbottomborder">                         
                         @if (Model?.CurrentActivityName == @data.ActivityName && !@data.IsFinal)
                         {
+                            Model.ListHistory = new List<ProcessHistoryItem>();
+                            var wfJsonModel = JsonSerializer.Serialize(Model);                           
                             <a class="navlinkcolor" asp-area="" asp-controller="CPROChain" asp-action="UpdateActivity" asp-route-jsonString=@wfJsonModel>@data.ActivityName</a>                            
                         }
                         else

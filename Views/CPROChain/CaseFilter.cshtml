@@ -1,20 +1,30 @@
 ﻿@model WorkFlowResponseModel
-<div>
-    <form method="get" action="CPROChain\GetCaseDetails">
-        <table class="tableborder">
-            <tr>
-                <td class="bold">                    
-                    Case ID :                              
-                </td>
-                <td>                    
-                    <input id="caseId" name="caseId" type="text" value="100016">                              
-                </td>
-                <td>                    
-                    <div>                    
-                        <input type="submit" value="Find" />
-                    </div>                          
-                </td>
-            </tr>         
-        </table>
-    </form>
+<script type="text/javascript">    
+    $(function () {
+        $("#btnFind").click(function () {
+            var caseId = document.querySelector('input[name="caseId"]').value;            
+            var parameterValue = "?caseId="+caseId;
+            var url = "@Url.Action("GetCaseDetails", "CPROChain")";
+            window.location.href = url + parameterValue;
+        });
+    });
+</script>
+<div>    
+    <table class="tableborder">
+        <tr>
+            <td class="bold">                    
+                Case ID :                              
+            </td>
+            <td>                    
+                <input id="caseId" name="caseId" type="text" value="100016">                              
+            </td>
+            <td>   
+                <div> 
+                    <div class="button">        
+                        <a class="nav-link text-white" style="cursor:pointer;" id="btnFind">Find</a>  
+                    </div>
+                </div>
+            </td>
+        </tr>         
+    </table>    
 </div>
