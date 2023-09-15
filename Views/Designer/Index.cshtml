@@ -144,6 +144,12 @@
         }
         else {
             wfdesigner.save(function () {
+                var selectElement = document.querySelector('#activity');
+                var majorActivity = selectElement.value;                         
+                var parameterValue = "?majorActivityCode=" + majorActivity;
+                var url = "@Url.Action("SaveWorkFlowData", "Designer")"; 
+                alert(url);
+                window.location.href = url+ parameterValue;
                 alert('The scheme is saved!');
             });
         }

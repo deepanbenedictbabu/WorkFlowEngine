@@ -13,8 +13,7 @@ namespace WorkflowEngineMVC.Controllers
         MoqData _moqData;
         CaseDetailsModel? _caseDetailsModel;
         WorkFlowResponseModel _workFlowResponseModel;
-        string? _caseId;
-        const string _constStrSchemeCode = "SchemeCode";
+        string? _caseId;        
         const string  _constStrMinorActivity = "MinorActivity";
         const string _constStrMajorActivity = "MajorActivity";
         const string _constStrCPROCaseId = "CPROCaseId";        
@@ -105,7 +104,7 @@ namespace WorkflowEngineMVC.Controllers
             _workFlowResponseModel.ProcessStartedDate = DateTime.Now;
             try
             {
-                var createInstanceParameters = new CreateInstanceParams(_constStrSchemeCode, _processId)                                                    
+                var createInstanceParameters = new CreateInstanceParams(majorActivity, _processId)                                                    
                                                     .AddPersistentParameter(_constStrCPROCaseId, caseId)
                                                     .AddPersistentParameter(_constStrMajorActivity, majorActivity)
                                                     .AddTemporaryParameter(_constStrCurrentDate, DateTime.Now);
