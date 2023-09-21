@@ -147,10 +147,13 @@
                 var selectElement = document.querySelector('#activity');
                 var majorActivity = selectElement.value;                         
                 var parameterValue = "?majorActivityCode=" + majorActivity;
-                var url = "@Url.Action("SaveWorkFlowData", "Designer")"; 
-                alert(url);
-                window.location.href = url+ parameterValue;
+                var url = "Designer/SaveWorkFlowData";     
                 alert('The scheme is saved!');
+                if(window.location.href.indexOf("Designer")>-1)
+                {
+                   url = "/Designer/SaveWorkFlowData";                     
+                }                
+                window.location.href = url+ parameterValue;                
             });
         }
     }
