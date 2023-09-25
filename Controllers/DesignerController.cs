@@ -21,16 +21,10 @@ namespace WorkflowEngineMVC.Controllers
 {
     public class DesignerController : Controller
     {
-        private readonly IConfiguration _configuration;
-        const string _constStrMinorActivity = "MinorActivity";
-        const string _constStrMajorActivity = "MajorActivity";
-        const string _constStrCPROCaseId = "CPROCaseId";
-        const string _constStrDaysDue = "DaysDue";
-        const string _constStrCurrentDate = "CurrentDate";
+        private readonly IConfiguration _configuration;        
+        const string _constStrCPROCaseId = "CPROCaseId";        
         const string _constStrFamilyViolence = "FamilyViolence";
         const string _constStrWorkflowResponseModel = "WorkflowResponseModel";
-        const string _actionAlertCode = "ActionAlertCode";
-        const string _alertWarningInDays = "AlertWarningInDays";
         
         public DesignerController(IConfiguration configuration)
         {
@@ -112,6 +106,11 @@ namespace WorkflowEngineMVC.Controllers
                         int noticeOrder = 0;
                         int reasonOrder = 0;
                         activityOrder++;
+                        WorkFlowInputParameter activityInput = new WorkFlowInputParameter();
+                        foreach (var impl in activity.Implementation.Where(a => a.ActionName == "SetActivityInputs"))
+                        {
+                            activityInput = JsonSerializer.Deserialize<WorkFlowInputParameter>(impl.ActionParameter);
+                        }
                         sqlQry = @"INSERT INTO RefMinorActivity_T1				
                                     (
                                         ActivityMinor_CODE,
@@ -135,17 +134,17 @@ namespace WorkflowEngineMVC.Controllers
                                     )
                                     VALUES
                                       ('"
-                                      + schema.GetActivityAnnotation(activity.Name, _constStrMinorActivity) + "'," 
+                                      + activityInput.MinorActivity + "'," 
                                       + "'',"
-                                      + "'" + activity.Name + "'," +
-                                      + Convert.ToDouble(schema.GetActivityAnnotation(activity.Name, _constStrDaysDue)) + ","
-                                      + "'" + Convert.ToString(schema.GetActivityAnnotation(activity.Name, _actionAlertCode?? "A")) + "',"                                      
+                                      + "'" + activity.Name + "'," 
+                                      +  activityInput.DaysDue + ","
+                                      + "'" + activityInput.ActionAlertCode + "',"                                      
                                       + "'',"
-                                      + Convert.ToDouble(schema.GetActivityAnnotation(activity.Name, _alertWarningInDays)) + ","
+                                      + activityInput.AlertWarningInDays + ","
                                       + "'',"
                                       + "'',"
                                       + "'',"
-                                      + "'" + DateTime.Now.ToShortDateString() +"'," 
+                                      + "'" + DateTime.Now.ToShortDateString() + "'," 
                                       + "'12/31/9999',"
                                       + "'KIDSFIRST',"
                                       + "'12/31/9999',"
@@ -176,9 +175,9 @@ namespace WorkflowEngineMVC.Controllers
                                     )
                                     VALUES
                                     ('"
-                                    + schema.GetActivityAnnotation(activity.Name, _constStrMinorActivity) + "',"
-                                    + "'" + schema.GetActivityAnnotation(activity.Name, "Category") + "',"
-                                    + "'" + schema.GetActivityAnnotation(activity.Name, "SubCategory") + "',"                                    
+                                    + activityInput.MinorActivity + "',"
+                                    + "'" + activityInput.Category + "',"
+                                    + "'" + activityInput.SubCategory + "',"                                    
                                     + "'',"
                                     + "'" + DateTime.Now.ToShortDateString() + "',"
                                     + "'12/31/9999',"
@@ -196,6 +195,11 @@ namespace WorkflowEngineMVC.Controllers
                         }
                         foreach (var data in schema.Transitions.Where(d => d.From.Name == activity.Name))
                         {
+                            WorkFlowInputParameter toActivityInput = new WorkFlowInputParameter();
+                            foreach (var impl in data.To.Implementation.Where(a => a.ActionName == "SetActivityInputs"))
+                            {
+                                toActivityInput = JsonSerializer.Deserialize<WorkFlowInputParameter>(impl.ActionParameter);
+                            }
                             reasonOrder++;
                             sqlQry = @"INSERT INTO RefNextActivity_T1
                                         (
@@ -233,14 +237,14 @@ namespace WorkflowEngineMVC.Controllers
                                         VALUES
                                         ('"
                                        + majorActivityCode + "',"
-                                       + "'" + schema.GetActivityAnnotation(data.From.Name, _constStrMinorActivity) + "',"
-                                       + activityOrder + ","
-                                       + "'" + data.Annotations.Where(a => a.Name == "Reason").FirstOrDefault()?.JsonValue + "',"
+                                       + "'" + activityInput.MinorActivity + "',"
+                                       + activityOrder + ","                                       
+                                       + "'" + data.Trigger.Command.InputParameters.Where(a => a.Name == "Reason").FirstOrDefault()?.DefaultValue + "',"
                                        + reasonOrder + ","
                                        + "'" + majorActivityCode + "',"
-                                       + "'" + schema.GetActivityAnnotation(data.To.Name, _constStrMinorActivity) + "',"
-                                       + "'" + schema.GetActivityAnnotation(data.From.Name, "Group") + "',"
-                                       + "'" + schema.GetActivityAnnotation(data.To.Name, "Group") + "',"
+                                       + "'" + toActivityInput.MinorActivity + "',"
+                                       + "'" + activityInput.Group + "',"
+                                       + "'" + toActivityInput.Group + "',"
                                        + "'" + DateTime.Now.ToShortDateString() + "',"
                                        + "'12/31/9999',"
                                        + "'KIDSFIRST',"
@@ -280,7 +284,7 @@ namespace WorkflowEngineMVC.Controllers
                                     )
                                     VALUES
                                     ('"
-                                        + schema.GetActivityAnnotation(data.From.Name, _constStrMinorActivity) + "',"
+                                        + activityInput.MinorActivity + "',"
                                         + "'" + NoticeInput.NoticeId + "',"
                                         + "'" + DateTime.Now.ToShortDateString() + "',"
                                         + "'12/31/9999',"
@@ -289,10 +293,10 @@ namespace WorkflowEngineMVC.Controllers
                                         + "1,"
                                         + "'N',"
                                         + "'O',"
+                                        + "'" + majorActivityCode + "',"                                        
+                                        + "'" + data.Trigger.Command.InputParameters.Where(a => a.Name == "Reason").FirstOrDefault()?.DefaultValue + "',"
                                         + "'" + majorActivityCode + "',"
-                                        + "'" + data.Annotations.Where(a => a.Name == "Reason").FirstOrDefault()?.JsonValue + "',"
-                                        + "'" + majorActivityCode + "',"
-                                        + "'" + schema.GetActivityAnnotation(data.To.Name, _constStrMinorActivity) + "',"
+                                        + "'" + toActivityInput.MinorActivity + "',"
                                         + noticeOrder + ","
                                         + "'" + NoticeInput.NoticeRecipient + "',"
                                         + "1,"

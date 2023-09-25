@@ -30,6 +30,7 @@ namespace WorkflowLib
             //_actions.Add("RecordGTSTTestResults", RecordGTSTTestResults); // sync
             //_actions.Add("GenerateNotice", GenerateNotice); // sync            
             //_actions.Add("GenerateAlert", GenerateAlert); // sync
+            _actions.Add("SetActivityInputs", SetActivityInputs); // sync
             _asyncActions.Add("MyActionAsync", MyActionAsync); // async
 
             // Register your conditions in _conditions and _asyncConditions dictionaries
@@ -115,6 +116,12 @@ namespace WorkflowLib
                 processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);                
             }
             return true;
+        }
+
+        private void SetActivityInputs(ProcessInstance processInstance, WorkflowRuntime runtime,
+            string actionParameter)//actionParameter should be the notice id 
+        {  
+             
         }
 
         private async Task MyActionAsync(ProcessInstance processInstance, WorkflowRuntime runtime,

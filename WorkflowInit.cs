@@ -46,7 +46,8 @@ namespace WorkflowLib
                 .WithActionProvider(WorkflowActionProvider)
                 .EnableCodeActions()
                 //.CodeActionsDebugOn()
-                .SwitchAutoUpdateSchemeBeforeGetAvailableCommandsOn()                
+                .SwitchAutoUpdateSchemeBeforeGetAvailableCommandsOn()
+                .WithDesignerParameterFormatProvider(new DesignerParameterFormatProvider())
                 .AsSingleServer();
 
             var plugin = new OptimaJet.Workflow.Plugins.BasicPlugin();
