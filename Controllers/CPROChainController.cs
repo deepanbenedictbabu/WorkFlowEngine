@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OptimaJet.Workflow.Core.Runtime;
+using System.Diagnostics;
 using System.Text.Json;
 using WorkflowEngineMVC.Data;
 using WorkflowEngineMVC.Models;
@@ -128,21 +129,26 @@ namespace WorkflowEngineMVC.Controllers
             var stateName = WorkflowInit.Runtime.GetCurrentStateName(processId);
             _workFlowResponseModel.ListCommandModel = new List<CommandModel>();
             _workFlowResponseModel.ListActivityModel = new List<ActivityModel>();
+            WorkFlowInputParameter? activityInput = new WorkFlowInputParameter();            
             foreach (var activity in schema.Activities)
             {
+                foreach (var impl in activity.Implementation.Where(a => a.ActionName == "SetActivityInputs"))
+                {
+                    activityInput = JsonSerializer.Deserialize<WorkFlowInputParameter>(impl.ActionParameter);
+                }
                 ActivityModel activityModel = new ActivityModel();
                 activityModel.IsInitial = activity.IsInitial;
                 activityModel.IsFinal = activity.IsFinal;
                 activityModel.ActivityName = activity.Name;
                 activityModel.ProcessId = processId;
-                activityModel.DaysDue = Convert.ToDouble(schema.GetActivityAnnotation(activity.Name, _constStrDaysDue));
-                activityModel.MinorActivityCode = schema.GetActivityAnnotation(activity.Name, _constStrMinorActivity);
+                activityModel.DaysDue = activityInput.DaysDue;
+                activityModel.MinorActivityCode = activityInput.MinorActivity;
                 _workFlowResponseModel.ListActivityModel.Add(activityModel);
             }
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
             _caseDetailsModel = _moqData.GetCaseDetails(_caseId);
             _workFlowResponseModel.CurrentActivityName = activityName;
-            _workFlowResponseModel.CurrentMinorActivityCode = schema.GetActivityAnnotation(activityName, _constStrMinorActivity);
+            _workFlowResponseModel.CurrentMinorActivityCode = activityInput.MinorActivity;
             _workFlowResponseModel.ProcessId = processId;
             _workFlowResponseModel.CurrentStateName = stateName;
             _workFlowResponseModel.CaseDetailsModel = _caseDetailsModel;

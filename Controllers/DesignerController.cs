@@ -81,7 +81,8 @@ namespace WorkflowEngineMVC.Controllers
         
         public IActionResult SaveWorkFlowData(string majorActivityCode)
         {
-            var processId = Guid.NewGuid();            
+            var processId = Guid.NewGuid();
+            int displayOrder = 0;
             try
             {
                 var createInstanceParameters = new CreateInstanceParams(majorActivityCode, processId);
@@ -93,6 +94,7 @@ namespace WorkflowEngineMVC.Controllers
                     con.Open();
                     string sqlQry = @"DELETE FROM RefMinorActivity_T1;
                                     DELETE FROM RefNextActivity_T1;
+                                    DELETE FROM RefMaintenance_T1
                                     DELETE FROM RefActivityCatRole_T1;
                                     DELETE FROM RefActivityFormMaster_T1;";
                     using (SqlCommand command = new SqlCommand(sqlQry, con))
@@ -106,7 +108,7 @@ namespace WorkflowEngineMVC.Controllers
                         int noticeOrder = 0;
                         int reasonOrder = 0;
                         activityOrder++;
-                        WorkFlowInputParameter activityInput = new WorkFlowInputParameter();
+                        WorkFlowInputParameter? activityInput = new WorkFlowInputParameter();
                         foreach (var impl in activity.Implementation.Where(a => a.ActionName == "SetActivityInputs"))
                         {
                             activityInput = JsonSerializer.Deserialize<WorkFlowInputParameter>(impl.ActionParameter);
@@ -184,7 +186,7 @@ namespace WorkflowEngineMVC.Controllers
                                     + "'KIDSFIRST',"
                                     + "1,"
                                     + "'',"
-                                    + "'',"
+                                    + "'" + activityInput.ScreenFunctionCode + "',"
                                     + "'Y',"
                                     + "''"
                                     + ")";
@@ -195,7 +197,7 @@ namespace WorkflowEngineMVC.Controllers
                         }
                         foreach (var data in schema.Transitions.Where(d => d.From.Name == activity.Name))
                         {
-                            WorkFlowInputParameter toActivityInput = new WorkFlowInputParameter();
+                            WorkFlowInputParameter? toActivityInput = new WorkFlowInputParameter();
                             foreach (var impl in data.To.Implementation.Where(a => a.ActionName == "SetActivityInputs"))
                             {
                                 toActivityInput = JsonSerializer.Deserialize<WorkFlowInputParameter>(impl.ActionParameter);
@@ -256,6 +258,38 @@ namespace WorkflowEngineMVC.Controllers
                                 command.CommandType = CommandType.Text;
                                 int count = command.ExecuteNonQuery();
                             }
+                            displayOrder++;
+                            sqlQry = @"INSERT INTO RefMaintenance_T1
+                                        (
+                                        Table_ID,
+                                        TableSub_ID,
+                                        DescriptionTable_TEXT,
+                                        Value_CODE,
+                                        DescriptionValue_TEXT,
+                                        DispOrder_NUMB,
+                                        BeginValidity_DATE,
+                                        WorkerUpdate_ID,
+                                        TransactionEventSeq_NUMB,
+                                        Update_DTTM	
+                                        )
+                                        VALUES
+                                        ('CPRO',
+                                         'REAS',
+                                        'ACTIVITY REASON',"                                       
+                                       + "'" + data.Trigger.Command.InputParameters.Where(a => a.Name == "Reason").FirstOrDefault()?.DefaultValue + "',"
+                                       + "'" + data.Trigger.Command.Name + "',"
+                                       + displayOrder + ","
+                                       + "'" + DateTime.Now.ToShortDateString() + "',"                                       
+                                       + "'KIDSFIRST',"                                       
+                                       + "1,"
+                                       + "'" + DateTime.Now.ToShortDateString() + "'"
+                                       + ")";
+                            using (SqlCommand command = new SqlCommand(sqlQry, con))
+                            {
+                                command.CommandType = CommandType.Text;
+                                int count = command.ExecuteNonQuery();
+                            }
+
                             foreach (var dataOut in data.Conditions.Where(d => d.Action?.ActionName == "GenerateNotice"))
                             {
                                 noticeOrder++;

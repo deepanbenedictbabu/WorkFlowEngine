@@ -28,6 +28,26 @@ namespace WorkflowEngineMVC
                         },
                         new DropdownValue
                         {
+                            Name = "INT-02",
+                            Value = "INT-02"
+                        },
+                        new DropdownValue
+                        {
+                            Name = "INT-03",
+                            Value = "INT-03"
+                        },
+                        new DropdownValue
+                        {
+                            Name = "INT-04",
+                            Value = "INT-04"
+                        },
+                        new DropdownValue
+                        {
+                            Name = "INT-05",
+                            Value = "INT-05"
+                        },
+                        new DropdownValue
+                        {
                             Name = "EST-07",
                             Value = "EST-07"
                         },
@@ -45,6 +65,21 @@ namespace WorkflowEngineMVC
                         {
                             Name = "EST-10",
                             Value = "EST-10"
+                        },
+                        new DropdownValue
+                        {
+                            Name = "FIN-01",
+                            Value = "FIN-01"
+                        },
+                        new DropdownValue
+                        {
+                            Name = "FIN-02",
+                            Value = "FIN-02"
+                        },
+                        new DropdownValue
+                        {
+                            Name = "FIN-03",
+                            Value = "FIN-03"
                         }
                     }
                 },
@@ -144,6 +179,14 @@ namespace WorkflowEngineMVC
                     Name = "AlertWarningInDays",
                     Title = "Alert Warning In Days",
                     Type = ParameterType.Number
+                },
+                new CodeActionParameterDefinition
+                {
+                    DefaultValue = "",
+                    IsRequired = false,
+                    Name = "ScreenFunctionCode",
+                    Title = "Screen Function Code",
+                    Type = ParameterType.Text
                 },
                 new CodeActionParameterDefinition
                 {
