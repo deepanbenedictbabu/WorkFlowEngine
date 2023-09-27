@@ -21,7 +21,7 @@
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
 <script type="text/javascript">
     var jsonModel;
-    $(function () {
+    $(function () {   
         $("#btnModify").click(function () {
             if(document.querySelector('input[name="rbCommand"]:checked')==null)
             {
@@ -33,8 +33,13 @@
             var parameterValue = "?jsonString=" + jsonModel + "&commandName="+commandName + "&notes="+notes;
             var url = "@Url.Action("ProcessCommand", "CPROChain")"; 
             window.location.href = url+ parameterValue;
-        });
+        });        
     });
+    function showAction(commandId)
+    {
+        $("table[id^='tblCommand']" ).hide();  
+        $('#tblCommand' + commandId).show();
+    }
 </script>
 <div>
     <div>  
@@ -52,7 +57,7 @@
     </div>
     <br />         
     <div>
-         <table class="tableborder" style="width:50%">
+         <table class="tableborder" style="width:81%">
             <tr>
                 <td style="color:blue; background-color:blue; color:white;">                    
                     Update Activity                           
@@ -62,21 +67,67 @@
                 <td>                     
                     @{
                         Model.ListHistory = new List<ProcessHistoryItem>();
-                        var wfJsonModel = JsonSerializer.Serialize(Model);  
+                        var wfJsonModel = JsonSerializer.Serialize(Model);
+                        var commandId = 1;
                     }   
                     <script>
                         jsonModel = JSON.stringify(@Html.Raw(JsonSerializer.Serialize(Model)));                        
                     </script>
                     <table style="width:100%">                                                                            
                             @foreach (var command in Model.ListCommandModel)
-                            {   
+                            {  
+                                var isOptionSelected = "";                                
                              <tr>  
-                                 <td>                                             
-                                       <input class="navlinkcolor" id="@command.CommandName" type="radio" name="rbCommand" value="@command.CommandName"> <label class="navlinkcolor" for="@command.CommandName">@command.CommandName</label>
-                                 </td>                                   
+                                 <td>  
+                                 @if(Model.CurrentCommandName == command.CommandName)
+                                 {
+                                    <input class="navlinkcolor" id="@command.CommandName" type="radio" name="rbCommand" value="@command.CommandName" checked onclick="showAction(@commandId)"> <label class="navlinkcolor" for="@command.CommandName" onclick="showAction(@commandId)">@command.CommandName</label>
+                                 } 
+                                 else
+                                 {
+                                    <input class="navlinkcolor" id="@command.CommandName" type="radio" name="rbCommand" value="@command.CommandName" onclick="showAction(@commandId)"> <label class="navlinkcolor" for="@command.CommandName" onclick="showAction(@commandId)">@command.CommandName</label>
+                                 }
+                                 </td>   
+                                 <td>
+                                    @{
+                                        var tblName = "tblCommand" + commandId;
+                                        commandId++;
+                                        var style = "";
+                                    }
+                                     @if(Model.CurrentCommandName == command.CommandName)
+                                     {
+                                        style = "display:block;";
+                                    }
+                                    else
+                                    {
+                                        style = "display:none;";
+                                    }
+                                    <table style="width:100%;@style" id=@tblName>                                                                            
+                                     
+                                            @foreach (var action in command.ListActionModel)
+                                            {   
+                                                <tr>                                                   
+                                                    <td> 
+                                                        @if ( @action.InputParameter?.NoticeId != null && @action.ActionName=="GenerateNotice")
+                                                        {                                                        
+                                                        <a class="navlinkcolor" asp-area="" asp-controller="NoticeGeneration" asp-action="ShowGenerateNoticeForm" asp-route-jsonString=@wfJsonModel asp-route-commandName=@command.CommandName  asp-route-noticeId=@action.InputParameter?.NoticeId>@action.ActionName - @action.InputParameter?.NoticeId</a>
+                                                        }
+                                                        else if ( @action.ActionName=="ShowGTSTScheduler")
+                                                        {
+                                                        <a class="navlinkcolor" asp-area="" asp-controller="GTSTScheduler" asp-action="ShowScheduler" asp-route-jsonString=@wfJsonModel asp-route-commandName=@command.CommandName>@action.ActionName</a>
+                                                        }
+                                                    else if (@action.ActionName == "RecordGTSTTestResults")
+                                                        {
+                                                        <a class="navlinkcolor" asp-area="" asp-controller="NoticeGeneration" asp-action="ShowScheduler" asp-route-jsonString=@wfJsonModel asp-route-commandName=@command.CommandName asp-route-noticeId=@action.InputParameter?.NoticeId>@action.ActionName - @action.InputParameter?.NoticeId</a>
+                                                        }
+                                                </td>                                   
+                                                </tr>                              
+                                            }                                  
+                                    </table>
+                                 </td>
                              </tr>                              
                             }                                  
-                    </table>
+                    </table>                    
                 </td>
             </tr>
         </table>
@@ -103,4 +154,26 @@
             @Html.PartialAsync("CPROUserAlert",Model).Result  
         </div>        
     }
+    <br/>    
+    @if (@Model.ScreenName == "GTSTScheduler")
+    {
+        <br />
+        <div>  
+            @Html.PartialAsync("GTSTScheduler",Model).Result  
+        </div>
+    }
+    else if(@Model.ScreenName == "NoticeGeneration")
+    {
+        <br />
+        <div>  
+            @Html.PartialAsync("NoticeGeneration",Model).Result  
+        </div>
+    }
+    else if(@Model.ScreenName == "GTSTTestResults")
+    {
+        <br />
+        <div>  
+            @Html.PartialAsync("GTSTTestResult",Model).Result  
+        </div>
+    }    
 </div>

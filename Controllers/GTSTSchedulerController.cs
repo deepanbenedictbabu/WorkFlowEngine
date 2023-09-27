@@ -25,6 +25,18 @@ namespace WorkflowEngineMVC.Controllers
             //Show the screen with all the case and schedule details
             return gtstSchedulerModel;
         }
+        public ActionResult ShowScheduler(string jsonString, string caseId, string commandName)
+        {
+            var workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();            
+            gtstSchedulerModel = moqData.GetGTSTScheduleDetails(caseId);            
+            workFlowResponseModel.ScreenName = "GTSTScheduler";
+            workFlowResponseModel.CurrentCommandName = commandName;            
+            workFlowResponseModel.GTSTSchedulerModel = gtstSchedulerModel;
+            //Implement the Notice generation logic here
+            //Save the notice details to db
+            jsonString = JsonSerializer.Serialize(workFlowResponseModel);
+            return RedirectToAction("UpdateActivity", "CPROChain", new { jsonString });
+        }
         // GET: GTSTSchedulerController
         public ActionResult Index()
         {

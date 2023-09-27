@@ -20,7 +20,7 @@ namespace WorkflowEngineMVC.Models
         public List<NoticeGenerationModel> ListNoticeGenerationModel { get; set; }        
         public GTSTTestResultsModel? GTSTTestResultsModel { get; set; }
         public CPROUserAlertModel? CPROUserAlertModel { get; set; }
-        public List<CommandModel> ListCommandModel { get; set; }                   
+        public List<CommandModel> ListCommandModel { get; set; }        
         public List<ActivityModel> ListActivityModel { get; set; }
         public List<ProcessHistoryItem> ListHistory { get; set; }
         public List<SpecialNotes> ListSpecialNotes { get; set; }

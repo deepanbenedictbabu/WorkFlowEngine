@@ -130,11 +130,11 @@
                             Member Name : @Model.CaseDetailsModel?.CPLastName, @Model.CaseDetailsModel?.CPFirstName <br />                       
                             <br/>                            
                             <div class="button">
-                                <a class="nav-link text-white" asp-area="" asp-controller="GTSTScheduler" asp-action="SaveSchedule" asp-route-jsonString=@wfJsonModel asp-route-commandName=@Model.CurrentCommandName>Accept Scheduling</a>                                                               
+                                <a class="nav-link text-white" asp-area="" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');return false;">Accept Scheduling</a>                                                                 
                             </div>                                    
                             <div>
                                 <div class="button">
-                                    <a class="nav-link text-white" href="#" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">Close</a>                               
+                                    <a class="nav-link text-white" href="#" onclick="$('#divSchedulerModal').hide();$('#divModal').removeClass('d-block');">Close</a>                                                                   
                                 </div>                                                   
                             </div>                                                                
                         </div>

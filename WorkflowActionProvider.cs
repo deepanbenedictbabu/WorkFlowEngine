@@ -44,63 +44,69 @@ namespace WorkflowLib
         private bool ShowGTSTScheduler(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
-            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            if (workflowResponseModel.GTSTSchedulerModel == null)
-            {
-                GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
-                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
-                workflowResponseModel.ScreenName = "GTSTScheduler";
-                workflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(caseId);
-                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
-                return false;
-            }
-            else
-            {
-                workflowResponseModel.ScreenName = "";
-                return true;
-            }
+            //workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            //if (workflowResponseModel.GTSTSchedulerModel == null)
+            //{
+            //    GTSTSchedulerController gTSTSchedulerController = new GTSTSchedulerController();
+            //    string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+            //    workflowResponseModel.ScreenName = "GTSTScheduler";
+            //    workflowResponseModel.GTSTSchedulerModel = gTSTSchedulerController.Show(caseId);
+            //    processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+            //    return false;
+            //}
+            //else
+            //{
+            //    workflowResponseModel.ScreenName = "";
+            //    return true;
+            //}
+            workflowResponseModel.ScreenName = "";
+            return true;
         }
         private bool RecordGTSTTestResults(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)
         {
-            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            if (workflowResponseModel.GTSTTestResultsModel == null)
-            {
-                GTSTTestResultsController gTSTTestResultsController = new GTSTTestResultsController();
-                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
-                workflowResponseModel.ScreenName = "GTSTTestResults";
-                workflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(caseId);
-                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
-                return false;
-            }
-            else
-            {
-                workflowResponseModel.ScreenName = "";
-                return true;
-            }
+            //workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            //if (workflowResponseModel.GTSTTestResultsModel == null)
+            //{
+            //    GTSTTestResultsController gTSTTestResultsController = new GTSTTestResultsController();
+            //    string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+            //    workflowResponseModel.ScreenName = "GTSTTestResults";
+            //    workflowResponseModel.GTSTTestResultsModel = gTSTTestResultsController.Show(caseId);
+            //    processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+            //    return false;
+            //}
+            //else
+            //{
+            //    workflowResponseModel.ScreenName = "";
+            //    return true;
+            //}
+            workflowResponseModel.ScreenName = "";
+            return true;
         }
         private bool GenerateNotice(ProcessInstance processInstance, WorkflowRuntime runtime,
             string actionParameter)//actionParameter should be the notice id 
         {
-            var inputParam = JsonSerializer.Deserialize<WorkFlowInputParameter>(actionParameter);
-            workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
-            var listNoticeGenerationModel = workflowResponseModel.ListNoticeGenerationModel.Where(d => d.NoticeId == inputParam?.NoticeId).ToList();
-            if (listNoticeGenerationModel == null || listNoticeGenerationModel.Count() < 1)
-            {
-                NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
-                string caseId = processInstance.GetParameter<string>("CPROCaseId");                
-                workflowResponseModel.ScreenName = "NoticeGeneration";
-                workflowResponseModel.CurrentNoticeId = inputParam?.NoticeId;
-                var noticeGenerationModel = noticeGenerationController.Show(inputParam?.NoticeId ?? "", caseId, inputParam?.NoticeRecipient);                
-                workflowResponseModel.ListNoticeGenerationModel.Add(noticeGenerationModel);
-                processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
-                return false;
-            }
-            else
-            {
-                workflowResponseModel.ScreenName = "";
-                return true;
-            }
+            //var inputParam = JsonSerializer.Deserialize<WorkFlowInputParameter>(actionParameter);
+            //workflowResponseModel = processInstance.GetParameter<WorkFlowResponseModel>("WorkflowResponseModel");
+            //var listNoticeGenerationModel = workflowResponseModel.ListNoticeGenerationModel.Where(d => d.NoticeId == inputParam?.NoticeId).ToList();
+            //if (listNoticeGenerationModel == null || listNoticeGenerationModel.Count() < 1)
+            //{
+            //    NoticeGenerationController noticeGenerationController = new NoticeGenerationController();
+            //    string caseId = processInstance.GetParameter<string>("CPROCaseId");                
+            //    workflowResponseModel.ScreenName = "NoticeGeneration";
+            //    workflowResponseModel.CurrentNoticeId = inputParam?.NoticeId;
+            //    var noticeGenerationModel = noticeGenerationController.Show(inputParam?.NoticeId ?? "", caseId, inputParam?.NoticeRecipient);                
+            //    workflowResponseModel.ListNoticeGenerationModel.Add(noticeGenerationModel);
+            //    processInstance.SetParameter("WorkflowResponseModel", workflowResponseModel);
+            //    return false;
+            //}
+            //else
+            //{
+            //    workflowResponseModel.ScreenName = "";
+            //    return true;
+            //}
+            workflowResponseModel.ScreenName = "";
+            return true;
         }
 
         private bool GenerateAlert(ProcessInstance processInstance, WorkflowRuntime runtime,

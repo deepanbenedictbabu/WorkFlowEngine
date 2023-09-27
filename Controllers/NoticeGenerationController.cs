@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
+using System.ComponentModel.Design;
+using System.Text.Json;
 using WorkflowEngineMVC.Data;
 using WorkflowEngineMVC.Models;
 
@@ -31,6 +34,23 @@ namespace WorkflowEngineMVC.Controllers
         {
             //Save the notice details to db            
             return RedirectToAction("ProcessCommand", "CPROChain", new { jsonString, commandName });
+        }
+
+        public ActionResult ShowGenerateNoticeForm(string jsonString, string? commandName, string? noticeId)
+        {
+            var workFlowResponseModel = JsonSerializer.Deserialize<WorkFlowResponseModel>(jsonString) ?? new WorkFlowResponseModel();
+            var inputParam = workFlowResponseModel.ListCommandModel.Where(c => c.CommandName == commandName).Select(p => p.ListActionModel).FirstOrDefault();
+            var noticeInput = inputParam?.Where(a=> a.InputParameter?.NoticeId== noticeId).Select(i=>i.InputParameter).FirstOrDefault();
+            noticeGenerationModel = moqData.GetNoticeGenerationDetails(noticeInput?.NoticeId, workFlowResponseModel?.CaseDetailsModel?.CaseId); ;
+            noticeGenerationModel.NoticeRecipient = noticeInput.NoticeRecipient;
+            workFlowResponseModel.ScreenName = "NoticeGeneration";
+            workFlowResponseModel.CurrentCommandName = commandName;            
+            workFlowResponseModel.CurrentNoticeId = noticeId;
+            workFlowResponseModel.ListNoticeGenerationModel.Add(noticeGenerationModel);
+            //Implement the Notice generation logic here
+            //Save the notice details to db
+            jsonString = JsonSerializer.Serialize(workFlowResponseModel);
+            return RedirectToAction("UpdateActivity", "CPROChain", new { jsonString });
         }
 
         // GET: NoticeGenerationController/Details/5

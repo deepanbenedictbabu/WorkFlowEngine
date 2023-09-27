@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OptimaJet.Workflow.Core.BPMN;
 using OptimaJet.Workflow.Core.Runtime;
 using System.Diagnostics;
 using System.Text.Json;
@@ -155,8 +156,27 @@ namespace WorkflowEngineMVC.Controllers
             foreach (var workflowCommand in workflowCommands)
             {
                 var commandModel = new CommandModel();
-                commandModel.ProcessId= workflowCommand.ProcessId;
+                commandModel.ProcessId = workflowCommand.ProcessId;
                 commandModel.CommandName = workflowCommand.CommandName;
+                List<ActionModel> actionModels = new List<ActionModel>();
+                foreach (var condition in schema.Transitions.Where(a => a.Trigger.Command.Name == workflowCommand.CommandName).Select(t=> t.Conditions))
+                {                    
+                    foreach (var action in condition.Select(t => t.Action))
+                    {
+                        if (action != null)
+                        {
+                            ActionModel actionModel = new ActionModel();
+                            actionModel.ProcessId = processId;
+                            actionModel.ActionName = action.ActionName;
+                            if (action.ActionParameter != null && action.ActionParameter.Contains("{"))
+                            {
+                                actionModel.InputParameter = JsonSerializer.Deserialize<WorkFlowInputParameter>(action.ActionParameter);
+                            }
+                            actionModels.Add(actionModel);
+                        }
+                    }
+                }
+                commandModel.ListActionModel = actionModels;
                 _workFlowResponseModel.ListCommandModel.Add(commandModel);
             }            
         }
