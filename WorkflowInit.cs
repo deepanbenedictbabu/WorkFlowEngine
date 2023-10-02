@@ -29,7 +29,7 @@ namespace WorkflowLib
                 throw new Exception("Please init ConnectionString before calling the Runtime!");
             }
             // TODO If you have a license key, you have to register it here
-            WorkflowRuntime.RegisterLicense("TRIAL-VFJJQUw6MDkuMzAuMjAyMzpleUpUZEhKcFkzUkRhR1ZqYXlJNmRISjFaU3dpVFdGNFRuVnRZbVZ5VDJaQlkzUnBkbWwwYVdWeklqb3RNU3dpVFdGNFRuVnRZbVZ5VDJaVWNtRnVjMmwwYVc5dWN5STZMVEVzSWsxaGVFNTFiV0psY2s5bVUyTm9aVzFsY3lJNkxURXNJazFoZUU1MWJXSmxjazltVkdoeVpXRmtjeUk2TFRFc0lrMWhlRTUxYldKbGNrOW1RMjl0YldGdVpITWlPaTB4ZlE9PTpnYnNHb2xqL2VsQ1FvelI1NVErcWpPYVF0VzQ0Q1BNYy95MG8zUXBOVldycWIzckRXUXAvK1BxcHZLenF4WmlyODZ1MkJSTm9WblVPWE5JczNzdDY3bWtHaWdxb2txVVVaaWsxZGNGcllDTmtqRjNWZXVkMFJOZkZVNDQxblZ4U3E4N1h4TXIyMk1mdDVyYnFlVHhtUy9Dd25KN29nRjBpVzBPL203NnhiT2c9");
+            WorkflowRuntime.RegisterLicense("Conduent-Q29uZHVlbnQ6MTAuMjYuMjAyMzpleUpOWVhoT2RXMWlaWEpQWmtGamRHbDJhWFJwWlhNaU9pMHhMQ0pOWVhoT2RXMWlaWEpQWmxSeVlXNXphWFJwYjI1eklqb3RNU3dpVFdGNFRuVnRZbVZ5VDJaVFkyaGxiV1Z6SWpvdE1Td2lUV0Y0VG5WdFltVnlUMlpVYUhKbFlXUnpJam90TVN3aVRXRjRUblZ0WW1WeVQyWkRiMjF0WVc1a2N5STZMVEY5OkNjOXVlcTBqUVk4OGgwL3RnZXY2ZFpsalVJVG9yb1hNY0RycnZ4Vm5NM1N5a0FvTUtLNlJqOEp6QVRuSkora21FcS9ZQmxuT1ZmYnNDS0htY0VwelR0Q0JHZ3lCV2pwVVR6QTVVOHpmNjZMR0ZjMng3UTc5andVMHlHU01BWWhRdXdEYURjeFM0SVhhSVFzNWttQ3N0dVBrbkJ3ZzVwd2lhdTZ3ODV3Q2dmVT0=");
 
             // TODO If you are using database different from SQL Server you have to use different persistence provider here.
             var dbProvider = new MSSQLProvider(ConnectionString);

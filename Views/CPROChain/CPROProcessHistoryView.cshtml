@@ -24,23 +24,26 @@
         }            
         @foreach(var data in Model.ListHistory)
         {
-            <tr>
-                <td>                         
-                     <span>@data.FromActivityName</span>                    
-                </td>
-                <td>                         
-                     <span>@data.ToActivityName</span>                    
-                </td>
-                <td>                         
-                     <span>@data.TriggerName</span>                    
-                </td>
-                <td>                         
-                     <span>@data.StartTransitionTime</span>                    
-                </td>
-                <td>                         
-                     <span>@data.TransitionDuration</span>                    
-                </td>                             
-            </tr>                    
+            if(data.TriggerName != "Initializing")
+            {
+                <tr>
+                    <td>                         
+                         <span>@data.FromActivityName</span>                    
+                    </td>
+                    <td>                         
+                         <span>@data.ToActivityName</span>                    
+                    </td>
+                    <td>                         
+                         <span>@data.TriggerName</span>                    
+                    </td>
+                    <td>                         
+                         <span>@data.StartTransitionTime</span>                    
+                    </td>
+                    <td>                         
+                         <span>@data.TransitionDuration</span>                    
+                    </td>                             
+                </tr> 
+            }
         }      
     </table>
 </div>

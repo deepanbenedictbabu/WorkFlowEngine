@@ -136,8 +136,8 @@ namespace WorkflowEngineMVC.Controllers
                                     )
                                     VALUES
                                       ('"
-                                      + activityInput.MinorActivity + "'," 
-                                      + "'',"
+                                      + activityInput.MinorActivity + "',"
+                                      + "'" + activityInput.TypeActivity + "',"
                                       + "'" + activity.Name + "'," 
                                       +  activityInput.DaysDue + ","
                                       + "'" + activityInput.ActionAlertCode + "',"                                      

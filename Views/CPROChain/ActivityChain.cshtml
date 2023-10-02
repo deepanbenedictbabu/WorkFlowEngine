@@ -16,6 +16,22 @@
 <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
+
+<script type="text/javascript">   
+    $(function () {         
+        showListView();
+    });
+    function showListView()
+    {
+        $("#divHistoryView").hide(); 
+        $("#divListView").show();        
+    }
+    function showHistoryView()
+    {
+        $("#divHistoryView").show(); 
+        $("#divListView").hide();          
+    }
+</script>
 <div>
     <div >  
         @Html.PartialAsync("CaseFilter",Model).Result  
@@ -28,26 +44,24 @@
         var wfJsonModel = JsonSerializer.Serialize(Model);  
      } 
     <br />     
-    @if (Model.IsHistoryView)
-    {
-        <div id="divListView" class="button">
-                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessListView" asp-route-jsonString=@wfJsonModel>List View</a>                               
+    <div id="divHistoryView">
+        <div class="button">
+                <a class="nav-link text-white" asp-area="" onclick="showListView();return false;">List View</a>                               
+        </div> 
+        <br /> 
+        <div >  
+            @Html.PartialAsync("CPROProcessHistoryView",Model).Result  
+        </div>
+    </div>
+    <div id="divListView">
+        <div class="button">
+                <a class="nav-link text-white" asp-area="" onclick="showHistoryView();return false;">History View</a>                               
         </div> 
         <br /> 
         <div>  
-            @Html.PartialAsync("CPROProcessHistoryView",Model).Result  
-        </div>
-    }
-    else
-    {
-        <div id="divHistoryView" class="button">
-                <a class="nav-link text-white" asp-area="" asp-controller="CPROChain" asp-action="ShowProcessHistoryView" asp-route-jsonString=@wfJsonModel>History View</a>                               
-        </div> 
-            <br /> 
-        <div>  
             @Html.PartialAsync("CPROProcessListView",Model).Result              
         </div>
-    }
+    </div>
     <br />    
     <br/>    
     @if (@Model.ScreenName == "GTSTScheduler")

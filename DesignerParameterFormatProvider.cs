@@ -195,6 +195,14 @@ namespace WorkflowEngineMVC
                     Name = "ActionAlertCode",
                     Title = "Action Alert Code",
                     Type = ParameterType.Text
+                },
+                new CodeActionParameterDefinition
+                {
+                    DefaultValue = "",
+                    IsRequired = false,
+                    Name = "TypeActivity",
+                    Title = "Type Activity Code",
+                    Type = ParameterType.Text
                 }
             };
             }

@@ -3,6 +3,7 @@
     public class WorkFlowInputParameter
     {
         public string? MinorActivity { get; set; }
+        public string? TypeActivity { get; set; }
         public string? Group { get; set; }
         public double DaysDue { get; set; }
         public string? Category { get; set; }
