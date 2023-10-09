@@ -45,6 +45,14 @@ namespace WorkflowEngineMVC.Controllers
             return View("Index", _workFlowResponseModel);
         }
 
+        public string GetCaseDetailInfo([FromBody] string caseId)
+        {
+            _caseId = caseId;
+            _caseDetailsModel = _moqData?.GetCaseDetails(caseId);
+            _workFlowResponseModel.CaseDetailsModel = _caseDetailsModel;
+            return JsonSerializer.Serialize(_caseDetailsModel);
+        }
+
         // GET: CPROController            
         public ActionResult ShowStartRemedy(string caseId, string majorActivity)
         {

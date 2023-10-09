@@ -3,10 +3,12 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -92,7 +94,8 @@ namespace WorkflowEngineMVC.Controllers
                 using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
                     con.Open();
-                    string sqlQry = @"DELETE FROM RefMinorActivity_T1;
+                    string sqlQry = @"DELETE FROM RefMajorActivity_T1 WHERE ActivityMajor_CODE = '" + majorActivityCode + "';" +
+                                  @"DELETE FROM RefMinorActivity_T1;
                                     DELETE FROM RefNextActivity_T1;
                                     DELETE FROM RefMaintenance_T1
                                     DELETE FROM RefActivityCatRole_T1;
@@ -102,6 +105,41 @@ namespace WorkflowEngineMVC.Controllers
                         command.CommandType = CommandType.Text;
                         int count = command.ExecuteNonQuery();
                     }
+
+                    sqlQry = @"INSERT INTO RefMajorActivity_T1 
+                              (
+                                ActivityMajor_CODE	,
+                                Subsystem_CODE	,
+                                DescriptionActivity_TEXT	,
+                                BeginValidity_DATE	,
+                                EndValidity_DATE	,
+                                WorkerUpdate_ID	,
+                                Update_DTTM	,
+                                TransactionEventSeq_NUMB	,
+                                Stop_INDC	,
+                                MultipleActiveInstance_INDC	,
+                                ManualStop_INDC	
+                              )
+                              VALUES
+                              (
+                                 '"+ majorActivityCode + @"', 
+                                 'ES',
+                                 '"+ majorActivityCode + @"',
+                                 '" + DateTime.Now.ToShortDateString() + @"',
+                                 '12/31/9999',
+                                 'KIDSFIRST',
+                                 '" + DateTime.Now.ToShortDateString() + @"',	
+                                 1,	
+                                 'N',
+                                 'Y',
+                                 'N'
+                              )";
+                    using (SqlCommand command = new SqlCommand(sqlQry, con))
+                    {
+                        command.CommandType = CommandType.Text;
+                        int count = command.ExecuteNonQuery();
+                    }
+
                     int activityOrder = 0;
                     foreach (var activity in schema.Activities)
                     {
@@ -354,13 +392,42 @@ namespace WorkflowEngineMVC.Controllers
             {
                 Console.WriteLine("CreateInstance - Exception: {0}", ex.Message);
             }
-            return View("Index");
+            return View("Index", getMajorActivityList());
         }
 
 
         public IActionResult Index()
+        {            
+            return View(getMajorActivityList());
+        }
+
+        private List<SelectListItem> getMajorActivityList()
         {
-            return View();
+            var ConnectionString = _configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
+            var majorActivityList = new List<SelectListItem>();
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                string sqlQry = @"SELECT ActivityMajor_CODE FROM RefMajorActivity_T1";
+                using (SqlCommand command = new SqlCommand(sqlQry, con))
+                {
+                    command.CommandType = CommandType.Text;
+                    var reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var majorActivity = new SelectListItem
+                            {
+                                Value = reader.GetString(0),
+                                Text = reader.GetString(0)
+                            };
+                            majorActivityList.Add(majorActivity);
+                        }
+                    }
+                }
+            }
+            return majorActivityList;
         }
     }
 }
