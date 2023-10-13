@@ -1,0 +1,358 @@
+﻿<Process Name="GTST" CanBeInlined="false" Tags="" LogEnabled="false">
+	<Designer />
+	<Actors>
+		<Actor Name="Approver" Rule="Approver" WasInlined="true" OriginalName="Approver" OriginalSchemeCode="ParallelApprovalWithoutBranches" />
+	</Actors>
+	<Parameters>
+		<Parameter Name="Reason" Type="String" Purpose="Persistence" />
+	</Parameters>
+	<Commands>
+		<Command Name="Schedule Genetic Test">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="SE" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Record Genetic Test" />
+		<Command Name="Generate Alert" />
+		<Command Name="Generate Notice EST-07" />
+		<Command Name="Test Results Recorded on GTST">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="TH" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="NCP/PF Failed to Appear">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="NQ" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="CP Failed to Appear">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="LY" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Reschedule Genetic Test">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="VA" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Cancel Genetic Test">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="FZ" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Genetic Test Rescheduled">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="KH" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Stop Genetic Test Activity">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="GZ" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Approve" />
+	</Commands>
+	<Timers>
+		<Timer Name="Minute" Type="Time" Value="1m" NotOverrideIfExists="false" />
+	</Timers>
+	<Activities>
+		<Activity Name="Await Genetic Test to be Scheduled" State="Await Genetic Test to be Scheduled" IsInitial="true" IsFinal="false" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"AGTSC","Group":"GSOGT","DaysDue":2,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":2,"ScreenFunctionCode":"CPROMODEST","ActionAlertCode":"A"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="790" Y="20" Hidden="false" />
+		</Activity>
+		<Activity Name="Record Genetic Test Results" State="Record Genetic Test Results" IsInitial="false" IsFinal="false" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"RGTST","Group":"GSOGT","DaysDue":30,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":5,"ScreenFunctionCode":"CPROMODEST","ActionAlertCode":"A","TypeActivity":"G"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="910" Y="160" Hidden="false" />
+		</Activity>
+		<Activity Name="Reschedule Genetic Test" State="Reschedule Genetic Test" IsInitial="false" IsFinal="false" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"RSGET","Group":"GSOGT","DaysDue":1,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":1,"ScreenFunctionCode":"CPROMODEST","ActionAlertCode":"A"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="910" Y="440" Hidden="false" />
+		</Activity>
+		<Activity Name="Activity Chain Closes" State="Activity Chain Closes" IsInitial="false" IsFinal="true" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"RMDCY","Group":"GCLAC","DaysDue":0,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":0,"ActionAlertCode":"A"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="1290" Y="520" Hidden="false" />
+		</Activity>
+	</Activities>
+	<Transitions>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_1" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Test Results Recorded on GTST" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1350.3583984375" Y="97" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_2" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="NCP/PF Failed to Appear" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1266.3583984375" Y="168" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_3" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="CP Failed to Appear" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1144.3583984375" Y="544" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Reschedule Genetic Test_1" To="Reschedule Genetic Test" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Reschedule Genetic Test" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Action" NameRef="GenerateAlert" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[CP Requested to reschedule]]></ActionParameter>
+				</Condition>
+				<Condition Type="Action" NameRef="GenerateNotice" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[{"NoticeId":"EST-10","NoticeRecipient":"MC","PrintMethod":"L"}]]></ActionParameter>
+				</Condition>
+			</Conditions>
+			<Designer X="953.9335708618164" Y="343" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_4" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Cancel Genetic Test" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Action" NameRef="GenerateAlert" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[Family violence is @FamilyViolence]]></ActionParameter>
+				</Condition>
+			</Conditions>
+			<Designer X="1219.3583984375" Y="199" Hidden="false" />
+		</Transition>
+		<Transition Name="Reschedule Genetic Test_Record Genetic Test Results_1" To="Record Genetic Test Results" From="Reschedule Genetic Test" Classifier="Reverse" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Genetic Test Rescheduled" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1049.9335708618164" Y="291" Hidden="false" />
+		</Transition>
+		<Transition Name="Reschedule Genetic Test_Activity Chain Closes_1" To="Activity Chain Closes" From="Reschedule Genetic Test" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Stop Genetic Test Activity" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="988.2543716430664" Y="565.5" Hidden="false" />
+		</Transition>
+		<Transition Name="Await Genetic Test to be Scheduled_Record Genetic Test Results_1" To="Record Genetic Test Results" From="Await Genetic Test to be Scheduled" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Schedule Genetic Test" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Action" NameRef="ShowGTSTScheduler" ConditionInversion="false" ResultOnPreExecution="true" />
+				<Condition Type="Action" NameRef="GenerateNotice" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[{"NoticeId":"EST-07","NoticeRecipient":"MN","PrintMethod":"L"}]]></ActionParameter>
+				</Condition>
+				<Condition Type="Action" NameRef="GenerateNotice" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[{"NoticeId":"EST-08","NoticeRecipient":"MC","PrintMethod":"C"}]]></ActionParameter>
+				</Condition>
+			</Conditions>
+			<Designer X="918" Y="110" Hidden="false" />
+		</Transition>
+	</Transitions>
+</Process>
+<Process Name="GTST" CanBeInlined="false" Tags="" LogEnabled="false">
+	<Designer />
+	<Actors>
+		<Actor Name="Approver" Rule="Approver" WasInlined="true" OriginalName="Approver" OriginalSchemeCode="ParallelApprovalWithoutBranches" />
+	</Actors>
+	<Parameters>
+		<Parameter Name="Reason" Type="String" Purpose="Persistence" />
+	</Parameters>
+	<Commands>
+		<Command Name="Schedule Genetic Test">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="SE" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Record Genetic Test" />
+		<Command Name="Generate Alert" />
+		<Command Name="Generate Notice EST-07" />
+		<Command Name="Test Results Recorded on GTST">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="TH" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="NCP/PF Failed to Appear">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="NQ" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="CP Failed to Appear">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="LY" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Reschedule Genetic Test">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="VA" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Cancel Genetic Test">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="FZ" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Genetic Test Rescheduled">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="KH" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Stop Genetic Test Activity">
+			<InputParameters>
+				<ParameterRef Name="Reason" IsRequired="false" DefaultValue="GZ" NameRef="Reason" />
+			</InputParameters>
+		</Command>
+		<Command Name="Approve" />
+	</Commands>
+	<Timers>
+		<Timer Name="Minute" Type="Time" Value="1m" NotOverrideIfExists="false" />
+	</Timers>
+	<Activities>
+		<Activity Name="Await Genetic Test to be Scheduled" State="Await Genetic Test to be Scheduled" IsInitial="true" IsFinal="false" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"AGTSC","Group":"GSOGT","DaysDue":2,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":2,"ScreenFunctionCode":"CPROMODEST","ActionAlertCode":"A"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="790" Y="20" Hidden="false" />
+		</Activity>
+		<Activity Name="Record Genetic Test Results" State="Record Genetic Test Results" IsInitial="false" IsFinal="false" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"RGTST","Group":"GSOGT","DaysDue":30,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":5,"ScreenFunctionCode":"CPROMODEST","ActionAlertCode":"A","TypeActivity":"G"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="910" Y="160" Hidden="false" />
+		</Activity>
+		<Activity Name="Reschedule Genetic Test" State="Reschedule Genetic Test" IsInitial="false" IsFinal="false" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"RSGET","Group":"GSOGT","DaysDue":1,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":1,"ScreenFunctionCode":"CPROMODEST","ActionAlertCode":"A"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="910" Y="440" Hidden="false" />
+		</Activity>
+		<Activity Name="Activity Chain Closes" State="Activity Chain Closes" IsInitial="false" IsFinal="true" IsForSetState="true" IsAutoSchemeUpdate="true">
+			<Implementation>
+				<ActionRef Order="1" NameRef="SetActivityInputs">
+					<ActionParameter><![CDATA[{"MinorActivity":"RMDCY","Group":"GCLAC","DaysDue":0,"Category":"ES","SubCategory":"GTST","AlertWarningInDays":0,"ActionAlertCode":"A"}]]></ActionParameter>
+				</ActionRef>
+			</Implementation>
+			<Designer X="1290" Y="520" Hidden="false" />
+		</Activity>
+	</Activities>
+	<Transitions>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_1" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Test Results Recorded on GTST" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1350.3583984375" Y="97" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_2" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="NCP/PF Failed to Appear" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1266.3583984375" Y="168" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_3" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="CP Failed to Appear" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1144.3583984375" Y="544" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Reschedule Genetic Test_1" To="Reschedule Genetic Test" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Reschedule Genetic Test" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Action" NameRef="GenerateAlert" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[CP Requested to reschedule]]></ActionParameter>
+				</Condition>
+				<Condition Type="Action" NameRef="GenerateNotice" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[{"NoticeId":"EST-10","NoticeRecipient":"MC","PrintMethod":"L"}]]></ActionParameter>
+				</Condition>
+			</Conditions>
+			<Designer X="953.9335708618164" Y="343" Hidden="false" />
+		</Transition>
+		<Transition Name="Record Genetic Test Results_Activity Chain Closes_4" To="Activity Chain Closes" From="Record Genetic Test Results" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Cancel Genetic Test" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Action" NameRef="GenerateAlert" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[Family violence is @FamilyViolence]]></ActionParameter>
+				</Condition>
+			</Conditions>
+			<Designer X="1219.3583984375" Y="199" Hidden="false" />
+		</Transition>
+		<Transition Name="Reschedule Genetic Test_Record Genetic Test Results_1" To="Record Genetic Test Results" From="Reschedule Genetic Test" Classifier="Reverse" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Genetic Test Rescheduled" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="1049.9335708618164" Y="291" Hidden="false" />
+		</Transition>
+		<Transition Name="Reschedule Genetic Test_Activity Chain Closes_1" To="Activity Chain Closes" From="Reschedule Genetic Test" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Stop Genetic Test Activity" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Always" />
+			</Conditions>
+			<Designer X="988.2543716430664" Y="565.5" Hidden="false" />
+		</Transition>
+		<Transition Name="Await Genetic Test to be Scheduled_Record Genetic Test Results_1" To="Record Genetic Test Results" From="Await Genetic Test to be Scheduled" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" DisableParentStateControl="false">
+			<Triggers>
+				<Trigger Type="Command" NameRef="Schedule Genetic Test" />
+			</Triggers>
+			<Conditions>
+				<Condition Type="Action" NameRef="ShowGTSTScheduler" ConditionInversion="false" ResultOnPreExecution="true" />
+				<Condition Type="Action" NameRef="GenerateNotice" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[{"NoticeId":"EST-07","NoticeRecipient":"MN","PrintMethod":"L"}]]></ActionParameter>
+				</Condition>
+				<Condition Type="Action" NameRef="GenerateNotice" ConditionInversion="false" ResultOnPreExecution="true">
+					<ActionParameter><![CDATA[{"NoticeId":"EST-08","NoticeRecipient":"MC","PrintMethod":"C"}]]></ActionParameter>
+				</Condition>
+			</Conditions>
+			<Designer X="918" Y="110" Hidden="false" />
+		</Transition>
+	</Transitions>
+</Process>

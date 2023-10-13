@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using OptimaJet.Workflow.Core.BPMN;
 using OptimaJet.Workflow.Core.Runtime;
 using System.Diagnostics;
 using System.Text.Json;
 using WorkflowEngineMVC.Data;
+using WorkflowEngineMVC.DBContext;
 using WorkflowEngineMVC.Models;
 using WorkflowLib;
 
 namespace WorkflowEngineMVC.Controllers
 {
     public class CPROChainController : Controller
-    {        
+    {
+        private readonly IConfiguration _configuration;
         static Guid _processId;
         MoqData _moqData;
         CaseDetailsModel? _caseDetailsModel;
@@ -24,8 +27,9 @@ namespace WorkflowEngineMVC.Controllers
         const string _constStrFamilyViolence = "FamilyViolence";
         const string _constStrWorkflowResponseModel = "WorkflowResponseModel";        
 
-        public CPROChainController()
+        public CPROChainController(IConfiguration configuration)
         {
+            _configuration = configuration;
             _workFlowResponseModel = new WorkFlowResponseModel();
             _moqData = new MoqData();
             _caseDetailsModel = new CaseDetailsModel();                        
@@ -157,7 +161,8 @@ namespace WorkflowEngineMVC.Controllers
             var workflowCommands = WorkflowInit.Runtime.GetAvailableCommands(processId, string.Empty);
             _caseDetailsModel = _moqData.GetCaseDetails(_caseId);
             _workFlowResponseModel.CurrentActivityName = activityName;
-            _workFlowResponseModel.CurrentMinorActivityCode = activityInput.MinorActivity;
+            var activityParam = _workFlowResponseModel.ListActivityModel.Where(a => a.ActivityName == activityName).FirstOrDefault();
+            _workFlowResponseModel.CurrentMinorActivityCode = activityParam?.MinorActivityCode;
             _workFlowResponseModel.ProcessId = processId;
             _workFlowResponseModel.CurrentStateName = stateName;
             _workFlowResponseModel.CaseDetailsModel = _caseDetailsModel;
@@ -199,7 +204,10 @@ namespace WorkflowEngineMVC.Controllers
             WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrFamilyViolence, _workFlowResponseModel.CaseDetailsModel?.FamilyViolence);
             WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrWorkflowResponseModel, _workFlowResponseModel);
             WorkflowInit.Runtime.SetPersistentProcessParameter(_processId, _constStrMinorActivity, _workFlowResponseModel.CurrentMinorActivityCode);
-            _workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(_workFlowResponseModel, commandName );            
+            _workFlowResponseModel = WorkflowInit.WorkflowActionProvider.ExecuteCommand(_workFlowResponseModel, commandName );
+            var connectionString = _configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
+            ActivityDBContext activityDBContext = new ActivityDBContext();
+            activityDBContext.ActivityDiaryTableUpdate(connectionString, _caseId, _workFlowResponseModel.MajorActivityCode, _workFlowResponseModel.CurrentMinorActivityCode, _processId);
             GetAllActivitiesAndCommands(_processId);
             if (!string.IsNullOrEmpty(notes))
             {

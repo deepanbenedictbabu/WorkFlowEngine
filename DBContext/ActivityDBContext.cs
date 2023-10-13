@@ -315,7 +315,7 @@ namespace WorkflowEngineMVC.DBContext
             }
         }
 
-        public void ActivityDiaryTableUpdate(string? connectionString, string? majorActivityCode)
+        public void ActivityDiaryTableUpdate(string? connectionString, string? caseId, string? majorActivityCode, string? minorActivityCode, Guid processId)
         {
             try
             {
@@ -351,22 +351,39 @@ namespace WorkflowEngineMVC.DBContext
                                 Update_DTTM	,
                                 TransactionEventSeq_NUMB	,
                                 TypeReference_CODE	,
-                                Reference_ID	
+                                Reference_ID,
+								Process_ID	
                               )
                               VALUES
                               (
-                                 '" + majorActivityCode + @"', 
-                                 'ES',
-                                 '" + majorActivityCode + @"',
-                                 '" + DateTime.Now.ToShortDateString() + @"',
-                                 '12/31/9999',
-                                 'KIDSFIRST',
-                                 '" + DateTime.Now.ToShortDateString() + @"',	
-                                 1,	
-                                 'N',
-                                 'Y',
-                                 'N'
-                              )";
+							  " + caseId + @", 
+							  1,
+							  1,
+							  1000230,
+							  '" + majorActivityCode + @"', 
+							  'ES',
+							  '',
+							  null,
+							  GETDATE(),
+							  GETDATE(),
+							  '',
+							  '',
+							  null,
+							  null,
+							  null,
+							  null,
+							  null,
+							  'KIDSFIRST',
+							  '',
+							  GETDATE(),
+							  GETDATE(),
+							  'KIDSFIRST',
+							  GETDATE(),
+							  1,
+							  '',
+							  null,
+							  '" + processId + @"'
+							  )";
                     using (SqlCommand command = new SqlCommand(sqlQry, con))
                     {
                         command.CommandType = CommandType.Text;
@@ -402,22 +419,41 @@ namespace WorkflowEngineMVC.DBContext
                                 TransactionEventSeq_NUMB	,
                                 WorkerDelegate_ID	,
                                 ActivityMajor_CODE	,
-                                Subsystem_CODE	
+                                Subsystem_CODE,
+								Process_ID	
                               )
                               VALUES
                               (
-                                 '" + majorActivityCode + @"', 
-                                 'ES',
-                                 '" + majorActivityCode + @"',
-                                 '" + DateTime.Now.ToShortDateString() + @"',
-                                 '12/31/9999',
-                                 'KIDSFIRST',
-                                 '" + DateTime.Now.ToShortDateString() + @"',	
-                                 1,	
-                                 'N',
-                                 'Y',
-                                 'N'
-                              )";
+								" + caseId + @", 
+								1,
+								1,
+								1,
+								1000230,
+								'" + minorActivityCode + @"', 
+								'RGTST',
+								GETDATE(),
+								GETDATE(),
+								GETDATE(),
+								'',
+								'SE',
+								null,
+								null,
+								null,
+								null,
+								null,
+								null,
+								'KIDSFIRST',
+								GETDATE(),
+								GETDATE(),
+								GETDATE(),
+								'KIDSFIRST',
+								GETDATE(),
+								1,
+								'KIDSFIRST',
+								'" + majorActivityCode + @"', 
+								'ES',
+								'" + processId + @"'
+							  )";
                     using (SqlCommand command = new SqlCommand(sqlQry, con))
                     {
                         command.CommandType = CommandType.Text;
